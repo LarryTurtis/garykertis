@@ -1,7 +1,7 @@
 var port = process.env.PORT || 3000,
     http = require("http"),
-    fs = require("fs"),
-    html = fs.readFileSync("index.html");
+    fs = require("fs");
+    //html = fs.readFileSync("index.html");
 
 var server = http.createServer(function (request, response) {
     if (request.method == 'POST') {
