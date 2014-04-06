@@ -2,6 +2,8 @@
 logs/*
 !.gitkeep
 node_modules/
+thumbnail.php
+app/img/
 tmp
 .DS_Store
 .idea

@@ -1,1 +1,7 @@
-<p>This is the partial for view 1.</p>
+ <ul class="sites">
+ 	<li ng-repeat="site in sites" class="thumbnail">
+ 		<a target="_blank" href="{{site.link}}" class="thumb"><img ng-src="{{site.imageUrl}}"></a>
+ 		<a target="_blank" href="{{site.link}}">{{site.name}}</a>
+ 		<p>{{site.description}}</p>
+ 	</li>
+ </ul>
