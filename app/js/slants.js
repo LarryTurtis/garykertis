@@ -19,7 +19,7 @@
 		var gap = -10;
         var now = true;
         var increment = 2;
-
+        animate();
 
 	
 	function fire() {

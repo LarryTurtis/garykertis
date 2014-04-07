@@ -1,7 +1,5 @@
  <ul class="sites">
  	<li ng-repeat="site in sites" class="thumbnail">
- 		<a target="_blank" href="{{site.link}}" class="thumb"><img ng-src="{{site.imageUrl}}"></a>
- 		<a target="_blank" href="{{site.link}}">{{site.name}}</a>
- 		<p>{{site.description}}</p>
+ 		<a href="#/sites/{{site.id}}" >{{site.name}}</a>
  	</li>
  </ul>

@@ -4,13 +4,15 @@
 // Declare app level module which depends on filters, and services
 var myApp = angular.module('myApp', [
   'ngRoute',
+  'ngAnimate',
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
   'myApp.controllers'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'siteCtrl'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.when('/sites', {templateUrl: 'partials/partial1.html', controller: 'siteCtrl'}).
+	when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'}).
+	when('/sites/:siteId', {templateUrl: 'partials/siteDetail.html', controller: 'siteDetailCtrl'}).
+	otherwise({redirectTo: '/sites'});
 }]);
