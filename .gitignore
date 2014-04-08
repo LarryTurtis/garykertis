@@ -2,7 +2,7 @@
 logs/*
 !.gitkeep
 node_modules/
-thumbnail.php
+app/sites/thumbnail.php
 tmp
 .DS_Store
 .idea
