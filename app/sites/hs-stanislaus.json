@@ -1,0 +1,7 @@
+{
+"id": "hs-stanislaus", 
+"imageUrl": "img/hs-stanislaus.png", 
+"name": "Humane Society of Stanislaus County", 
+"link": "http://hsstanislaus.org",
+"description": "A drupal-based website for the Humane Society of Stanislaus county."
+}

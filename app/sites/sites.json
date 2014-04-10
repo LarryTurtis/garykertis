@@ -18,5 +18,21 @@
         "id": "video-break-apart", 
         "name": "Video Break Apart",
         "url": "http://garykertis.com/breaker/test2.html" 
+    },
+    {
+        "id": "parallax-collages", 
+        "name": "Parallax Collages",
+        "url": "http://garykertis.com/storybook/" 
+    },
+    {
+        "id": "canvas-zoom-effect", 
+        "name": "Canvas Zoom Effect",
+        "url": "http://tagseer.com/test6.html" 
+    },
+    {
+        "id": "hs-stanislaus", 
+        "name": "Humane Society",
+        "url": "http://hsstanislaus.org" 
     }
+
 ]

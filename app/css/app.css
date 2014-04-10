@@ -9,21 +9,22 @@ body {
     background: #EEEEEE;
 }
 
-h4, h4 a {
-  font-family: 'Galindo';
-  font-size: 64px;
+h2, h2 a, .h2, .h2 a {
+  font-family: 'lobster';
   color: #ebb123;
-  text-shadow: 1px 1px #674e4d,2px 2px #674e4d,3px 3px #674e4d;
+  padding: 10px;
 }
 
 h1 {
   font-family: 'Galindo';
   font-size: 80px;
   color: #c15420;
+  padding: 10px;
 }
 
 img {
   border: 1px solid #674e4d;
+  margin: 5px;
 }
 
 
@@ -37,15 +38,12 @@ img {
   border-top:2px solid #674e4d;
   border-bottom:2px solid #674e4d;}
 
-h4 a:hover {
-  font-size: 64px;
+h2 a:hover {
   color: #c15420;
-  text-shadow: 1px 1px #674e4d,2px 2px #674e4d,3px 3px #674e4d;
   text-decoration: none;
 }
 
 p, a {
-  font-size: 24px;
   color: #674e4d;
 }
 
@@ -60,15 +58,15 @@ p, a {
 .wrap {
 overflow: hidden;
 margin-top: 50px;
-margin-bottom: 50px;
+padding-bottom: 50px;
   border-top: 2px solid #674e4d;
   border-bottom: 2px solid #674e4d;
 background: #EEEEEE;
 }
 
 .main {
-  border-left: 2px solid #e1e1e1;
-  border-top: 2px solid #e1e1e1;
+  margin-top: 50px;
+  border: 1px solid #e1e1e1;
   background: white;
   padding: 0px!important;
 }
@@ -110,4 +108,36 @@ background: #EEEEEE;
 }
 .view-animate.ng-leave.ng-leave-active {
   left:-100%;
+}
+
+.footer {
+  border-top: 2px solid #674e4d;
+}
+
+.menu {
+  list-style: none;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
 }

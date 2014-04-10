@@ -13,20 +13,40 @@
 
   <div class="wrap container-fluid">
   <div class="container main">
-    <div class="container">
+    <div class="row">
+      <div class="col-md-9">
       <h1>GARY KERTIS</h1>
-      <h2>portfolio.</h2>
+      <span class="h2">projects.</span>
     </div>
-  <ul class="nav nav-pills container" ng-controller="siteCtrl">
+    <div class="col-md-3">
+      <img class="media-object" src="http://www.gravatar.com/avatar/c1ed3ec726240a7c42f37f3469758a35?s=200" />
+    </div>
+    </div>
+  <ul class="nav nav-pills" ng-controller="siteCtrl">
   <li ng-repeat="site in sites" ng-class="getClass('/sites/{{site.id}}')">
     <a href="#/sites/{{site.id}}" >{{site.name}}</a>
   </li>
   </ul>
-<div class="view-animate-container container">
-  <div ng-view class="view-animate" id="viewAnimate"></div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="view-animate-container">
+      <div ng-view class="view-animate" id="viewAnimate">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<ul class="menu pull-right">
+  <li class=""><a href="https://www.facebook.com/gary.kertis" target="_blank">Facebook</a></li>
+  <li class=""><a href="https://www.linkedin.com/profile/view?id=23709354" target="_blank">LinkedIn</a></li>
+  <li class=""><a href="https://plus.google.com/u/0/111327913229867413812/" target="_blank">Google+</a></li>
+  <li class=""><a href="https://github.com/GaryKertis" target="_blank">GitHub</a></li>
+  <li class=""><a href="https://twitter.com/GaryKertis" target="_blank">Twitter</a></li>
+</ul>
 </div>
 </div>
-
+</div>
 </div>
   <canvas id="sun"></canvas>
   
