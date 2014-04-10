@@ -5,17 +5,26 @@
   <title>My AngularJS App</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+  <link href='http://fonts.googleapis.com/css?family=Lobster|Galindo' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/app.css"/>
 
 </head>
 <body>
-  <div class="wrap">
-  <ul class="menu">
-    <li><a href="#/sites">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
+
+  <div class="wrap container-fluid">
+  <div class="container main">
+    <div class="container">
+      <h1>GARY KERTIS</h1>
+      <h2>portfolio.</h2>
+    </div>
+  <ul class="nav nav-pills container" ng-controller="siteCtrl">
+  <li ng-repeat="site in sites" ng-class="getClass('/sites/{{site.id}}')">
+    <a href="#/sites/{{site.id}}" >{{site.name}}</a>
+  </li>
   </ul>
-<div class="view-container">
-  <div ng-view class="view-frame"></div>
+<div class="view-animate-container container">
+  <div ng-view class="view-animate" id="viewAnimate"></div>
+</div>
 </div>
 
 </div>

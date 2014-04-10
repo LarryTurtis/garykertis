@@ -1,5 +1,5 @@
 
-        var notEveryTime = 0;
+        var notEveryTime = 3;
         var canvas = document.getElementById('sun');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -10,10 +10,6 @@
 		
         var barW = 50;
 		
-		var rand = [];
-        for (var j = -5; j <= canvas.width+1 / barW; j++) {
-			rand[j] = Math.ceil(Math.random()*100)+30;		
-		}
 
         var y = 0;
 		var gap = -10;
@@ -23,13 +19,32 @@
 
 	
 	function fire() {
-		gap = -10;
+		gap = -10; 
 		now = true;
-        for (j = -5; j <= canvas.width+1 / barW; j++) {
-			rand[j] = Math.ceil(Math.random()*100)+30;
-				
-		}
 	}
+
+function shuffle(array) {
+    if(--notEveryTime>0){ return; }; 
+    var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  notEveryTime = 6;
+  return array;
+}
 
 
     function animate() {
@@ -57,15 +72,14 @@
 
       
 			
-        context.lineWidth = 1;
-        context.strokeStyle = '674e4d';
+        context.lineWidth = 2;
+        context.strokeStyle = '#674e4d';
         context.clearRect(0, 0, canvas.width, canvas.height);
-        if (gap<canvas.height/3) gap+=15; else now=false;
-        for (j = -5; j <= canvas.width+1 / barW; j++) {
 
-            heit = canvas.height / 2;
-			y = heit - gap + rand[j];
-            
+        str = document.getElementById('viewAnimate').attributes.class.value;
+        if (str.search('ng-animate') > 0) shuffle(colors);
+        //if (gap < 50) {gap+=5; shuffle(colors);} else now = false;
+        for (j = -5; j <= canvas.width+1 / barW; j++) {
 
             if (x == colors.length - 1) x = 0; else x++;
             context.fillStyle = colors[x];
@@ -74,64 +88,30 @@
 			
 			points1 = {
 				a: {
-					x: j*barW,
+					x: j*(barW)+1,
 					y: 0,
 				},
 				b: {
-					x: (y)*.35 + (j*barW),
-					y: y
+					x: (j*(barW))+1,
+					y: canvas.height
 				},
 				c: {
-					x: (y)*.35 + ((j+1)*barW),
-					y: y
+					x: ((j+1)*(barW)),
+					y: canvas.height
 				},
 				d: {
-					x: (j+1) * barW,
+					x: (j+1) * (barW),
 					y: 0
 				}
 			}
 			
-			y = heit + gap - rand[j];
-		
-						
-			points2 = {
-				a: {
-					x: j*barW,
-					y: canvas.height,
-				},
-				b: {
-					x: (j*barW),
-					y: y
-				},
-				c: {
-					x: ((j+1)*barW),
-					y: y
-				},
-				d: {
-					x: ((j+1) * barW),
-					y: canvas.height
-				}
-			}
 			
             context.moveTo(points1.a.x,points1.a.y);
             context.lineTo(points1.b.x,points1.b.y);
             context.lineTo(points1.c.x,points1.c.y);
             context.lineTo(points1.d.x,points1.d.y);
 			context.closePath();
+			context.fill();
             context.stroke();
-            context.fill();
-
-			
-            context.moveTo(points2.a.x,points2.a.y);
-            context.lineTo(points2.b.x,points2.b.y);
-            context.lineTo(points2.c.x,points2.c.y);
-            context.lineTo(points2.d.x,points2.d.y);
-			context.closePath();
-            context.stroke();
-            context.fill();
-            
-
         }
-        notEveryTime = 3;
-
     }

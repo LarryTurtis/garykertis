@@ -1,110 +1,113 @@
 /* app css stylesheet */
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+body, body a {
+  font-family: 'Lobster';
+  color: #674e4d;
 }
 
-.menu:before {
-  content: "[";
+body {
+    background: #EEEEEE;
 }
 
-.menu:after {
-  content: "]";
+h4, h4 a {
+  font-family: 'Galindo';
+  font-size: 64px;
+  color: #ebb123;
+  text-shadow: 1px 1px #674e4d,2px 2px #674e4d,3px 3px #674e4d;
 }
 
-.menu > li {
-  display: inline;
+h1 {
+  font-family: 'Galindo';
+  font-size: 80px;
+  color: #c15420;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+img {
+  border: 1px solid #674e4d;
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+
+.active a {
+  background-color: #674e4d!important;
+}
+
+.nav-pills li a {border-radius: 0px!important;color:#674e4d;}
+
+.nav {background-color: white;
+  border-top:2px solid #674e4d;
+  border-bottom:2px solid #674e4d;}
+
+h4 a:hover {
+  font-size: 64px;
+  color: #c15420;
+  text-shadow: 1px 1px #674e4d,2px 2px #674e4d,3px 3px #674e4d;
+  text-decoration: none;
+}
+
+p, a {
+  font-size: 24px;
+  color: #674e4d;
 }
 
 #sun {
-  position: absolute;
+  z-index: -1;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
+  border:2px solid #674e4d;
 }
 
 .wrap {
-  position: absolute; 
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: 50%;
+overflow: hidden;
+margin-top: 50px;
+margin-bottom: 50px;
+  border-top: 2px solid #674e4d;
+  border-bottom: 2px solid #674e4d;
+background: #EEEEEE;
 }
 
-.sites {
-  max-width: 320px;
-}
-
-.thumb {
-  height: 150px;
-  width: 200px;
-}
-
-.view-container {
-  position: relative;
-}
- 
-.view-frame.ng-enter, .view-frame.ng-leave {
+.main {
+  border-left: 2px solid #e1e1e1;
+  border-top: 2px solid #e1e1e1;
   background: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  padding: 0px!important;
+}
+
+.view-animate-container {
+  position:relative;
+  height:350px;
+  position:relative;
+  background: #fff7c9;
+  overflow:hidden;
+  padding: 0px!important;
 }
  
-.view-frame.ng-enter {
-  -webkit-animation: 0.5s fade-in;
-  -moz-animation: 0.5s fade-in;
-  -o-animation: 0.5s fade-in;
-  animation: 0.5s fade-in;
-  z-index: 100;
+.view-animate {
+  padding:10px!important;
 }
  
-.view-frame.ng-leave {
-  -webkit-animation: 0.5s fade-out;
-  -moz-animation: 0.5s fade-out;
-  -o-animation: 0.5s fade-out;
-  animation: 0.5s fade-out;
-  z-index:99;
+.view-animate.ng-enter, .view-animate.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+ 
+  display:block;
+  width:100%;
+  border-left:2px solid #674e4d;
+ 
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:10px;
 }
  
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.view-animate.ng-enter {
+  left:100%;
 }
-@-moz-keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.view-animate.ng-enter.ng-enter-active {
+  left:0;
 }
-@-webkit-keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
- 
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@-moz-keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@-webkit-keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+.view-animate.ng-leave.ng-leave-active {
+  left:-100%;
 }

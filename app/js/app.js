@@ -11,8 +11,9 @@ var myApp = angular.module('myApp', [
   'myApp.controllers'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/sites', {templateUrl: 'partials/partial1.html', controller: 'siteCtrl'}).
-	when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'}).
-	when('/sites/:siteId', {templateUrl: 'partials/siteDetail.html', controller: 'siteDetailCtrl'}).
+  $routeProvider.when('/sites/:siteId', {templateUrl: 'partials/siteDetail.html', controller: 'siteDetailCtrl'}).
 	otherwise({redirectTo: '/sites'});
 }]);
+
+
+
