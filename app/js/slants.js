@@ -76,8 +76,10 @@ function shuffle(array) {
         context.strokeStyle = '#674e4d';
         context.clearRect(0, 0, canvas.width, canvas.height);
 
+        if(document.getElementById('viewAnimate') != null){
         str = document.getElementById('viewAnimate').attributes.class.value;
         if (str.search('ng-animate') > 0) shuffle(colors);
+    }
         //if (gap < 50) {gap+=5; shuffle(colors);} else now = false;
         for (j = -5; j <= canvas.width+1 / barW; j++) {
 
