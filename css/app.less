@@ -1,0 +1,170 @@
+/* app css stylesheet */
+
+@mainFont: 'Galindo';
+@secondaryFont: 'Lobster';
+
+@darkBrown: #674e4d;
+@red: #c15420;
+@yellow: #ebb123;
+@blue: #96a8af;
+@cream: #fff7c9;
+@grey: #EEEEEE;
+
+@thinBorder: 1px solid @darkBrown;
+@thickBorder: 2px solid @darkBrown;
+
+
+.verticalCenter {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+.verticalBorder {
+  border-top: @thickBorder;
+  border-bottom: @thickBorder;
+}
+
+.horizontalBorder {
+  border-left: @thickBorder;
+  border-right: @thickBorder;
+}
+
+body, body a {
+  font-family: @secondaryFont;
+  color: @darkBrown;
+}
+
+h2, h2 a, .h2, .h2 a {
+  color: @yellow;
+  padding: 10px;
+}
+
+h1 {
+  font-family: @mainFont;
+  font-size: 80px;
+  color: @red;
+  padding: 10px;
+}
+
+img {
+border: @thinBorder;
+margin: 5px;
+}
+
+
+.active a {
+  background-color: @darkBrown!important;
+}
+
+.nav-pills li a {
+  border-radius: 0px!important;
+  color:@darkBrown;
+}
+
+.nav {
+  background-color: white;
+  .verticalBorder;
+}
+
+h2 a:hover {
+  color: @red;
+  text-decoration: none;
+}
+
+p, a {
+  color: @darkBrown;
+  font-family: @secondaryFont;
+}
+
+#sun {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border:@thickBorder;
+}
+
+.wrap {
+overflow: hidden;
+margin-top: 50px;
+padding-bottom: 50px;
+.verticalBorder;
+background: @grey;
+
+}
+
+.main {
+  margin-top: 50px;
+  border: 1px solid #e1e1e1;
+  background: white;
+  padding: 0px!important;
+}
+
+.view-animate-container {
+  position:relative;
+  height:350px;
+  position:relative;
+  overflow: hidden;
+  padding: 0px!important;
+  border-bottom: @thinBorder;
+
+}
+ 
+.view-animate {
+  padding:10px!important;
+}
+ 
+.view-animate.ng-enter, .view-animate.ng-leave {
+  -webkit-transition:all 0.5s;
+  transition:all 0.5s;
+ 
+  display:block;
+  width:100%;
+  .verticalCenter; 
+  padding:10px;
+}
+ 
+.view-animate.ng-enter {
+  left:100%;
+}
+.view-animate.ng-enter.ng-enter-active {
+  left:0;
+}
+.view-animate.ng-leave.ng-leave-active {
+  left:-100%;
+}
+
+.footer {
+  border-top: @thickBorder;
+}
+
+.menu {
+  list-style: none;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
