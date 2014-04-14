@@ -28,6 +28,11 @@
         "id": "hs-stanislaus", 
         "name": "Humane Society",
         "url": "http://hsstanislaus.org" 
+    },
+    {
+        "id": "extra-neato", 
+        "name": "Extra Neato",
+        "url": "http://extraneato.com" 
     }
 
 ]
