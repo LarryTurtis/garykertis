@@ -26,9 +26,8 @@ h2 a,
   color: #ebb123;
   padding: 10px;
 }
-h1 {
+.jumbotron h1 {
   font-family: 'Galindo';
-  font-size: 80px;
   color: #c15420;
   padding: 10px;
 }

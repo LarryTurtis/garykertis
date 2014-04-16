@@ -103,3 +103,7 @@ function animate(now) {
 }
 
 animate(true);
+
+window.onresize = function(event) {
+    animate(true);
+};
