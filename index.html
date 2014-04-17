@@ -6,18 +6,20 @@
   <title>Gary Kertis</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-  <link href='http://fonts.googleapis.com/css?family=Lobster|Galindo' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lobster|Galindo|Lato' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/app.css"/> 
 
 </head>
 <body>
 
   <div class="wrap container-fluid">
-  <div class="container main jumbotron">
-    <div class="row">
-      <div class="col-xs-6 col-md-9">
-      <h1>GARY KERTIS</h1>
-      <span class="h2">projects.</span>
+  <div class="container main">
+    <div class="row jumbotron">
+      <div class="col-md-9">
+        <div class="header">
+          <h1>GARY KERTIS</h1>
+          <span class="h2">projects.</span>
+        </div>
     </div>
     <div class="col-xs-6 col-md-3">
       <img class="img-responsive" src="http://www.gravatar.com/avatar/c1ed3ec726240a7c42f37f3469758a35?s=200" />
@@ -27,6 +29,7 @@
   <li ng-repeat="site in sites" ng-class="getClass('/sites/{{site.id}}')">
     <a href="#/sites/{{site.id}}" >{{site.name}}</a>
   </li>
+  <li ng-class="getClass('/goals')"><a href="#/goals">Goals</a></li>
   </ul>
 <div class="row">
   <div class="col-md-12">

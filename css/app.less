@@ -2,6 +2,7 @@
 
 @mainFont: 'Galindo';
 @secondaryFont: 'Lobster';
+@tertiaryFont: 'Lato';
 
 @darkBrown: #674e4d;
 @red: #c15420;
@@ -9,6 +10,7 @@
 @blue: #96a8af;
 @cream: #fff7c9;
 @grey: #EEEEEE;
+@green: #A7BC6E;
 
 @thinBorder: 1px solid @darkBrown;
 @thickBorder: 2px solid @darkBrown;
@@ -39,14 +41,27 @@ body, body a {
 
 h2, h2 a, .h2, .h2 a {
   color: @yellow;
-  padding: 10px;
+  font-family: @secondaryFont;
 }
 
 .jumbotron h1 {
   font-family: @mainFont;
   color: @red;
-  padding: 10px;
 }
+
+.jumbotron {
+  background: transparent;
+}
+
+.header {padding: 20px}
+.goals ul {padding: 10px;}
+.goals h3, .goals h3 a {font-family: @tertiaryFont; color: @darkBrown}
+.goals li:nth-child(odd) h3,
+.goals li:nth-child(odd) h3 a {color: @red}
+.goals li:nth-child(even) h3,
+.goals li:nth-child(odd) h3 a {color: @darkBrown}
+
+.goals h2 {margin-top: 0px}
 
 img {
 border: @thinBorder;
@@ -68,7 +83,7 @@ margin: 5px;
   .verticalBorder;
 }
 
-h2 a:hover {
+a:hover {
   color: @red;
   text-decoration: none;
 }

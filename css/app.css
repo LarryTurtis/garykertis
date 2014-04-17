@@ -24,12 +24,36 @@ h2 a,
 .h2,
 .h2 a {
   color: #ebb123;
-  padding: 10px;
+  font-family: 'Lobster';
 }
 .jumbotron h1 {
   font-family: 'Galindo';
   color: #c15420;
+}
+.jumbotron {
+  background: transparent;
+}
+.header {
+  padding: 20px;
+}
+.goals ul {
   padding: 10px;
+}
+.goals h3,
+.goals h3 a {
+  font-family: 'Lato';
+  color: #674e4d;
+}
+.goals li:nth-child(odd) h3,
+.goals li:nth-child(odd) h3 a {
+  color: #c15420;
+}
+.goals li:nth-child(even) h3,
+.goals li:nth-child(odd) h3 a {
+  color: #674e4d;
+}
+.goals h2 {
+  margin-top: 0px;
 }
 img {
   border: 1px solid #674e4d;
@@ -47,7 +71,7 @@ img {
   border-top: 2px solid #674e4d;
   border-bottom: 2px solid #674e4d;
 }
-h2 a:hover {
+a:hover {
   color: #c15420;
   text-decoration: none;
 }
