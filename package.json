@@ -20,7 +20,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "custom-server",
+    "start": "http-server",
     "test": "karma start test/karma.conf.js",
     "update-webdriver": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
