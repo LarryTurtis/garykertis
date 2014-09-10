@@ -2,7 +2,6 @@
 logs/*
 !.gitkeep
 node_modules/
-bower_components/
 sites/thumbnail.php
 tmp
 .DS_Store
