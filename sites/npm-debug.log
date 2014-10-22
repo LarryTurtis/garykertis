@@ -6,7 +6,7 @@
 5 error If you need help, you may report this *entire* log,
 5 error including the npm and node versions, at:
 5 error     <http://github.com/npm/npm/issues>
-6 error System Darwin 13.3.0
+6 error System Darwin 14.0.0
 7 error command "node" "/usr/local/bin/npm" "start"
 8 error cwd /usr/local/html/garykertis/sites
 9 error node -v v0.10.28

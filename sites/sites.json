@@ -9,7 +9,7 @@
     }, {
         "id": "pinball-12",
         "name": "Pinball 12",
-        "url": "http://s293713900.onlinehome.us/garykertis/rainbow/pinball"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/demos/pinball"
     }, {
         "id": "tagseer",
         "name": "Tag Seer",
@@ -17,15 +17,15 @@
     }, {
         "id": "biking-quebec",
         "name": "Biking Quebec",
-        "url": "http://s293713900.onlinehome.us/garykertis/wordpress"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/quebec/"
     }, {
         "id": "video-break-apart",
         "name": "Video Break Apart",
-        "url": "http://s293713900.onlinehome.us/garykertis/breaker/test2.html"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/demos/breaker/index.html"
     }, {
         "id": "parallax-collages",
         "name": "Parallax Collages",
-        "url": "http://s293713900.onlinehome.us/garykertis/storybook/"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/demos/storybook/"
     }, {
         "id": "hs-stanislaus",
         "name": "Humane Society",
