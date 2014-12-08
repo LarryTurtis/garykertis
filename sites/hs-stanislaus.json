@@ -2,6 +2,6 @@
 "id": "hs-stanislaus", 
 "imageUrl": "img/hs-stanislaus_thumb.png", 
 "name": "Humane Society of Stanislaus County", 
-"link": "http://hsstanislaus.org",
+"link": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/hsstanislaus/",
 "description": "A drupal-based website for the Humane Society of Stanislaus county."
 }

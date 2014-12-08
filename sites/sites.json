@@ -5,15 +5,11 @@
     }, {
         "id": "vivo-para",
         "name": "Vivo Para",
-        "url": "http://vivopara.com"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/vivopara/"
     }, {
         "id": "pinball-12",
         "name": "Pinball 12",
         "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/demos/pinball"
-    }, {
-        "id": "tagseer",
-        "name": "Tag Seer",
-        "url": "http://tagseer.com/backend.html"
     }, {
         "id": "biking-quebec",
         "name": "Biking Quebec",
@@ -29,11 +25,11 @@
     }, {
         "id": "hs-stanislaus",
         "name": "Humane Society",
-        "url": "http://hsstanislaus.org"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/hsstanislaus/"
     }, {
         "id": "extra-neato",
         "name": "Extra Neato",
-        "url": "http://extraneato.com"
+        "url": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/extraneato/"
     }
 
 ]
