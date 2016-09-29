@@ -20,8 +20,13 @@ li {
     list-style: none;
 }
 
+p {
+    color: rgb(68, 53, 91);
+}
+
 .title {
     font-family: 'BungeeShade', Arial, serif;
+    color: rgb(68, 53, 91);
     position: absolute;
     top: 100px;
     left: 100px;
@@ -87,7 +92,6 @@ a:hover {
     text-decoration: none;
 }
 
-p,
 a {
     color: white;
     font-family: 'Chicle';
