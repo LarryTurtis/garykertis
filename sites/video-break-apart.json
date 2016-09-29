@@ -1,7 +1,0 @@
-{
-"id": "video-break-apart", 
-"imageUrl": "img/video-break-apart_thumb.png", 
-"name": "Video Break Apart", 
-"link": "http://gary-all-1569497988.us-east-1.elb.amazonaws.com/demos/breaker/index.html",
-"description": "A video overlay that breaks apart into its companion ads."
-}

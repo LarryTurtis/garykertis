@@ -1,7 +1,0 @@
-{
-"id": "tagseer", 
-"imageUrl": "img/tagseer.png", 
-"name": "Tag Seer", 
-"link": "http://tagseer.com/backend.html",
-"description": "A socket.io based realtime-analytics platform for advertisers."
-}

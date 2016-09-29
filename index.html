@@ -1,71 +1,42 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GARY KERTIS</title>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-  <link href='http://fonts.googleapis.com/css?family=Lobster|Galindo|Lato' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/app.css"/> 
-
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
-<body>
 
-  <div class="wrap container-fluid">
-  <div class="container main">
-    <div class="row jumbotron">
-      <div class="col-md-9">
-        <div class="header">
-          <h1>GARY KERTIS</h1>
-          <span class="h2">_projects:</span>
+<body style="margin: 0px;">
+    <div class="title">Gary Kertis</div>
+    <p>Web Portfolio</p>
+    <div id="staticBackgroundCanvas" class="canvases"></div>
+    <div id="dynamicBackgroundCanvas" class="canvases"></div>
+    <div id="staticForegroundCanvas" class="canvases"></div>
+    <div id="dynamicForegroundCanvas" class="canvases"></div>
+    <div id="main" class="canvases">
+        <div id="about" class="nav nav-pills" ng-controller="siteCtrl">
+            <h2>Work</h2>
+            <ul>
+                <li><a target="_blank" href="http://mobydickmarathonnyc.org">Moby Dick Marathon NYC</a></li>
+                <li><a target="_blank" href="http://garykertis.com/vivopara">Vivo Para</a></li>
+                <li><a target="_blank" href="http://garykertis.com/demos/pinball12">Pinball</a></li>
+                <li><a target="_blank" href="http://garykertis.com/wordpress/">Quebec Bike Trip</a></li>
+                <li><a target="_blank" href="http://garykertis.com/extraneato">Extra Neato</a></li>
+                <li><a target="_blank" href="http://garykertis.com/hsstanislaus/">Humane Society</a></li>
+                <li><a target="_blank" href="http://garykertis.com/larryturtis/">Blog</a></li>
+            </ul>
         </div>
     </div>
-    <div class="col-xs-6 col-md-3">
-      <img class="img-responsive" src="http://www.gravatar.com/avatar/c1ed3ec726240a7c42f37f3469758a35?s=200" />
+    <div id="footer">
+        <ul class="menu">
+            <li><a href="https://www.facebook.com/gary.kertis" target="_blank">Facebook</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=23709354" target="_blank">LinkedIn</a></li>
+            <li><a href="https://plus.google.com/u/0/111327913229867413812/" target="_blank">Google+</a></li>
+            <li><a href="https://github.com/GaryKertis" target="_blank">GitHub</a></li>
+            <li><a href="https://twitter.com/GaryKertis" target="_blank">Twitter</a></li>
+        </ul>
     </div>
-    </div>
-  <ul class="nav nav-pills" ng-controller="siteCtrl">
-  <li ng-repeat="site in sites" ng-class="getClass('/sites/{{site.id}}')">
-    <a href="#/sites/{{site.id}}" >{{site.name}}</a>
-  </li>
-  <li ng-class="getClass('/goals')"><a href="#/goals">Goals</a></li>
-  </ul>
-<div class="row">
-  <div class="col-md-12">
-    <div class="view-animate-container">
-      <div ng-view class="view-animate" id="viewAnimate">
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-<div class="col-md-12">
-<ul class="menu pull-right">
-  <li class=""><a href="https://www.facebook.com/gary.kertis" target="_blank">Facebook</a></li>
-  <li class=""><a href="https://www.linkedin.com/profile/view?id=23709354" target="_blank">LinkedIn</a></li>
-  <li class=""><a href="https://plus.google.com/u/0/111327913229867413812/" target="_blank">Google+</a></li>
-  <li class=""><a href="https://github.com/GaryKertis" target="_blank">GitHub</a></li>
-  <li class=""><a href="https://twitter.com/GaryKertis" target="_blank">Twitter</a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-  <canvas id="sun"></canvas>
-  
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="./bower_components/angular/angular.js"></script>
-  <script src="./bower_components/angular-route/angular-route.js"></script>
-  <script src="./bower_components/angular-animate/angular-animate.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
-  <script src="js/slants.js"></script>
 </body>
+<script src="./sat.js"></script>
+<script src="./code.js"></script>
+
 </html>
