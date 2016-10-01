@@ -10,7 +10,7 @@
 
 body {
     background-color: rgb(68, 53, 91);
-    color: pink;
+    color: rgb(68, 53, 91);
     font-family: 'Chicle', Arial, serif;
     font-size: 2.5vw;
     height: 0px;
@@ -20,8 +20,8 @@ li {
     list-style: none;
 }
 
-p {
-    color: rgb(68, 53, 91);
+h2 {
+    color: pink;
 }
 
 .title {
@@ -60,6 +60,7 @@ p {
 }
 
 #main {
+    height: 200%;
     z-index: 150;
     pointer-events: all;
 }
@@ -75,7 +76,7 @@ p {
 #footer {
     position: fixed;
     font-size: 1vw;
-    top: 90%;
+    bottom: 3%;
     width: 50%;
     padding: 1%;
     height: 1%;
