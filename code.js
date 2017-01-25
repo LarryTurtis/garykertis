@@ -1,6 +1,3940 @@
-!function a(b,c,d){function e(g,h){if(!c[g]){if(!b[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);var j=new Error("Cannot find module '"+g+"'");throw j.code="MODULE_NOT_FOUND",j}var k=c[g]={exports:{}};b[g][0].call(k.exports,function(a){var c=b[g][1][a];return e(c?c:a)},k,k.exports,a,b,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b,c){"use strict";function g(){e.engine.levels.push(f.scenes.level0),e.engine.levels.push(f.scenes.level1),e.engine.levels.push(f.scenes.level2),e.engine.levels.push(f.scenes.level3),e.engine.levels.push(f.scenes.level4),e.engine.levels.push(f.scenes.level5),e.engine.levels.push(f.scenes.level6),e.engine.levels.push(f.scenes.level7),e.engine.levels.push(f.scenes.level8),e.engine.levels.push(f.scenes.level9),f.scenes.level0()}var e=(a("./trees.js"),a("./engine/engine.js")),f=a("./scenes/scenes.js");e.engine.go(g)},{"./engine/engine.js":57,"./scenes/scenes.js":89,"./trees.js":90}],2:[function(a,b,c){"use strict";function k(){g.static||requestAnimationFrame(function(){k()}),h=Date.now(),j=h-i,j>g._interval&&(i=h-j%g._interval,g.length&&!function(){g.blur||(g.dynamicBackgroundCanvas.ctx.clearRect(0,0,g.dynamicBackgroundCanvas.width,g.dynamicBackgroundCanvas.height),g.dynamicForegroundCanvas.ctx.clearRect(0,0,g.dynamicForegroundCanvas.width,g.dynamicForegroundCanvas.height));var a=0;g.dynamicShapes.forEach(function(b){if((g.static||!(b.boundary.a.x>b.canvas.width.percent(110)||b.boundary.b.x<-b.canvas.width.percent(10)))&&(g.static||!(b.boundary.a.y>b.canvas.currentY+window.innerHeight.percent(110)||b.boundary.d.y<b.canvas.currentY-b.canvas.height.percent(10)))){a++;var c=[];b.animate&&b.animate(),b.callback&&b.callback(),b.collidable&&(c=(0,e.updateCollisions)(b),c.length&&c.forEach(f.collisionHandler)),b.visible&&b.draw(b.canvas.ctx)}})}())}Object.defineProperty(c,"__esModule",{value:!0}),c.animate=void 0;var d=a("./shapesregistry.js"),e=a("./collisions/collisionDetection.js"),f=a("./collisions/collisionHandler.js"),g=new d.ShapesRegistry,h=void 0,i=Date.now(),j=void 0;c.animate=k},{"./collisions/collisionDetection.js":27,"./collisions/collisionHandler.js":28,"./shapesregistry.js":65}],3:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.Canvas=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./point.js");CanvasRenderingContext2D.prototype.curve=function(a){a&&this.bezierCurveTo(a.cp1.x,a.cp1.y,a.cp2.x,a.cp2.y,a.end.x,a.end.y)},CanvasRenderingContext2D.prototype.yLine=function(a){this.lineTo(a.x,a.y)},CanvasRenderingContext2D.prototype.yRect=function(a){this.yMove(a.a),this.yLine(a.b),this.yLine(a.c),this.yLine(a.d),this.yLine(a.a)},CanvasRenderingContext2D.prototype.yMove=function(a){this.moveTo(a.x,a.y)},CanvasRenderingContext2D.prototype.yArc=function(a){this.arc(a.x,a.y,a.r,a.sAngle,a.eAngle)};var g=function(){function a(b){f(this,a),this.element=document.createElement("canvas"),this.ctx=this.element.getContext("2d"),this._center=new e.Point(this.element.width/2,this.element.height/2),this._width=this.element.width,this._height=this.element.height,this._currentY=0,this.parentNode=document.getElementById(b)||document.body;var c=window.devicePixelRatio||1,d=this.ctx.webkitBackingStorePixelRatio||this.ctx.mozBackingStorePixelRatio||this.ctx.msBackingStorePixelRatio||this.ctx.oBackingStorePixelRatio||this.ctx.backingStorePixelRatio||1;this.pixelRatio=c/d,this.createCanvas(500,250)}return d(a,[{key:"measureText",value:function(b,c){return this.ctx.font=c,this.ctx.measureText(b).width}},{key:"createCanvas",value:function(b,c,d){try{this.parentNode.removeChild(this.element)}catch(a){}d||(d=this.pixelRatio);var e=document.createElement("canvas");e.width=b*d,e.height=c*d,e.style.width=b+"px",e.style.height=c+"px",this.ctx=e.getContext("2d"),this.element=e,this.ctx.setTransform(d,0,0,d,0,0),this.parentNode.appendChild(this.element)}},{key:"addEventListener",value:function(b,c){this.element.addEventListener(b,c,!1)}},{key:"dispatchEvent",value:function(b){this.element.dispatchEvent(b)}},{key:"getBoundingClientRect",value:function(){return this.element.getBoundingClientRect()}},{key:"scroll",value:function(b){this.currentY+b>0&&this.currentY+b<this.height&&(this.currentY+=b,this.element.style.marginTop=-this.currentY+"px")}},{key:"width",set:function(b){this._width=b,this._center=new e.Point(b/2,this._center.y),this.createCanvas(b,this.height)},get:function(){return this._width}},{key:"height",set:function(b){this._height=b,this._center=new e.Point(this._center.x,b/2),this.createCanvas(this.width,b)},get:function(){return this._height}},{key:"center",get:function(){return this._center}},{key:"currentY",get:function(){return this._currentY},set:function(b){this._currentY=b}}]),a}();c.Canvas=g},{"./point.js":64}],4:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Arrow=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../simples/simples.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,d,e,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,g));j.type="Arrow";var k=new f.simples.Rectangle(a,c+e/4,d/2,e/2,0),l=new f.simples.Triangle(a+d/4,c+e/4,d,e/2,90);return j.addShape(k),j.addShape(l),j}return j(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.fill(),this.lineColor&&c.stroke(),c.closePath()}}]),b}(g.ComplexShape);c.Arrow=k},{"../complex/complexShape.js":39,"../simples/simples.js":70}],5:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Cave=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),f=(a("../simples/simples.js"),a("../complex/complex.js")),g=a("./client.js"),i=(a("../patterns/patterns.js"),a("../complex/complexShape.js")),m=function(a){function b(a,c,d,e){j(this,b);var g=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));g.type="Cave";var h=new f.complex.Box(a-d.percent(3),c-d.percent(3),d.percent(30),e.percent(15));h.rotate(-20,h.center);var i=h.lines()[2],l=new f.complex.Box(d.percent(45),c-d.percent(5),d.percent(30),e.percent(15));l.rotate(20,l.center);var m=l.lines()[2],n=new f.complex.Box(d.percent(70),c-d.percent(5),d.percent(30),e.percent(15));n.rotate(-20,n.center);var o=n.lines()[2],p=new f.complex.Box(a,c+e.percent(10),d.percent(3),e.percent(60)),q=p.lines()[1],r=new f.complex.Box(a-d.percent(3),c+e.percent(75),d.percent(30),e.percent(15));r.rotate(20,r.center);var s=r.lines()[0],t=new f.complex.Box(a+d.percent(25),c+e.percent(75),d.percent(75),e.percent(15));t.rotate(-10,t.center);var u=t.lines()[0],v=new f.complex.Box(a+d.percent(97),c,d.percent(3),e.percent(80)),w=v.lines()[3],x=new f.complex.Box(a,c+e.percent(80),d,e.percent(20));return new f.complex.RockyBorder(h,d.percent(5),i),new f.complex.RockyBorder(l,d.percent(5),m),new f.complex.RockyBorder(n,d.percent(5),o),new f.complex.RockyBorder(p,d.percent(5),q),new f.complex.RockyBorder(r,d.percent(5),s),new f.complex.RockyBorder(t,d.percent(5),u),new f.complex.RockyBorder(v,d.percent(5),w),g.addShape(h),g.addShape(l),g.addShape(n),g.addShape(p),g.addShape(r),g.addShape(t),g.addShape(v),g.addShape(x),g.addMushroom(s),g.addMushroom(s),g.addMushroom(u),g.addMushroom(u),g.addMushroom(u),g.addMushroom(u),g.addMushroom(u),g.addMushroom(u),g}return l(b,a),d(b,[{key:"addMushroom",value:function(b){var c=trees.getDistance(b.start,b.end),d=trees.getPointOnLine(b.start,trees.random(0,c),trees.getAngle(b.start,b.end)),e=new g.client.Mushroom(d.x,d.y-this.height.percent(5),this.width.percent(trees.random(1,3)),this.height.percent(trees.random(4,5)));this.addShape(e)}}]),b}(i.ComplexShape);c.Cave=m},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../patterns/patterns.js":59,"../simples/simples.js":70,"./client.js":6}],6:[function(a,b,c){"use strict";Object.defineProperty(c,"__esModule",{value:!0}),c.client=void 0;var d=a("./arrow.js"),e=a("./doubleArrow.js"),f=a("./door.js"),g=a("./tree.js"),h=a("./wheel.js"),i=a("./waterWheel.js"),j=a("./mushroom.js"),k=a("./octopus.js"),l=a("./cloud.js"),m=a("./mountains.js"),n=a("./hotAirBalloon.js"),o=a("./stripedBalloon.js"),p=a("./cup.js"),q=a("./spray.js"),r=a("./erlenmeyer.js"),s=a("./testTube.js"),t=a("./shoreLine.js"),u=a("./lake.js"),v=a("./cave.js"),w=a("./crystal.js"),x=a("./gleamingCrystal.js"),y={Arrow:d.Arrow,DoubleArrow:e.DoubleArrow,Door:f.Door,Tree:g.Tree,Wheel:h.Wheel,WaterWheel:i.WaterWheel,Mushroom:j.Mushroom,Octopus:k.Octopus,Cloud:l.Cloud,Mountains:m.Mountains,HotAirBalloon:n.HotAirBalloon,StripedBalloon:o.StripedBalloon,Cup:p.Cup,Spray:q.Spray,Erlenmeyer:r.Erlenmeyer,TestTube:s.TestTube,ShoreLine:t.ShoreLine,Lake:u.Lake,Cave:v.Cave,Crystal:w.Crystal,GleamingCrystal:x.GleamingCrystal};c.client=y},{"./arrow.js":4,"./cave.js":5,"./cloud.js":7,"./crystal.js":8,"./cup.js":9,"./door.js":10,"./doubleArrow.js":11,"./erlenmeyer.js":12,"./gleamingCrystal.js":13,"./hotAirBalloon.js":14,"./lake.js":15,"./mountains.js":16,"./mushroom.js":17,"./octopus.js":18,"./shoreLine.js":19,"./spray.js":20,"./stripedBalloon.js":21,"./testTube.js":22,"./tree.js":23,"./waterWheel.js":24,"./wheel.js":25}],7:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Cloud=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=(a("../simples/simples.js"),a("../complex/complex.js")),h=a("../complex/complexShape.js"),l=function(a){function b(a,c,d,e,f){i(this,b);var h=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f));h.type="Cloud";for(var k=h.width/2,l=void 0,m=void 0,n=!0;n;){m=l?l.b.x-l.width/4:h.x;var o=trees.random(k/4,k),p=new g.complex.SemiCircle(m,h.d.y-o/2,o,o/2);h.addShape(p),l=p,p.b.x>h.b.x&&(p.x=h.b.x-p.width,n=!1)}return h}return k(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.closePath()}}]),b}(h.ComplexShape);c.Cloud=l},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],8:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Crystal=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../point.js"),h=a("../simples/simples.js"),i=a("../complex/complexShape.js"),m=function(a){function b(a,c,d,e){j(this,b);var f=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));f.type="Crystal";var i=trees.random(f.height.percent(10),f.height.percent(50)),l=trees.random(0,f.width/2),m=trees.random(l,f.width),n=new g.Point(f.center.x,f.y),o=new g.Point(f.center.x,f.y+f.height),p=new g.Point(f.x,f.y+i),q=new g.Point(f.x+l,f.y+i),r=new g.Point(f.x+m,f.y+i),s=new g.Point(f.x+f.width,f.y+i);return f.triangle1=new h.simples.Triangle(a,c,d,e),f.triangle2=new h.simples.Triangle(a,c,d,e),f.triangle3=new h.simples.Triangle(a,c,d,e),f.triangle4=new h.simples.Triangle(a,c,d,e),f.triangle5=new h.simples.Triangle(a,c,d,e),f.triangle6=new h.simples.Triangle(a,c,d,e),f.triangle1.points=[p,n,q],f.triangle2.points=[q,n,r],f.triangle3.points=[r,n,s],f.triangle4.points=[p,o,q],f.triangle5.points=[q,o,r],f.triangle6.points=[r,o,s],f.addShape(f.triangle1),f.addShape(f.triangle2),f.addShape(f.triangle3),f.addShape(f.triangle4),f.addShape(f.triangle5),f.addShape(f.triangle6),f}return l(b,a),d(b,[{key:"color",get:function(){return f(Object.getPrototypeOf(b.prototype),"color",this)},set:function(c){var d=this;e(Object.getPrototypeOf(b.prototype),"color",c,this),this.shape.forEach(function(a){a.color=trees.shadeColor(d.color,trees.random(-50,50)/100)})}}]),b}(i.ComplexShape);c.Crystal=m},{"../complex/complexShape.js":39,"../point.js":64,"../simples/simples.js":70}],9:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Cup=void 0;var d=a("../simples/simples.js"),e=a("../complex/containers/containerComposite.js"),i=function(a){function b(a,c,e,h,i){f(this,b);var j=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h));j.type="Cup",j.taper=i;var k=new d.simples.Trapezoid(a,c,e,h,i,i);return k.openingIndex=0,k.bottomIndex=2,j.addShape(k),j}return h(b,a),b}(e.ContainerComposite);c.Cup=i},{"../complex/containers/containerComposite.js":41,"../simples/simples.js":70}],10:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Door=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../simples/simples.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,d,e,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,g));j.type="Door";var k=new f.simples.Circle(a,c,d,d,0),l=new f.simples.Rectangle(a,c+d/2,d,e-d/2,0);return j.addShape(k),j.addShape(l),j}return j(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.fill(),this.lineColor&&c.stroke(),c.closePath()}}]),b}(g.ComplexShape);c.Door=k},{"../complex/complexShape.js":39,"../simples/simples.js":70}],11:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.DoubleArrow=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../complex/complex.js"),g=a("../simples/simples.js"),h=a("../complex/complexShape.js"),l=function(a){function b(a,c,d,e,h){i(this,b);var k=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e,h));k.type="DoubleArrow";var l=new f.complex.Arrow(a,c,d/2,e/2,0),m=new f.complex.Arrow(a+d/2,c,d/2,e/2,180),n=new g.simples.Polygon(a,c+e/2,d/2,e/2,0,9);return k.addShape(l),k.addShape(m),k.addShape(n),k}return k(b,a),d(b,[{key:"draw",value:function(c){this.rotate(1,this.center),e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.fill(),this.lineColor&&c.stroke(),c.closePath()}}]),b}(h.ComplexShape);c.DoubleArrow=l},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],12:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Erlenmeyer=void 0;var d=a("../simples/simples.js"),e=a("../complex/containers/containerComposite.js"),j=(a("../complex/hose.js"),function(a){function b(a,c,e,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,e,f));i.type="Erlenmeyer";var j=new d.simples.Rectangle(i.x+i.width/4,i.y,i.width/2,i.height/20),k=i.width/2.5,l=new d.simples.Rectangle(trees.getCenterX(k,i),i.y+j.height,k,i.height/4),m=new d.simples.Rectangle(i.x,i.y+.75*i.height,i.width,i.height/4),n=new d.simples.Trapezoid(i.x,i.y+j.height+l.height,i.width,i.height-j.height-l.height-m.height,trees.getAngle(l.d,m.a),trees.getAngle(l.d,m.a));return j.openingIndex=0,i.addShape(j),i.addShape(l),i.addShape(n),m.bottomIndex=2,i.addShape(m),i}return i(b,a),b}(e.ContainerComposite));c.Erlenmeyer=j},{"../complex/containers/containerComposite.js":41,"../complex/hose.js":48,"../simples/simples.js":70}],13:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.GleamingCrystal=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=(a("../simples/simples.js"),a("../patterns/patterns.js")),h=a("./crystal.js"),i=a("../shapesregistry.js"),m=new i.ShapesRegistry,n=function(a){function b(a,c,d,e){j(this,b);var f=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="GleamingCrystal",f}return l(b,a),d(b,[{key:"addStripes",value:function(){var b=this;this.stripeWidth&&this.stripeSpacing&&this.stripeColor&&this.stripeOrientation&&(this.stripes=g.patterns.stripes(this.triangle5,this.stripeWidth,this.stripeSpacing,this.stripeColor,this.stripeOrientation),this.stripes.forEach(function(a){var c=0;a.animate=function(){if(c<this.width.percent(200)){var b=trees.getPointOnLine(this.a,c++,trees.getAngle(this.a,this.b));a.x=b.x,a.y=b.y}else c=0}.bind(b),m.addToDynamicBackground(a)}))}},{key:"rotate",value:function(c,d){e(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.stripes.forEach(function(a){a.rotate(c,d)})}},{key:"stripeColor",get:function(){return this._stripeColor},set:function(b){this._stripeColor=b,this.addStripes()}},{key:"stripeWidth",get:function(){return this._stripeWidth},set:function(b){this._stripeWidth=b,this.addStripes()}},{key:"stripeSpacing",get:function(){return this._stripeSpacing},set:function(b){this._stripeSpacing=b,this.addStripes()}},{key:"stripeOrientation",get:function(){return this._stripeOrientation},set:function(b){this._stripeOrientation=b,this.addStripes()}}]),b}(h.Crystal);c.GleamingCrystal=n},{"../patterns/patterns.js":59,"../shapesregistry.js":65,"../simples/simples.js":70,"./crystal.js":8}],14:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.HotAirBalloon=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../simples/simples.js"),h=a("../complex/complex.js"),i=a("../complex/complexShape.js"),m=function(a){function b(a,c,d,e){j(this,b);var f=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="HotAirBalloon",f.balloon=new h.complex.Balloon(a,c,d,e),f.basket=new g.simples.Rectangle(trees.getCenterX(d.percent(15),f.balloon),c+e.percent(140),d.percent(15),e.percent(15)),f.leftString=new g.simples.Rectangle(trees.getCenterX(d.percent(15),f.balloon)+d.percent(1),c+e.percent(125),d.percent(1),e.percent(15)),f.rightString=new g.simples.Rectangle(trees.getCenterX(d.percent(15),f.balloon)+d.percent(13),c+e.percent(125),d.percent(1),e.percent(15)),f.addShape(f.balloon),f.addShape(f.leftString),f.addShape(f.basket),f.addShape(f.rightString),f}return l(b,a),d(b,[{key:"color",get:function(){return f(Object.getPrototypeOf(b.prototype),"color",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"color",c,this),this.leftString.color="black",this.rightString.color="black",this.basket.color="white"}}]),b}(i.ComplexShape);c.HotAirBalloon=m},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],15:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Lake=void 0;var d=a("../simples/simples.js"),e=a("./client.js"),f=a("../complex/complexShape.js"),j=function(a){function b(a,c,f,i){g(this,b);var j=h(this,Object.getPrototypeOf(b).call(this,a,c,f,i));return j.type="Lake",j.wedge=new d.simples.Wedge(a+f.percent(50),c,f.percent(20),f.percent(20)),j.wedge.rotate(-90,j.wedge.b),j.addShape(j.wedge),j.shoreLine1=new e.client.ShoreLine(a,c+i-f.percent(30),f.percent(70),f.percent(15)),j.addShape(j.shoreLine1),j.shoreLine2=new e.client.ShoreLine(a+f.percent(15),c+i-f.percent(15),f.percent(40),f.percent(15)),j.addShape(j.shoreLine2),j.rectangle1=new d.simples.Rectangle(a+f.percent(70),c+i-f.percent(30),f.percent(30),f.percent(15)),j.rectangle2=new d.simples.Rectangle(a+f.percent(90),c,f.percent(10),f.percent(20)),j.addShape(j.rectangle1),j.addShape(j.rectangle2),j.rectangle3=new d.simples.Rectangle(a,c+i-f.percent(15),f.percent(15),f.percent(15)),j.rectangle4=new d.simples.Rectangle(a+f.percent(55),c+i-f.percent(15),f.percent(45),f.percent(15)),j.addShape(j.rectangle3),j.addShape(j.rectangle4),j}return i(b,a),b}(f.ComplexShape);c.Lake=j},{"../complex/complexShape.js":39,"../simples/simples.js":70,"./client.js":6}],16:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Mountains=void 0;var d=a("../simples/simples.js"),f=(a("../complex/complex.js"),a("../complex/complexShape.js")),j=function(a){function b(a,c,e,f,i){g(this,b);var j=h(this,Object.getPrototypeOf(b).call(this,a,c,e,f,i));j.type="Mountains";for(var k=f,l=void 0,m=void 0,n=!0;n;){var o=Math.floor(3*Math.random())+1;m=l?l.b.x-l.width/o:j.x;var p=Math.floor(Math.random()*(k-k/10))+k/10,q=new d.simples.Triangle(m,j.d.y-p,p,p);j.addShape(q),l=q,q.b.x>j.b.x&&(q.x=j.b.x-q.width,n=!1)}return j}return i(b,a),b}(f.ComplexShape);c.Mountains=j},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],17:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Mushroom=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;
-if(void 0!==g)return g.call(d)},f=a("../simples/simples.js"),g=a("../complex/complex.js"),h=a("../complex/complexShape.js"),i=a("../patterns/patterns.js"),m=function(a){function b(a,c,d,e){j(this,b);var h=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));h.type="Mushroom";var l=new f.simples.Rectangle(h.center.x-h.width/10,c+e/4,h.width/5,.75*h.height);l.color="#F8A068";var m=new g.complex.SemiCircle(a,c,d,d/2),n=new f.simples.Circle(a,c,d,d);m.color="#AF001E";var o=new f.simples.Rectangle(a,c+d/2,d,e/8);o.color="#AF001E",h.addShape(l),h.addShape(m);for(var p=0;p<5;p++){var q=d/5,r=q/2,s=new g.complex.SemiCircle(a+p*q,o.d.y,q,r);s.rotate(180,s.center),s.color="#FFFCC4",h.addShape(s)}return h.addShape(o),i.patterns.randomSpotsOnCircle(n).forEach(function(a){a.y+a.height<o.d.y&&(a.color="#F8A068",a.collidable=!1,h.addShape(a))}),h}return l(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.fill(),this.lineColor&&c.stroke(),c.closePath()}},{key:"color",get:function(){return this._color},set:function(b){this._color=b}}]),b}(h.ComplexShape);c.Mushroom=m},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../patterns/patterns.js":59,"../simples/simples.js":70}],18:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Octopus=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../simples/simples.js"),f=a("../complex/complex.js"),g=a("../complex/complexShape.js"),k=0,l=1,m=function(a){function b(a,c,d,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,g));j.type="Octopus";var k=new e.simples.Circle(j.center.x-d/8,c,d/4,g/4),l=new e.simples.Rectangle(k.x,k.center.y,d/4,g/8);j.addShape(k),j.addShape(l);for(var m=1,n=0;n<8;n++){var o=new f.complex.Hose(l.d.x+n*l.width/8,l.d.y-l.width/8,.75*j.width,l.width/8);o.direction=m,o.type="Tentacle",j.addShape(o),o.rotate(90,o.d),m=-m}return j}return j(b,a),d(b,[{key:"animate",value:function(){this.shape.forEach(function(a){if("Tentacle"===a.type){k>30&&(l++,k=0);Math.floor(Math.random()*a.length);a.selectSection(a.shape[l]),a.sectionLength=5,a.bend(a.direction),a.selectSection(a.shape[0]),a.sectionLength=l,a.bend(-a.direction),k++}})}}]),b}(g.ComplexShape);c.Octopus=m},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],19:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.ShoreLine=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../simples/simples.js"),f=a("../complex/complex.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,d,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,g));return j.type="ShoreLine",j.water=new e.simples.Rectangle(a,c,d,g),j.water.pathOnly=!0,j.addShape(j.water),j.leftEdge=new f.complex.YinYang(a,c,g,g),j.addShape(j.leftEdge),j.rightEdge=new f.complex.YangYin(a+d-g,c,g,g),j.addShape(j.rightEdge),j}return j(b,a),d(b,[{key:"draw",value:function(b){b.save(),b.beginPath(),this.water.draw(b),b.clip(),this.leftEdge.draw(b),this.rightEdge.draw(b),b.closePath(),b.fill(),b.restore()}},{key:"waterColor",get:function(){return this.water.color},set:function(b){this.water.color=b}}]),b}(g.ComplexShape);c.ShoreLine=k},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],20:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Spray=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../simples/simples.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,d,e,f,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f,g));j.type="Spray";for(var k=0;k<g;k++)j.createParticle();return j}return j(b,a),d(b,[{key:"spray",value:function(){var b=this;this.shape.forEach(function(a){a.x+=a.xspeed,a.y+=a.yspeed,a.width>0&&(a.width-=.1,a.height-=.1),a.width<=0&&(b.removeShape(a),b.createParticle())})}},{key:"createParticle",value:function(){var b=trees.random(1,5),c=new f.simples.Circle(this.a.x,this.a.y,b,b);c.xspeed=trees.random(2,4),c.yspeed=trees.random(3,5),c.color=this.color,this.addShape(c)}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.closePath()}}]),b}(g.ComplexShape);c.Spray=k},{"../complex/complexShape.js":39,"../simples/simples.js":70}],21:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.StripedBalloon=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),f=(a("../simples/simples.js"),a("../patterns/patterns.js")),g=a("./hotAirBalloon.js"),k=function(a){function b(a,c,d,e){h(this,b);var f=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="Balloon",f}return j(b,a),d(b,[{key:"addStripes",value:function(){var b=this;this.stripeWidth&&this.stripeSpacing&&this.stripeColor&&this.stripeOrientation&&(this.stripes=f.patterns.stripes(this.balloon,this.stripeWidth,this.stripeSpacing,this.stripeColor,this.stripeOrientation),this.stripes.forEach(function(a){b.addShape(a)}))}},{key:"stripeColor",get:function(){return this._stripeColor},set:function(b){this._stripeColor=b,this.addStripes()}},{key:"stripeWidth",get:function(){return this._stripeWidth},set:function(b){this._stripeWidth=b,this.addStripes()}},{key:"stripeSpacing",get:function(){return this._stripeSpacing},set:function(b){this._stripeSpacing=b,this.addStripes()}},{key:"stripeOrientation",get:function(){return this._stripeOrientation},set:function(b){this._stripeOrientation=b,this.addStripes()}}]),b}(g.HotAirBalloon);c.StripedBalloon=k},{"../patterns/patterns.js":59,"../simples/simples.js":70,"./hotAirBalloon.js":14}],22:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.TestTube=void 0;var d=a("../simples/simples.js"),e=a("../complex/containers/containerComposite.js"),i=function(a){function b(a,c,e,h){f(this,b);var i=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h));i.type="TestTube";var j=new d.simples.Rectangle(i.x+i.width/4,i.y,i.width/2,i.height/20);j.openingIndex=0,i.addShape(j),i.lip=j;var k=i.width/2.5,l=new d.simples.Rectangle(trees.getCenterX(k,i),i.y+j.height,k,i.height-i.height/20);return l.bottomIndex=2,i.addShape(l),i}return h(b,a),b}(e.ContainerComposite);c.TestTube=i},{"../complex/containers/containerComposite.js":41,"../simples/simples.js":70}],23:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Tree=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../simples/simples.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,d,e,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,g));j.type="Tree";var k=new f.simples.Rectangle(j.center.x-j.width/8,c+e/4,j.width/4,.75*j.height,0),l=new f.simples.Triangle(a,c+e/2,d,e/4,0),m=new f.simples.Triangle(a,c+e/4,d,e/4,0),n=new f.simples.Triangle(a,c,d,e/4,0);return j.addShape(l),j.addShape(m),j.addShape(n),j.addShape(k),j}return j(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.fill(),this.lineColor&&c.stroke(),c.closePath()}}]),b}(g.ComplexShape);c.Tree=k},{"../complex/complexShape.js":39,"../simples/simples.js":70}],24:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.WaterWheel=void 0;var d=a("../simples/simples.js"),e=a("../complex/complex.js"),f=a("./client.js"),g=a("../complex/complexShape.js"),k=function(a){function b(a,c,g,j,k){h(this,b);var l=i(this,Object.getPrototypeOf(b).call(this,a,c,g,j,k));l.type="WaterWheel";var m=g.percent(3),n=new e.complex.Circle(a+g.percent(37.5),c+g.percent(37.5),g.percent(25),j.percent(25));n.color=trees.setOpacity("white",1);var o=new e.complex.Donut(a,c,g,j,m);o.color=trees.setOpacity("white",1),l.addShape(o);for(var p=0,q=["red","green","blue","yellow","black","orange","purple","white"],r=0;r<8;r++){var s=new d.simples.Rectangle(l.center.x-m/2,l.center.y,m,j/2,0);l.addShape(s),s.color=trees.setOpacity(q[r],.5),s.rotate(p,l.center),p+=45}l.addShape(n);for(var r=0;r<8;r++){var t=new f.client.Cup(a+g.percent(10),c+j.percent(1),g.percent(16),g.percent(16),70);t.thickness=g.percent(1),t.color=trees.setOpacity(q[r],.5),t.liquidColor="rgb(0,47,57)",t.pourHeight=j/2,l.addShape(t),t.rotate(p,l.center),t.rotate(-p,t.center),t.rotate(p+45,t.center),t.level=50,p+=45}return l}return j(b,a),b}(g.ComplexShape);c.WaterWheel=k},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70,"./client.js":6}],25:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Wheel=void 0;var d=a("../simples/simples.js"),e=a("../complex/complex.js"),f=a("../complex/complexShape.js"),j=function(a){function b(a,c,f,i,j){g(this,b);var k=h(this,Object.getPrototypeOf(b).call(this,a,c,f,i,j));k.type="Wheel";var l=f/30,m=new e.complex.Circle(a+f/2-f/8,c+f/2-f/8,f/4,i/4,0),n=new e.complex.Donut(a,c,f,i,0,l);k.addShape(m),k.addShape(n);for(var o=0,p=0;p<8;p++){var q=new d.simples.Rectangle(k.center.x-l/2,k.center.y,l,k.height/2,0);k.addShape(q),q.rotate(o,k.center),o+=45}return k}return i(b,a),b}(f.ComplexShape);c.Wheel=j},{"../complex/complex.js":38,"../complex/complexShape.js":39,"../simples/simples.js":70}],26:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){return a.id+"-"+b.id}Object.defineProperty(c,"__esModule",{value:!0}),c.Collision=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),g=(a("./collisionDetection.js"),function(){function a(b,c,d){f(this,a),this._resolved=!1,this._o1=b,this._o2=c,this._id=h(b,c),this._overlap=d}return d(a,[{key:"id",get:function(){return this._id},set:function(b){this._id=b}},{key:"o1",get:function(){return this._o1},set:function(b){this._o1=b}},{key:"o2",get:function(){return this._o2},set:function(b){this._o2=b}},{key:"overlap",get:function(){return this._overlap},set:function(b){this._overlap=b}},{key:"resolved",get:function(){return this._resolved},set:function(b){this._resolved=b}}]),a}());c.Collision=g},{"./collisionDetection.js":27}],27:[function(a,b,c){"use strict";function g(a,b){var d=a.createSATObject(),e=b.createSATObject(),f=void 0,g=void 0;if(d&&e)for(var h=0;h<d.length;h++)for(var i=0;i<e.length;i++){g=new SAT.Response;var j=SAT.testPolygonPolygon;d[h].r&&(j=SAT.testCirclePolygon),e[i].r&&(j=SAT.testPolygonCircle),d[h].r&&e[i].r&&(j=SAT.testCircleCircle),j(d[h],e[i],g)&&(!f||f.overlap<g.overlap)&&(f=g)}return!!f&&f.overlapV}function j(a){var b=[];return a.collidingWithPlatform=!1,h.forEach(function(c){if(a!==c&&c.collidable){var d=g(a,c);if(d){var e=i.add(a,c,d);b.push(e)}else i.remove(a,c)}}),b}Object.defineProperty(c,"__esModule",{value:!0}),c.updateCollisions=void 0;var d=a("./globalCollisionRegistry.js"),e=a("../shapesregistry.js"),h=new e.ShapesRegistry,i=new d.GlobalCollisionRegistry;c.updateCollisions=j},{"../shapesregistry.js":65,"./globalCollisionRegistry.js":29}],28:[function(a,b,c){"use strict";function d(a){if(a._o1.y<a._o2.y&&a._o1.pourComposite||"PourComposite"===a._o1.type){var b=a._o1.pourComposite||a._o1,c=b.activePour.drops.splice(0,1);if(c.length){var d=Math.abs((c[0].end.x-c[0].start.x)/10);a._o2.fill(d)}}if(a._o2.y<a._o1.y&&a._o2.pourComposite||"PourComposite"===a._o2.type){var e=a._o2.pourComposite||a._o2,f=e.activePour.drops.splice(0,1);if(f.length){var g=Math.abs((f[0].end.x-f[0].start.x)/10);a._o1.fill(g)}}a.resolved=!0}Object.defineProperty(c,"__esModule",{value:!0}),c.collisionHandler=d},{}],29:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){return a.id+"-"+b.id}Object.defineProperty(c,"__esModule",{value:!0}),c.GlobalCollisionRegistry=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./collision.js"),g=null,h=function(){function a(b){return f(this,a),g||(g=this),this._all={},g}return d(a,[{key:"forEach",value:function(b){var c=this;Object.keys(this.all).forEach(function(a){var d=c._all[a];d&&b(d)})}},{key:"add",value:function(b,c,d){var f=this._all[i(b,c)]||this._all[i(c,b)];if(!f){var g=new e.Collision(b,c,d);return this._all[g.id]=g,g}return f}},{key:"remove",value:function(b,c){delete this._all[i(b,c)],delete this._all[i(c,b)]}},{key:"all",get:function(){return this._all}}]),a}();c.GlobalCollisionRegistry=h},{"./collision.js":26}],30:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Balloon=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../simples/simples.js"),f=a("./complexShape.js"),j=function(a){function b(a,c,d,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,d,f));return i.type="Balloon",i.circle=new e.simples.Circle(a,c,d,f),i.circle.startAngle=.835,i.circle.endAngle=.165,i.trapezoid=new e.simples.Trapezoid(trees.getCenterX(d.percent(86),i.circle),c+f.percent(75),d.percent(86),f.percent(50),55),i.height=i.circle.height+i.trapezoid.height,i.circle.pathOnly=!0,i.trapezoid.pathOnly=!0,i.addShape(i.circle),i.addShape(i.trapezoid),i}return i(b,a),d(b,[{key:"draw",value:function(b){b.beginPath(),b.arc(this.circle.center.x,this.circle.center.y,this.circle.radius,this.circle.startAngle,this.circle.endAngle),b.yLine(this.trapezoid.bottomRight),b.yLine(this.trapezoid.bottomLeft),b.yLine(this.trapezoid.topLeft),b.fillStyle=this.color,b.strokeStyle=this.lineColor,this.pathOnly||b.fill(),!this.pathOnly&&this.lineColor&&b.stroke(),b.closePath()}}]),b}(f.ComplexShape);c.Balloon=j},{"../simples/simples.js":70,"./complexShape.js":39}],31:[function(a,b,c){"use strict";function e(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function f(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function g(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Border=void 0;var d=a("../../sprite.js"),h=function(a){function b(a,c,d,g){if(e(this,b),!a.addShape)throw new Error("Supplied container cannot receive a border. Most likely cause is that it is not a subclass of complexShape.");var h=trees.copyPoint(d.start),i=trees.getDistance(d.start,d.end),j=f(this,Object.getPrototypeOf(b).call(this,h.x,h.y,i,c));return j.type="Border",j}return g(b,a),b}(d.Sprite);c.Border=h},{"../../sprite.js":75}],32:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.RockyBorder=void 0;var d=a("../../simples/simples.js"),e=a("./border.js"),i=function(a){function b(a,c,e,h){f(this,b);var i=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h));i.type="RockyBorder";for(var j=Math.floor(i.width/c*2),k=trees.copyPoint(e.start),l=trees.getAngle(e.start,e.end),m=0;m<j;m++){var n=new d.simples.Polygon(k.x,k.y,c,c,trees.random(3,6));n.rotate(l-45,n.a),n.rotate(trees.random(0,180),n.center),n.color=a.color,a.addShape(n),k=trees.getPointOnLine(k,c.percent(50),l)}return i}return h(b,a),b}(e.Border);c.RockyBorder=i},{"../../simples/simples.js":70,"./border.js":31}],33:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.ScallopedBorder=void 0;var d=a("../../simples/simples.js"),e=a("./border.js"),i=function(a){function b(a,c,e,h){f(this,b);var i=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h));i.type="ScallopedBorder";for(var j=Math.floor(i.width/c),k=trees.copyPoint(e.start),l=trees.getAngle(e.start,e.end),m=0;m<j;m++){var n=new d.simples.Circle(k.x,k.y,c,c);n.rotate(l-45,n.a),n.color=a.color,n.startAngle=0,n.endAngle=1,a.addShape(n),k=trees.getPointOnLine(k,c,l)}return i}return h(b,a),b}(e.Border);c.ScallopedBorder=i},{"../../simples/simples.js":70,"./border.js":31}],34:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Box=void 0;var d=a("../simples/simples.js"),e=a("./complexShape.js"),i=function(a){function b(a,c,e,h){f(this,b);var i=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h));i.type="Box";var j=new d.simples.Rectangle(a,c,e,h);return i.addShape(j),i}return h(b,a),b}(e.ComplexShape);c.Box=i},{"../simples/simples.js":70,"./complexShape.js":39}],35:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Circle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../../simples/simples.js"),g=a("./circularShape.js"),k=function(a){function b(a,c,d,e){h(this,b);var g=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return g.type="Circle",g.topRight=new f.simples.Wedge(a+d/2,c,d/2,e/2),g.topLeft=new f.simples.Wedge(a,c,d/2,e/2,270),g.topLeft.rotate(270,g.topLeft.center),g.bottomRight=new f.simples.Wedge(a+d/2,c+e/2,d/2,e/2,90),g.bottomRight.rotate(90,g.bottomRight.center),g.bottomLeft=new f.simples.Wedge(a,c+e/2,d/2,e/2,180),g.bottomLeft.rotate(180,g.bottomLeft.center),g.addShape(g.topRight),g.addShape(g.topLeft),g.addShape(g.bottomRight),g.addShape(g.bottomLeft),g}return j(b,a),d(b,[{key:"rotate",value:function(){}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.closePath()}}]),b}(g.CircularShape);c.Circle=k},{"../../simples/simples.js":70,"./circularShape.js":36}],36:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.CircularShape=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},h=(a("../../simples/simples.js"),a("../complexShape.js")),l=function(a){function b(a,c,d,e,f){i(this,b);var g=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return g.type="CircularShape",g._radius=g.width/2,g}return k(b,a),d(b,[{key:"createSATObject",value:function(){return[new SAT.Circle(new SAT.Vector(this.center.x,this.center.y),this.radius)]}},{key:"radius",get:function(){return this._radius},set:function(b){this._radius=b}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.radius=c/2}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"height",c,this)}}]),b}(h.ComplexShape);c.CircularShape=l},{"../../simples/simples.js":70,"../complexShape.js":39}],37:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.SemiCircle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../../simples/simples.js"),g=a("./circularShape.js"),k=function(a){function b(a,c,d,e,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,g));return j.type="SemiCircle",j.right=new f.simples.Wedge(a+d/2,c,d/2,e),j.left=new f.simples.Wedge(a,c,d/2,e,270),j.left.rotate(270,j.left.center),j.addShape(j.left),j.addShape(j.right),j}return j(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.yMove(this.d),c.curve(this.left.curve),c.curve(this.right.curve),c.yLine(this.d),c.fill(),this.lineColor&&c.stroke(),c.closePath()}}]),b}(g.CircularShape);c.SemiCircle=k},{"../../simples/simples.js":70,"./circularShape.js":36}],38:[function(a,b,c){"use strict";Object.defineProperty(c,"__esModule",{value:!0}),c.complex=void 0;var d=a("./circularShapes/semiCircle.js"),e=a("./circularShapes/circle.js"),f=a("./thickShapes/macaroni.js"),g=a("./thickShapes/arch.js"),h=a("./thickShapes/donut.js"),i=a("./hose.js"),j=a("./box.js"),k=a("./balloon.js"),l=a("./yinYang.js"),m=a("./yangYin.js"),n=a("./containers/pourComposite.js"),o=a("./containers/container.js"),p=a("./borders/border.js"),q=a("./borders/rockyBorder.js"),r=a("./borders/scallopedBorder.js"),s={
-SemiCircle:d.SemiCircle,Circle:e.Circle,Macaroni:f.Macaroni,Arch:g.Arch,Donut:h.Donut,Hose:i.Hose,Box:j.Box,Balloon:k.Balloon,YinYang:l.YinYang,YangYin:m.YangYin,Container:o.Container,PourComposite:n.PourComposite,Border:p.Border,RockyBorder:q.RockyBorder,ScallopedBorder:r.ScallopedBorder};c.complex=s},{"./balloon.js":30,"./borders/border.js":31,"./borders/rockyBorder.js":32,"./borders/scallopedBorder.js":33,"./box.js":34,"./circularShapes/circle.js":35,"./circularShapes/semiCircle.js":37,"./containers/container.js":40,"./containers/pourComposite.js":47,"./hose.js":48,"./thickShapes/arch.js":49,"./thickShapes/donut.js":50,"./thickShapes/macaroni.js":51,"./yangYin.js":53,"./yinYang.js":54}],39:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.ComplexShape=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../sprite.js"),k=function(a){function b(a,c,d,e){h(this,b);var f=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="ComplexShape",f._shape=[],f}return j(b,a),d(b,[{key:"addShape",value:function(b){if(this.shape.indexOf(b)>=0)throw new Error("Attempted to add same shape twice.");b.relativeX=(b.x-this.x)/this.width,b.relativeY=(b.y-this.y)/this.height,b.relativeWidth=b.width/this.width,b.relativeHeight=b.height/this.height,this.shape.push(b)}},{key:"moveDrawOrderBack",value:function(b){this.removeShape(b);this.shape.unshift(b)}},{key:"removeShape",value:function(b){var c=this.shape.indexOf(b);c>=0&&this.shape.splice(c,1)}},{key:"animate",value:function(){this.shape&&this.shape.forEach(function(a){a.animate&&a.animate()})}},{key:"rotate",value:function(c,d){f(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.shape&&this.shape.forEach(function(a){a.rotate(c,d)})}},{key:"createSATObject",value:function(){var b=[];return this.shape.forEach(function(a){b=b.concat(a.createSATObject())}),b}},{key:"wasClicked",value:function(b,c){var d=null;return this.shape.forEach(function(a){d=d||a.wasClicked(b,c)}),d}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.visible&&a.draw(c)}),c.closePath()}},{key:"shape",get:function(){return this._shape},set:function(b){this._shape=b}},{key:"lastShape",get:function(){return this._shape[this._shape.length-1]}},{key:"firstShape",get:function(){return this._shape[0]}},{key:"pathOnly",get:function(){return f(Object.getPrototypeOf(b.prototype),"pathOnly",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"pathOnly",c,this),this.shape.forEach(function(a){a.pathOnly=c})}},{key:"color",get:function(){return f(Object.getPrototypeOf(b.prototype),"color",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"color",c,this),this.shape.forEach(function(a){a.color=c})}},{key:"lineColor",get:function(){return f(Object.getPrototypeOf(b.prototype),"lineColor",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"lineColor",c,this),this.shape.forEach(function(a){a.lineColor=c})}},{key:"collidable",get:function(){return f(Object.getPrototypeOf(b.prototype),"collidable",this)},set:function(c){if("boolean"!=typeof c)throw new Error("Property collidable expects boolean value");e(Object.getPrototypeOf(b.prototype),"collidable",c,this),this.shape.forEach(function(a){a.collidable=c})}},{key:"x",get:function(){return f(Object.getPrototypeOf(b.prototype),"x",this)},set:function(c){var d=this.x,f=c-d;e(Object.getPrototypeOf(b.prototype),"x",c,this),this.shape.forEach(function(a){a.x+=f})}},{key:"y",get:function(){return f(Object.getPrototypeOf(b.prototype),"y",this)},set:function(c){var d=this.y,f=c-d;e(Object.getPrototypeOf(b.prototype),"y",c,this),this.shape.forEach(function(a){a.y+=f})}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){var d=this.width,f=c-d;e(Object.getPrototypeOf(b.prototype),"width",c,this),this.shape.forEach(function(a){a.width=c*a.relativeWidth,a.x=a.x+f*a.relativeX})}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){var d=this.height,f=c-d;e(Object.getPrototypeOf(b.prototype),"height",c,this),this.shape.forEach(function(a){a.height=c*a.relativeHeight,a.y=a.y+f*a.relativeY})}}]),b}(g.Sprite);c.ComplexShape=k},{"../sprite.js":75}],40:[function(a,b,c){"use strict";function e(a){a.type="Container",a._overflowing=!1,a._openingIndex=a.openingIndex>=0?a.openingIndex:-1,a._bottomIndex=a.bottomIndex>=0?a.bottomIndex:-1,a._thickness=0,Object.defineProperty(a,"overflowing",{get:function(){return this._overflowing},set:function(b){this._overflowing=b}}),Object.defineProperty(a,"openingIndex",{get:function(){return this._openingIndex},set:function(b){this._openingIndex=b}}),Object.defineProperty(a,"bottomIndex",{get:function(){return this._bottomIndex},set:function(b){this._bottomIndex=b}}),Object.defineProperty(a,"innerLines",{get:function(){return this._innerLines},set:function(b){this._innerLines=b}}),a._innerLines=a.lines().map(function(a,b){return trees.copyLine(a)}),Object.defineProperty(a,"thickness",{get:function(){return this._thickness},set:function(c){var d=this._thickness;this._thickness=c;var e=this.thickness-d;trees.resizeLine(a.innerLines[0],e),trees.resizeLine(a.innerLines[2],e),a.bottomIndex>=0&&trees.moveLineVertical(a.innerLines[a.bottomIndex],-e),a.innerLines[1].start.x=a.innerLines[0].end.x,a.innerLines[1].start.y=a.innerLines[0].end.y,a.innerLines[1].end.x=a.innerLines[2].start.x,a.innerLines[1].end.y=a.innerLines[2].start.y,a.innerLines[3].start.x=a.innerLines[2].end.x,a.innerLines[3].start.y=a.innerLines[2].end.y,a.innerLines[3].end.x=a.innerLines[0].start.x,a.innerLines[3].end.y=a.innerLines[0].start.y}});var b=a.rotate;return a.rotate=function(c,d){b.call(a,c,d),a.innerLines.forEach(function(a){a.start=trees.rotatePoint(a.start,d,c),a.end=trees.rotatePoint(a.end,d,c)})},a.createSATObject=function(){var b=[],c=a.lines();return c.length&&c.forEach(function(c,d){d!==a.openingIndex&&(b=b.concat(c.createSATObject()))}),b},a}Object.defineProperty(c,"__esModule",{value:!0}),c.Container=void 0;a("./liquid.js");c.Container=e},{"./liquid.js":44}],41:[function(a,b,c){"use strict";function o(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function p(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function q(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.ContainerComposite=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../complexShape.js"),h=a("./liquid.js"),i=a("./pourComposite.js"),j=a("./meniscus.js"),k=a("./container.js"),l=a("../../line.js"),m=a("../../point.js"),n=a("./levelLine.js"),r=function(a){function b(a,c,d,e){o(this,b);var f=p(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="ContainerComposite",f._liquidColor="transparent",f._containers=[],f._liquids=[],f._levelLine=new n.LevelLine(c),f._speed=10,f._collidable=!1,f._thickness=0,f.drainVolume=.3,f}return q(b,a),d(b,[{key:"rotate",value:function(c,d){this.liquidArea;if(f(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),!this.empty&&this.liquidCenterPoint){var g=this.liquidCenterPoint;this._levelLine.rotate(c,d),this._levelLine.rotate(-c,g)}this.handleOverflow()}},{key:"addShape",value:function(c){var d=(0,k.Container)(c),e=new h.Liquid(d);e.color=this.liquidColor,e.levelLine=this._levelLine,f(Object.getPrototypeOf(b.prototype),"addShape",this).call(this,d),f(Object.getPrototypeOf(b.prototype),"addShape",this).call(this,e),this.containers.push(d),this.liquids.push(e)}},{key:"drain",value:function(b){if("number"!=typeof b||b<0)throw new Error("Tried to use drain function with invalid amount.");this.empty||(this.levelLine+=b)}},{key:"fill",value:function(b){if("number"!=typeof b||b<0)throw new Error("Tried to use drain function with invalid amount.");this.full||(this.levelLine-=b)}},{key:"startDraining",value:function(){this.draining=!0}},{key:"stopDraining",value:function(){this.draining=!1}},{key:"addMeniscus",value:function(){this.removeMeniscus(),this.meniscus=new j.Meniscus(this.overflowStart.x,this.overflowStart.y,this.pourWidth,5,this.activeOpeningEdge,this.orientation),this.meniscus.color=this.liquidColor,f(Object.getPrototypeOf(b.prototype),"addShape",this).call(this,this.meniscus)}},{key:"removeMeniscus",value:function(){this.removeShape(this.meniscus)}},{key:"handleOverflow",value:function(){this.overflowing?(this.addMeniscus(),this.startPour(),this.startDraining()):(this.removeMeniscus(),this.stopPour(),this.stopDraining())}},{key:"startPour",value:function(){var c=this.activeOpeningEdge;this.pourComposite?(this.pourComposite.width="I"===this.orientation||"IV"===this.orientation?this.meniscus.overhangWidth:-this.meniscus.overhangWidth,this.pourComposite.x=c.x,this.pourComposite.y=c.y):(this.pourComposite=new i.PourComposite(c.x,c.y,this.meniscus.overhangWidth,this.pourHeight),this.pourComposite.color=this.liquidColor,f(Object.getPrototypeOf(b.prototype),"addShape",this).call(this,this.pourComposite)),this.pourComposite.start()}},{key:"stopPour",value:function(){this.pourComposite&&this.pourComposite.pouring&&this.pourComposite.stop()}},{key:"animate",value:function(){f(Object.getPrototypeOf(b.prototype),"animate",this).call(this),this.draining&&this.drain(this.drainVolume),this.filling&&this.fill(this.drainVolume)}},{key:"createSATObject",value:function(){var b=[];return this.containers.forEach(function(a){b=b.concat(a.createSATObject())}),this.pourComposite&&(b=b.concat(this.pourComposite.createSATObject())),this.liquidTop&&(b=b.concat(this.liquidTop.createSATObject())),b}},{key:"draw",value:function(b){this.liquids.length&&this.liquids.forEach(function(a){a.draw(b)}),this.containers.length&&this.containers.forEach(function(a){a.draw(b)}),this.shape.length&&this.shape.forEach(function(a){"Container"!==a.type&&"Liquid"!==a.type&&a.draw(b)})}},{key:"x",get:function(){return f(Object.getPrototypeOf(b.prototype),"x",this)},set:function(c){var d=this.x,f=c-d;e(Object.getPrototypeOf(b.prototype),"x",c,this),this.containers.forEach(function(a){a.innerLines.forEach(function(a){a.start.x+=f,a.end.x+=f})}),this.liquids.forEach(function(a){a.lines.forEach(function(a){a.start.x+=f,a.end.x+=f})})}},{key:"y",get:function(){return f(Object.getPrototypeOf(b.prototype),"y",this)},set:function(c){var d=this.y,f=c-d;e(Object.getPrototypeOf(b.prototype),"y",c,this),this.containers.forEach(function(a){a.innerLines.forEach(function(a){a.start.y+=f,a.end.y+=f})}),this.liquids.forEach(function(a){a.lines.forEach(function(a){a.start.y+=f,a.end.y+=f})}),this.levelLine+=f}},{key:"liquidColor",get:function(){return this._liquidColor},set:function(b){this._liquidColor=b,this.liquids.forEach(function(a){a.color=b})}},{key:"level",get:function(){return(this.height-(this.levelLine-this.y))/this.height*100},set:function(b){if("number"!=typeof b||b<0||b>100)throw new Error("Level value must be a number between zero and 100.");this.levelLine=this.y+this.height*(100-b)/100}},{key:"levelLine",get:function(){return this._levelLine.y},set:function(b){this._levelLine.y=b,this.liquids.forEach(function(a){a.level()}),this.handleOverflow()}},{key:"containers",get:function(){return this._containers}},{key:"liquids",get:function(){return this._liquids}},{key:"overflowStart",get:function(){var b=null;return this.liquids.forEach(function(a){b=b||a.overflowStart}),b}},{key:"liquidTop",get:function(){var b=this,c=null,d=null,e=null;return this.liquids.forEach(function(a){a.lines.forEach(function(a){Math.abs(a.start.y-b.levelLine)<1e-4&&((!d||a.start.x<d.x)&&(d=a.start),(!e||a.start.x>e.x)&&(e=a.start)),Math.abs(a.end.y-b.levelLine)<1e-4&&((!d||a.end.x<d.x)&&(d=a.end),(!e||a.end.x>e.x)&&(e=a.end))})}),d&&e&&(c=new l.Line(d,e)),c}},{key:"liquidCenterPoint",get:function(){var b=this.liquidTop;return b?new m.Point(b.start.x+(b.end.x-b.start.x)/2,b.start.y):null}},{key:"opening",get:function(){var b=null;return this.containers.forEach(function(a){a.openingIndex>=0&&(b=a.lines()[a.openingIndex]||b)}),b}},{key:"activeOpeningEdge",get:function(){var b=this.opening;return b?b.start.y>b.end.y?b.start:b.end:b}},{key:"pourWidth",get:function(){var b=null;return this.overflowStart&&this.activeOpeningEdge&&(b=Math.abs(trees.getDistance(this.overflowStart,this.activeOpeningEdge))),b}},{key:"overflowing",get:function(){var b=!1;return this.containers.forEach(function(a){b=b||a.overflowing}),b}},{key:"full",get:function(){return this.levelLine<=this.boundary.a.y}},{key:"empty",get:function(){var b=!0;return this.liquids.forEach(function(a){b=b&&!a.lines.length}),b}},{key:"speed",get:function(){return this._speed},set:function(b){this._speed=b}},{key:"pourHeight",get:function(){return this._pourHeight},set:function(b){this._pourHeight=b}},{key:"thickness",get:function(){return this._thickness},set:function(b){this._thickness=b,this.containers.forEach(function(a){a.thickness=b}),this.liquids.forEach(function(a){a.level()})}},{key:"liquidArea",get:function(){var b=0;return this.liquids.forEach(function(a){b+=a.area}),b}},{key:"orientation",get:function(){var b=this.opening,c=null;return b&&(b.start.x<=b.end.x&&b.start.y<=b.end.y&&(c="I"),b.start.x<=b.end.x&&b.start.y>b.end.y&&(c="II"),b.start.x>b.end.x&&b.start.y>b.end.y&&(c="III"),b.start.x>b.end.x&&b.start.y<=b.end.y&&(c="IV")),c}}]),b}(g.ComplexShape);c.ContainerComposite=r},{"../../line.js":58,"../../point.js":64,"../complexShape.js":39,"./container.js":40,"./levelLine.js":43,"./liquid.js":44,"./meniscus.js":45,"./pourComposite.js":47}],42:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Drop=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../../point.js"),f=a("../../line.js"),j=function(a){function b(a,c){g(this,b);var d=new e.Point(a.x,a.y),f=new e.Point(a.x+c,a.y),i=h(this,Object.getPrototypeOf(b).call(this,d,f));return i.type="Drop",i}return i(b,a),d(b,[{key:"y",get:function(){return this.start.y},set:function(b){this.start.y=b,this.end.y=b}},{key:"x",get:function(){return this.start.x},set:function(b){var c=this.width;this.start.x=b,this.end.x=b+c}},{key:"width",get:function(){return this.end.x-this.start.x},set:function(b){this.end.x=this.start.x+b}}]),b}(f.Line);c.Drop=j},{"../../line.js":58,"../../point.js":64}],43:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.LevelLine=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../../line.js"),f=a("../../point.js"),j=-2e3,k=2e3,l=function(a){function b(a){if(g(this,b),"number"!=typeof a)throw new Error("LevelLine cannot be created without a valid y position");var c=new f.Point(j,a),d=new f.Point(k,a);return h(this,Object.getPrototypeOf(b).call(this,c,d))}return i(b,a),d(b,[{key:"rotate",value:function(b,c){this.start=trees.rotatePoint(this.start,c,b),this.end=trees.rotatePoint(this.end,c,b)}},{key:"y",get:function(){return this.start.y},set:function(b){if("number"!=typeof b)throw new Error("Invalid value supplied for LevelLine");this.start.y=b,this.end.y=b}}]),b}(e.Line);c.LevelLine=l},{"../../line.js":58,"../../point.js":64}],44:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Liquid=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../../sprite.js"),h=(a("../../line.js"),a("./levelLine.js")),l=function(a){function b(a){if(i(this,b),!a||"Container"!==a.type)throw new Error("Cannot create a liquid without a properly formed container sprite.");var c=j(this,Object.getPrototypeOf(b).call(this,a.x,a.y,a.width,a.height));return c.type="Liquid",c.container=a,c.lines=c.container.innerLines,c.overflowStart=null,c._levelLine=new h.LevelLine(a.y),c}return k(b,a),d(b,[{key:"level",value:function(){var b=this,c=null,d=null;this.lines=[],this.container.overflowing=!1,this.container.innerLines.forEach(function(a,e){var f=trees.copyLine(a),g=trees.intersection(f,b.levelLine);g.onLine1&&g.onLine2?(e===b.container.openingIndex&&(b.container.overflowing=!0,b.overflowStart=g),b.lines.push(f),c?c.x<g.x?(f.start=g,b.lines[d].end=c):(f.end=g,b.lines[d].start=c):(c=g,d=b.lines.indexOf(f))):f.start.y>b.levelLine.y&&(e===b.container.openingIndex&&(b.container.overflowing=!0,b.overflowStart=f.start.y<f.end.y?f.start:f.end),b.lines.push(f))})}},{key:"rotate",value:function(c,d){e(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.level()}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),this.lines.length&&(c.beginPath(),c.yMove(this.lines[0].start),this.lines.forEach(function(a,b){c.yLine(a.start),c.yLine(a.end)}),c.fill(),c.closePath())}},{key:"container",get:function(){return this._container},set:function(b){this._container=b}},{key:"overflowStart",get:function(){return this._overflowStart},set:function(b){this._overflowStart=b}},{key:"levelLine",get:function(){return this._levelLine},set:function(b){this._levelLine=b}},{key:"area",get:function(){return trees.polygonArea(this.lines)}}]),b}(f.Sprite);c.Liquid=l},{"../../line.js":58,"../../sprite.js":75,"./levelLine.js":43}],45:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Meniscus=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../../sprite.js"),g=a("../../curve.js"),h=a("../../point.js"),l=function(a){function b(a,c,d,e,f,k){i(this,b);var l=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e));if(!f)throw new Error("Attempted to create meniscus without openingEdgepoint");return l.type="Meniscus",l._cp1,l._cp2,l._overhang,l._openingEdge=f,l._factor=.25,l._overhangWidth=d*l._factor,"I"===k?(l._cp1=l.origin,l._cp2=new h.Point(l._openingEdge.x+l._overhangWidth,l._openingEdge.y),l._overhang=new h.Point(l._openingEdge.x+l._overhangWidth,l._openingEdge.y)):"II"===k?(l._cp1=l.origin,l._cp2=new h.Point(l._openingEdge.x-l._overhangWidth,l._openingEdge.y),l._overhang=new h.Point(l._openingEdge.x-l._overhangWidth,l._openingEdge.y)):"III"===k?(l._cp1=l.origin,l._cp2=new h.Point(l._openingEdge.x-l._overhangWidth,l._openingEdge.y),l._overhang=new h.Point(l._openingEdge.x-l._overhangWidth,l._openingEdge.y)):"IV"===k&&(l._cp1=l.origin,l._cp2=new h.Point(l._openingEdge.x+l._overhangWidth,l._openingEdge.y),l._overhang=new h.Point(l._openingEdge.x+l._overhangWidth,l._openingEdge.y)),l._curve=new g.Curve(l._cp1,l._cp2,l._overhang),l}return k(b,a),d(b,[{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.yMove(this.origin),c.curve(this._curve),c.yLine(this._openingEdge),c.yLine(this.origin),c.closePath(),c.fill()}},{key:"factor",get:function(){return this._factor},set:function(b){this._factor=b}},{key:"overhangWidth",get:function(){return this._overhangWidth},set:function(b){this._overhangWidth=b}}]),b}(f.Sprite);c.Meniscus=l},{"../../curve.js":55,"../../point.js":64,"../../sprite.js":75}],46:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.Pour=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./drop.js"),g=function(){function a(b,c){f(this,a),this.drops=[],this._width=c,this.origin=b,this.addDrop(),this.type="Pour",this.oscillateSpeed=4,this.oscillate=!0,this.oscillateInterval=c.percent(1),this.oscillateCounter=0}return d(a,[{key:"animate",value:function(){this.oscillate&&(this.oscillateCounter<this.oscillateSpeed?this.oscillateCounter++:(this.oscillateCounter=0,this.oscillateInterval*=-1))}},{key:"pour",value:function(b){var c=this;this.drops.forEach(function(a,d){a.y+=b,a.y+=b,a.y>c.endPoint&&c.removeDrop(a)})}},{key:"addDrop",value:function(){var b=new e.Drop(this.origin,this.width);this.oscillate&&(b.x=this.origin.x+this.oscillateInterval),this.drops.push(b)}},{key:"removeDrop",value:function(b){var c=this.drops.indexOf(b);c>=0&&this.drops.splice(c,1)}},{key:"createSATObject",value:function(){if(this.drops.length){var b=this.drops[0];return[new SAT.Polygon(new SAT.Vector(0,0),[new SAT.Vector(b.end.x,b.end.y),new SAT.Vector(b.end.x,b.end.y-100),new SAT.Vector(b.start.x,b.end.y-100),new SAT.Vector(b.start.x,b.start.y)])]}return[]}},{key:"draw",value:function(b){this.drops.length&&(b.beginPath(),b.fillStyle=this.color,b.yMove(this.drops[0].start),this.drops.forEach(function(a){b.yLine(a.start)}),this.drops.reverse(),b.yLine(this.drops[0].end),this.drops.forEach(function(a){b.yLine(a.end)}),this.drops.reverse(),b.yLine(this.drops[0].start),b.fill(),b.closePath())}},{key:"width",get:function(){return this._width},set:function(b){this._width=b}}]),a}();c.Pour=g},{"./drop.js":42}],47:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.PourComposite=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../complexShape.js"),h=a("./pour.js"),l=6,m=function(a){function b(a,c,d,e){i(this,b);var f=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="PourComposite",f.pours=[],f._pourSpeed=l,f._pouring=!1,f}return k(b,a),d(b,[{key:"pour",value:function(){var b=this;this.pours.length&&this.pours.forEach(function(a){a.pour(b.pourSpeed)}),this.pouring&&this.activePour.addDrop()}},{key:"addPour",value:function(){var b=new h.Pour(this.origin,this.width);this.pours.push(b),b.endPoint=this.y+this.height}},{key:"animate",value:function(){(this.pouring||this.finishing)&&this.pour(),!this.pouring&&this.finishing&&(this.activePour.drops.length||(this.finishing=!1)),this.pours.forEach(function(a){a.animate&&a.animate()})}},{key:"start",value:function(){this.pouring||(this.addPour(),this.pouring=!0)}},{key:"stop",value:function(){this.pouring=!1,this.finishing=!0}},{key:"createSATObject",value:function(){var b=[];return this.pours.forEach(function(a){b=b.concat(a.createSATObject())}),b}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),this.pours.length&&this.pours.forEach(function(a){a.draw(c)})}},{key:"x",get:function(){return f(Object.getPrototypeOf(b.prototype),"x",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"x",c,this),this.activePour.origin.x=c}},{key:"y",get:function(){return f(Object.getPrototypeOf(b.prototype),"y",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"y",c,this),this.activePour.origin.y=c}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.activePour.width=c}},{key:"pouring",get:function(){return this._pouring},set:function(b){this._pouring=b}},{key:"pourSpeed",get:function(){return this._pourSpeed},set:function(b){this._pourSpeed=b}},{key:"activePour",get:function(){return this.pours.length?this.pours[this.pours.length-1]:null}}]),b}(g.ComplexShape);c.PourComposite=m},{"../complexShape.js":39,"./pour.js":46}],48:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Hose=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../point.js"),g=a("../simples/simples.js"),h=a("./complexShape.js"),l=function(a){function b(a,c,d,e){i(this,b);var f=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e));f.type="Hose",f.sectionAngle=0,f.sectionLength=5,f.sectionColor="black",f.fullSectionColor="orange",f.length=Math.floor(d/e),f.fullCounter=0;for(var h=0;h<f.length;h++){var k=new g.simples.Rectangle(a+h*e,c,e,e);f.addShape(k)}return f}return k(b,a),d(b,[{key:"addLink",value:function(){var b=this.shape[this.shape.length-1],c=new g.simples.Rectangle(b.b.x,b.b.y,this.height,this.height),d=trees.getAngle(b.a,b.b);c.rotate(d,b.b),this.addShape(c)}},{key:"selectSection",value:function(b){
-var c=this;this.shape.forEach(function(a){a.color=c.color,a.selectedSection=!1});var d=this.shape.indexOf(b);d>this.shape.length-this.sectionLength&&(d=this.shape.length-this.sectionLength);var e=this.shape.slice(d,d+this.sectionLength);e.length&&e.forEach(function(a){a.selectedSection=!0})}},{key:"fill",value:function(b){this.empty=!1;var c=this.shape[this.fullCounter];c.isFull=!0,c.color=this.fullSectionColor,this.fullCounter===this.shape.length-1?this.full=!0:(this.full=!1,this.fullCounter+=b)}},{key:"drain",value:function(b){this.full=!1;for(var c=0;c<this.shape.length;c++){var d=this.shape[c];if(d.isFull){d.isFull=!1,d.color=this.color;break}}0===this.fullCounter?this.empty=!0:(this.empty=!1,this.fullCounter-=b)}},{key:"bend",value:function(b){var c=this,d=[],e=0;this.sectionAngle+=b,this.shape.forEach(function(a){a.selectedSection&&(d.push(a),e=c.shape.indexOf(a)+1)});var f=b/d.length,g=0;d.length&&!function(){d.forEach(function(a,b){a.rotate(g,a.d),b>0&&(a.x=d[b-1].b.x,a.y=d[b-1].b.y),g+=f});var a=c.shape.slice(e);a.forEach(function(c,e){c.rotate(b,d[0].origin),e>0?(c.x=a[e-1].b.x,c.y=a[e-1].b.y):(c.x=d[d.length-1].b.x,c.y=d[d.length-1].b.y)}),c._updateBoundaries()}()}},{key:"_updateBoundaries",value:function(){e(Object.getPrototypeOf(b.prototype),"_updateBoundaries",this).call(this);var c=void 0,d=void 0,g=void 0,h=void 0;this.shape&&this.shape.length>0&&(this.shape.forEach(function(a){(!c||a.a.x<c.a.x)&&(c=a),(!g||a.a.y<g.a.y)&&(g=a),(!d||a.c.x>d.c.x)&&(d=a),(!h||a.c.y>h.c.y)&&(h=a)}),this.boundary.a=new f.Point(c.a.x,g.a.y),this.boundary.b=new f.Point(d.c.x,g.a.y),this.boundary.c=new f.Point(d.c.x,h.c.y),this.boundary.d=new f.Point(c.a.x,h.c.y))}},{key:"draw",value:function(b){b.fillStyle=this.fullSectionColor,this.drawHose(b,this.fullSection),b.fillStyle=this.color,this.drawHose(b,this.shape),b.fillStyle=this.sectionColor,this.drawHose(b,this.selectedSection)}},{key:"drawHose",value:function(b,c){c.length&&(b.beginPath(),b.yMove(c[0].a),c.forEach(function(a){b.yLine(a.a),b.yLine(a.b)}),c.reverse(),b.yLine(c[0].c),c.forEach(function(a){b.yLine(a.c),b.yLine(a.d)}),c.reverse(),b.yLine(c[0].a),b.fill(),this.lineColor&&b.stroke(),b.closePath())}},{key:"full",get:function(){return this._full},set:function(b){this._full=b}},{key:"empty",get:function(){return this._empty},set:function(b){this._empty=b}},{key:"fullSection",get:function(){var b=[];return this.shape.forEach(function(a){a.isFull&&b.push(a)}),b}},{key:"selectedSection",get:function(){var b=[];return this.shape.forEach(function(a){a.selectedSection&&b.push(a)}),b}},{key:"tip",get:function(){return this.shape[this.shape.length-1].center}}]),b}(h.ComplexShape);c.Hose=l},{"../point.js":64,"../simples/simples.js":70,"./complexShape.js":39}],49:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function g(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function h(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Arch=void 0;var d=a("../complex.js"),e=a("./thickShape.js"),i=function(a){function b(a,c,e,h,i){f(this,b);var j=g(this,Object.getPrototypeOf(b).call(this,a,c,e,h,i));return j.type="Arch",j.right=new d.complex.Macaroni(a+e/2,c,e/2,h,i),j.left=new d.complex.Macaroni(a,c,e/2,h,i),j.left.rotate(270,j.left.center),j.addShape(j.right),j.addShape(j.left),j}return h(b,a),b}(e.ThickShape);c.Arch=i},{"../complex.js":38,"./thickShape.js":52}],50:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Donut=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../complex.js"),g=a("./thickShape.js"),k=function(a){function b(a,c,d,e,g){h(this,b);var j=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,g));j.type="Donut";var k=new f.complex.Arch(a,c,d,e/2,g),l=new f.complex.Arch(a,c+e/2,d,e/2,g);return l.rotate(180,l.center),j.addShape(k),j.addShape(l),j}return j(b,a),d(b,[{key:"rotate",value:function(){}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),this.shape.forEach(function(a){a.draw(c)}),c.closePath()}}]),b}(g.ThickShape);c.Donut=k},{"../complex.js":38,"./thickShape.js":52}],51:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Macaroni=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../../simples/wedge.js"),h=a("./thickShape.js"),l=function(a){function b(a,c,d,e,f){i(this,b);var h=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f));return h.type="Macaroni",h.outer=new g.Wedge(a,c,d,e),h.inner=new g.Wedge(a,c+f,d-f,e-f),h.addShape(h.inner),h.addShape(h.outer),h}return k(b,a),d(b,[{key:"draw",value:function(b){b.beginPath(),b.yMove(this.a),b.curve(this.outer.curve),b.yLine(this.inner.c),b.curve(this.inner.getReverseCurve()),b.yLine(this.a),b.closePath(),b.fill(),this.lineColor&&b.stroke()}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){var d=this.width;e(Object.getPrototypeOf(b.prototype),"width",c,this);var f=this.width-d;this.thickness=this.thickness+f*this.relativeThickness,this.inner.y=trees.getPointOnLine(this.outer.origin,this.thickness,trees.getAngle(this.a,this.d)).y,this.inner.x=trees.getPointOnLine(this.outer.origin,this.thickness,trees.getAngle(this.a,this.d)).x}}]),b}(h.ThickShape);c.Macaroni=l},{"../../simples/wedge.js":74,"./thickShape.js":52}],52:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.ThickShape=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../circularShapes/circularShape.js"),j=function(a){function b(a,c,d,e,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return i.type="ThickShape",i._thickness=f||1,i}return i(b,a),d(b,[{key:"addShape",value:function(c){e(Object.getPrototypeOf(b.prototype),"addShape",this).call(this,c),this.relativeThickness=this.thickness/this.width}},{key:"thickness",get:function(){return this._thickness},set:function(b){this._thickness=b}}]),b}(f.CircularShape);c.ThickShape=j},{"../circularShapes/circularShape.js":36}],53:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.YangYin=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../simples/simples.js"),f=a("./complexShape.js"),j=function(a){function b(a,c,d,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,d,f));return i.type="YangYin",i.topWedge=new e.simples.Wedge(a+d.percent(50),c,d.percent(50),d.percent(50)),i.topWedge.rotate(-90,i.topWedge.center),i.bottomWedge=new e.simples.Wedge(a,c+d.percent(50),d.percent(50),d.percent(50)),i.bottomWedge.rotate(90,i.bottomWedge.center),i.addShape(i.topWedge),i.addShape(i.bottomWedge),i}return i(b,a),d(b,[{key:"draw",value:function(b){b.beginPath(),b.yMove(this.topWedge.origin),b.curve(this.topWedge.curve),b.yLine(this.c),b.yLine(this.d),b.bezierCurveTo(this.bottomWedge.cp2.x,this.bottomWedge.cp2.y,this.bottomWedge.cp1.x,this.bottomWedge.cp1.y,this.topWedge.a.x,this.topWedge.a.y),b.fillStyle=this.color,b.fill(),this.lineColor&&b.stroke(),b.closePath()}}]),b}(f.ComplexShape);c.YangYin=j},{"../simples/simples.js":70,"./complexShape.js":39}],54:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.YinYang=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("../simples/simples.js"),f=a("./complexShape.js"),j=function(a){function b(a,c,d,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,d,f));return i.type="YinYang",i.topWedge=new e.simples.Wedge(a,c,d.percent(50),d.percent(50)),i.bottomWedge=new e.simples.Wedge(a+d.percent(50),c+d.percent(50),d.percent(50),d.percent(50)),i.bottomWedge.rotate(180,i.bottomWedge.center),i.addShape(i.topWedge),i.addShape(i.bottomWedge),i}return i(b,a),d(b,[{key:"draw",value:function(b){b.beginPath(),b.yMove(this.topWedge.origin),b.curve(this.topWedge.curve),b.bezierCurveTo(this.bottomWedge.cp2.x,this.bottomWedge.cp2.y,this.bottomWedge.cp1.x,this.bottomWedge.cp1.y,this.c.x,this.c.y),b.yLine(this.d),b.fillStyle=this.color,b.fill(),this.lineColor&&b.stroke(),b.closePath()}}]),b}(f.ComplexShape);c.YinYang=j},{"../simples/simples.js":70,"./complexShape.js":39}],55:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.Curve=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),g=(a("./point.js"),function(){function a(b,c,d){f(this,a),this._cp1=b,this._cp2=c,this._end=d,this._points=[this._cp1,this._cp2,this._end]}return d(a,[{key:"points",get:function(){return this._points},set:function(b){this._points=b}},{key:"cp1",get:function(){return this._cp1},set:function(b){this._cp1=b}},{key:"cp2",get:function(){return this._cp2},set:function(b){this._cp2=b}},{key:"end",get:function(){return this._end},set:function(b){this._end=b}}]),a}());c.Curve=g},{"./point.js":64}],56:[function(a,b,c){"use strict";function f(){requestAnimationFrame(function(){e.length&&(e.blur||(e.staticBackgroundCanvas.ctx.clearRect(0,0,e.staticBackgroundCanvas.width,e.staticBackgroundCanvas.height),e.staticForegroundCanvas.ctx.clearRect(0,0,e.staticForegroundCanvas.width,e.staticForegroundCanvas.height)),e.staticShapes.forEach(function(a){a.visible&&a.draw(a.canvas.ctx)}))})}Object.defineProperty(c,"__esModule",{value:!0}),c.drawStaticShapes=void 0;var d=a("./shapesregistry.js"),e=new d.ShapesRegistry;c.drawStaticShapes=f},{"./shapesregistry.js":65}],57:[function(a,b,c){"use strict";function q(a){n.maxShapes=1e4,n.allCanvases.forEach(function(a){a.width=window.innerWidth,a.height=2.5*window.innerWidth}),document.body.style.height=2.5*window.innerWidth+"px",document.getElementById("main").style.height=2.5*window.innerWidth+"px",window.addEventListener("load",function(){m.scrollEvents.initialize(),a(),(0,f.drawStaticShapes)(),(0,e.animate)()},!1)}Object.defineProperty(c,"__esModule",{value:!0}),c.engine=void 0;var d=a("./shapesregistry.js"),e=a("./animate.js"),f=a("./drawStaticShapes.js"),g=a("./simples/simples.js"),h=a("./complex/complex.js"),i=a("./client/client.js"),j=a("./patterns/patterns.js"),m=(a("./userInput/mouseEvents.js"),a("./userInput/keyboardEvents.js"),a("./userInput/scrollEvents.js")),n=new d.ShapesRegistry,p={patterns:j.patterns,shapesRegistry:n,drawStaticShapes:f.drawStaticShapes,simples:g.simples,complex:h.complex,client:i.client,go:q,levels:[]};c.engine=p},{"./animate.js":2,"./client/client.js":6,"./complex/complex.js":38,"./drawStaticShapes.js":56,"./patterns/patterns.js":59,"./shapesregistry.js":65,"./simples/simples.js":70,"./userInput/keyboardEvents.js":76,"./userInput/mouseEvents.js":77,"./userInput/scrollEvents.js":78}],58:[function(a,b,c){"use strict";function e(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0});var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),f=function(){function a(b,c){e(this,a),this._start=b,this._end=c}return d(a,[{key:"createSATObject",value:function(){return[new SAT.Polygon(new SAT.Vector(0,0),[new SAT.Vector(this.end.x,this.end.y),new SAT.Vector(this.start.x,this.start.y)])]}},{key:"start",get:function(){return this._start},set:function(b){this._start=b}},{key:"end",get:function(){return this._end},set:function(b){this._end=b}}]),a}();c.Line=f},{}],59:[function(a,b,c){"use strict";Object.defineProperty(c,"__esModule",{value:!0}),c.patterns=void 0;var d=a("./randomSpotsOnCircle.js"),e=a("./polkaDots.js"),f=a("./polkaTrapezoids.js"),g=a("./stripes.js"),h={randomSpotsOnCircle:d.randomSpotsOnCircle,polkaDots:e.polkaDots,polkaTrapezoids:f.polkaTrapezoids,stripes:g.stripes};c.patterns=h},{"./polkaDots.js":60,"./polkaTrapezoids.js":61,"./randomSpotsOnCircle.js":62,"./stripes.js":63}],60:[function(a,b,c){"use strict";function d(a,b,c,d,e,f){for(var g=0;g<c;g++){var h=trees.getPointOnLine(a.a,trees.random(0,a.width),trees.getAngle(a.a,a.b)),i=trees.getPointOnLine(h,trees.random(0,a.height),trees.getAngle(a.a,a.d)),j=i.x,k=i.y,l=trees.random(d,e),m=new b(j,k,l,l);m.color=f,a.addShape(m)}}Object.defineProperty(c,"__esModule",{value:!0}),c.polkaDots=d},{}],61:[function(a,b,c){"use strict";function e(a,b,c,e,f){for(var g=0;g<b;g++){var h=trees.getPointOnLine(a.a,trees.random(0,a.width),trees.getAngle(a.a,a.b)),i=trees.getPointOnLine(h,trees.random(0,a.height),trees.getAngle(a.a,a.d)),j=i.x,k=i.y,l=trees.random(c,e),m=new d.Trapezoid(j,k,l,l,trees.random(85,105),trees.random(85,105));m.color=f,a.addShape(m)}}Object.defineProperty(c,"__esModule",{value:!0}),c.polkaTrapezoids=void 0;var d=a("../simples/trapezoid.js");c.polkaTrapezoids=e},{"../simples/trapezoid.js":72}],62:[function(a,b,c){"use strict";function e(a){for(var b=[],c=function(e){var h=g(a.center,a.radius),i=f(h,a),j=new d.simples.Circle(h.x,h.y,i,i),k=!0;b.forEach(function(a){var b=j.center.x-j.radius,c=j.center.x+j.radius,d=j.center.y-j.radius,e=j.center.y+j.radius,f=a.center.x-a.radius,g=a.center.x+a.radius,h=a.center.y-a.radius,i=a.center.y+a.radius;b<g&&c>f&&d<i&&e>h&&(k=!1)}),k&&b.push(j)},e=0;e<20;e++)c(e);return b}function f(a,b){var c=trees.getAngle(b.center,a),d=trees.getPointOnLine(b.center,b.radius,c),e=trees.getDistance(a,d)/2,f=b.radius/6>e?e:b.radius/6;return Math.floor(Math.random()*(e-f))+f}function g(a,b){var c=2*Math.PI*Math.random(),d=Math.sqrt(Math.random()),e=b*d*Math.cos(c)+a.x,f=b*d*Math.sin(c)+a.y;return{x:e,y:f}}Object.defineProperty(c,"__esModule",{value:!0}),c.randomSpotsOnCircle=void 0;var d=a("../simples/simples.js");c.randomSpotsOnCircle=e},{"../simples/simples.js":70}],63:[function(a,b,c){"use strict";function f(a,b,c,e,f){var g=[];if(f&&"vertical"!==f){if("horizontal"===f)for(var l=a.height/(b+c),m=a.y,n=function(h){var i=new d.simples.Rectangle(a.x,m,a.width,b);i.color=e[h%e.length],i.draw=function(b){b.save(),b.beginPath(),a.pathOnly=!0,a.draw(b),a.pathOnly=!1,b.clip(),b.closePath(),b.beginPath();var c={a:this.a,b:this.b,c:this.c,d:this.d};b.yMove(this.a),b.yRect(c),b.fillStyle=e[h%e.length],b.fill(),b.closePath(),b.restore()},g.push(i),m+=b+c},o=0;o<l;o++)n(o);else if("diagonal"===f)for(var p=a.height/(b+c)*2,q=a.y,r=function(h){var i=new d.simples.Rectangle(a.x-a.width/2,q-a.width/2,2*a.width,b);i.rotate(-45,i.center),i.color=e[h%e.length],i.draw=function(b){b.save(),b.beginPath(),a.pathOnly=!0,a.draw(b),a.pathOnly=!1,b.clip(),b.closePath(),b.beginPath();var c={a:this.a,b:this.b,c:this.c,d:this.d};b.yMove(this.a),b.yRect(c),b.fillStyle=e[h%e.length],b.fill(),b.closePath(),b.restore()},g.push(i),q+=b+c},s=0;s<p;s++)r(s)}else for(var h=a.width/(b+c),i=a.x,j=function(h){var j=new d.simples.Rectangle(i,a.y,b,a.height);j.color=e[h%e.length],j.draw=function(b){b.save(),b.beginPath(),a.pathOnly=!0,a.draw(b),a.pathOnly=!1,b.clip(),b.closePath(),b.beginPath();var c={a:this.a,b:this.b,c:this.c,d:this.d};b.yMove(this.a),b.yRect(c),b.fillStyle=e[h%e.length],b.fill(),b.closePath(),b.restore()},g.push(j),i+=b+c},k=0;k<h;k++)j(k);return g}Object.defineProperty(c,"__esModule",{value:!0}),c.stripes=void 0;var d=a("../simples/simples.js");a("../complex/complex.js");c.stripes=f},{"../complex/complex.js":38,"../simples/simples.js":70}],64:[function(a,b,c){"use strict";function e(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0});var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),f=function(){function a(b,c){e(this,a),this._x=b,this._y=c}return d(a,[{key:"x",get:function(){return this._x},set:function(b){this._x=b}},{key:"y",get:function(){return this._y},set:function(b){this._y=b}}]),a}();c.Point=f},{}],65:[function(a,b,c){"use strict";function f(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.ShapesRegistry=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./canvas.js"),g=null,h=function(){function a(){return f(this,a),g||(g=this,this._shapes={},this._dynamicShapes=[],this._staticShapes=[],this._shapeId=0,this._maxShapes=1e6,this._fps=30,this._interval=1e3/this._fps,this.blur=!1,this._staticBackgroundCanvas=new e.Canvas("staticBackgroundCanvas"),this._staticForegroundCanvas=new e.Canvas("staticForegroundCanvas"),this._dynamicBackgroundCanvas=new e.Canvas("dynamicBackgroundCanvas"),this._dynamicForegroundCanvas=new e.Canvas("dynamicForegroundCanvas"),this.static="static"===document.URL.split("?")[1]),g}return d(a,[{key:"addToStaticBackground",value:function(b){var c=this;this.add(b),Array.isArray(b)?b.forEach(function(a){return c.staticShapes.push(a)}):this.staticShapes.push(b),b.canvas=this.staticBackgroundCanvas}},{key:"addToStaticForeground",value:function(b){var c=this;this.add(b),Array.isArray(b)?b.forEach(function(a){return c.staticShapes.push(a)}):this.staticShapes.push(b),b.canvas=this.staticForegroundCanvas}},{key:"addToDynamicBackground",value:function(b){var c=this;this.add(b),Array.isArray(b)?b.forEach(function(a){return c.dynamicShapes.push(a)}):this.dynamicShapes.push(b),b.canvas=this.dynamicBackgroundCanvas}},{key:"addToDynamicForeground",value:function(b){var c=this;this.add(b),Array.isArray(b)?b.forEach(function(a){return c.dynamicShapes.push(a)}):this.dynamicShapes.push(b),b.canvas=this.dynamicForegroundCanvas}},{key:"forEach",value:function(b){var c=this;Object.keys(this.shapes).forEach(function(a){var d=c.shapes[a];d&&b(d)})}},{key:"add",value:function(b){function d(a){a.id=this.shapeId,this.shapeId++,this.length<this.maxShapes&&(this._shapes[a.id]=a),a.canvas||(a.canvas=this.staticBackgroundCanvas)}var c=this;Array.isArray(b)?b.forEach(function(a){d.call(c,a)}):d.call(this,b)}},{key:"remove",value:function(b){var c=this;setTimeout(function(){delete c._shapes[b.id]},0)}},{key:"reset",value:function(){this.shapeId=0,this.shapes={}}},{key:"staticBackgroundCanvas",get:function(){return this._staticBackgroundCanvas},set:function(b){this._staticBackgroundCanvas=b}},{key:"dynamicBackgroundCanvas",get:function(){return this._dynamicBackgroundCanvas},set:function(b){this._dynamicBackgroundCanvas=b}},{key:"staticForegroundCanvas",get:function(){return this._staticForegroundCanvas},set:function(b){this._staticForegroundCanvas=b}},{key:"dynamicForegroundCanvas",get:function(){return this._dynamicForegroundCanvas},set:function(b){this._dynamicBackgroundCanvas=dynamicBackgroundCanvas}},{key:"allCanvases",get:function(){return[this.staticBackgroundCanvas,this.dynamicBackgroundCanvas,this.staticForegroundCanvas,this.dynamicForegroundCanvas]}},{key:"shapes",get:function(){return this._shapes},set:function(b){this._shapes=b}},{key:"dynamicShapes",get:function(){return this._dynamicShapes},set:function(b){this._dynamicShapes=b}},{key:"staticShapes",get:function(){return this._staticShapes},set:function(b){this._staticShapes=b}},{key:"shapeId",get:function(){return this._shapeId},set:function(b){this._shapeId=b}},{key:"maxShapes",get:function(){return this._maxShapes},set:function(b){this._maxShapes=b}},{key:"length",get:function(){return Object.keys(this.shapes).length}}]),a}();c.ShapesRegistry=h},{"./canvas.js":3}],66:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Circle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../sprite.js"),k=function(a){function b(a,c,d,e){h(this,b);var f=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return f.type="Circle",f._radius=d/2,f.startAngle=0,f.endAngle=2,f}return j(b,a),d(b,[{key:"createSATObject",value:function(){return[new SAT.Circle(new SAT.Vector(this.center.x,this.center.y),this.width/2)]}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.arc(this.center.x,this.center.y,this.radius,this.startAngle,this.endAngle),this.pathOnly||c.fill(),!this.pathOnly&&this.lineColor&&c.stroke(),c.closePath()}},{key:"radius",get:function(){return this._radius},set:function(b){this._radius=b}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.radius=c/2}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"height",c,this)}},{key:"startAngle",get:function(){return this._startAngle},set:function(b){this._startAngle=b*Math.PI}},{key:"endAngle",get:function(){return this._endAngle},set:function(b){this._endAngle=b*Math.PI}}]),b}(g.Sprite);c.Circle=k},{"../sprite.js":75}],67:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Polygon=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../sprite.js"),h=a("../point.js"),l=function(a){function b(a,c,d,e,f){i(this,b);var g=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e));return g.type="Polygon",g._sides=f,g._points=[],g._radius=g.width/2,g.updatePolygon(),g}return k(b,a),d(b,[{key:"rotate",value:function(c,d){f(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.points=this.points.map(function(a){return trees.rotatePoint(a,d,c)})}},{key:"_updatePoints",value:function(){var c=this.origin;f(Object.getPrototypeOf(b.prototype),"_updatePoints",this).call(this),this.points||this.updatePolygon();var d=this.origin.x-c.x,e=this.origin.y-c.y;this.points=this.points.map(function(a){return new h.Point(a.x+d,a.y+e)})}},{key:"updatePolygon",value:function(){this._points=[];for(var b=trees.getPointOnLine(this.a,this.width/2,trees.getAngle(this.a,this.b)),c=Math.acos((b.x-this.center.x)/this.radius),d=0;d<this.sides;d++){var e=this.center.x+this.radius*Math.cos(c+2*Math.PI*d/this.sides),f=this.center.y+this.radius*Math.sin(c+2*Math.PI*d/this.sides);this._points[d]=new h.Point(e,f)}}},{key:"createSATObject",value:function(){var b=this,c=[];return this.points.forEach(function(a){c.push(new SAT.Vector(a.x-b.x,a.y-b.y))}),[new SAT.Polygon(new SAT.Vector(this.x,this.y),c)]}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c);({a:this.a,b:this.b,c:this.c,d:this.d});this.points.length&&(c.beginPath(),c.yMove(this.points[0]),this.points.forEach(function(a,b){c.yLine(a)}),c.yLine(this.points[0]),this.lineColor&&c.stroke(),c.closePath(),c.fill())}},{key:"sides",get:function(){return this._sides},set:function(b){this._sides=b,this.updatePolygon()}},{key:"points",get:function(){return this._points},set:function(b){this._points=b}},{key:"radius",get:function(){return this._radius},set:function(b){this._radius=b}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this._radius=c/2,this.updatePolygon()}}]),b}(g.Sprite);c.Polygon=l},{"../point.js":64,"../sprite.js":75}],68:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function h(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function i(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Rectangle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){
-var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../sprite.js"),j=function(a){function b(a,c,d,e,f){g(this,b);var i=h(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f));return i.type="Rectangle",i}return i(b,a),d(b,[{key:"createSATObject",value:function(){return[new SAT.Polygon(new SAT.Vector(this.x,this.y),[new SAT.Vector(this.a.x-this.x,this.a.y-this.y),new SAT.Vector(this.b.x-this.x,this.b.y-this.y),new SAT.Vector(this.c.x-this.x,this.c.y-this.y),new SAT.Vector(this.d.x-this.x,this.d.y-this.y)])]}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c);var d={a:this.a,b:this.b,c:this.c,d:this.d};c.beginPath(),c.yMove(this.a),c.yRect(d),this.pathOnly||c.fill(),!this.pathOnly&&this.lineColor&&c.stroke(),c.closePath()}}]),b}(f.Sprite);c.Rectangle=j},{"../sprite.js":75}],69:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.SemiCircle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../sprite.js"),k=function(a){function b(a,c,d,e,f){h(this,b);var g=i(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f));return g.type="SemiCircle",g._radius=d/2,g}return j(b,a),d(b,[{key:"createSATObject",value:function(){return[new SAT.Circle(new SAT.Vector(this.center.x,this.center.y),this.radius)]}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.arc(this.center.x,this.center.y,this.radius,1*Math.PI,0),c.fill(),this.lineColor&&c.stroke(),c.closePath()}},{key:"radius",get:function(){return this._radius},set:function(b){this._radius=b}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.radius=c/2}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"height",c,this)}}]),b}(g.Sprite);c.SemiCircle=k},{"../sprite.js":75}],70:[function(a,b,c){"use strict";Object.defineProperty(c,"__esModule",{value:!0}),c.simples=void 0;var d=a("./rectangle.js"),e=a("./triangle.js"),f=a("./circle.js"),g=a("./polygon.js"),h=a("./semiCircle.js"),i=a("./wedge.js"),j=a("./trapezoid.js"),k=a("./text.js"),l={Rectangle:d.Rectangle,Triangle:e.Triangle,Circle:f.Circle,Polygon:g.Polygon,SemiCircle:h.SemiCircle,Wedge:i.Wedge,Trapezoid:j.Trapezoid,Text:k.Text};c.simples=l},{"./circle.js":66,"./polygon.js":67,"./rectangle.js":68,"./semiCircle.js":69,"./text.js":71,"./trapezoid.js":72,"./triangle.js":73,"./wedge.js":74}],71:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function i(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function j(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Text=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=a("../sprite.js"),g=a("../shapesregistry.js"),k=new g.ShapesRegistry,l=function(a){function b(a,c,d,e,f){h(this,b);var g=i(this,Object.getPrototypeOf(b).call(this,c,d,e,e));return g.type="Text",g._value=a,g._size=e,g._fontName=f,g._font=e+"px "+f,g}return j(b,a),d(b,[{key:"draw",value:function(c){var d=this;e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.font=this.font,c.textBaseline="hanging",c.textAlign="center",Array.isArray(this.color)?!function(){var a=d.value.split(""),b=d.x;a.forEach(function(a,e){var f=void 0;f=e<=d.color.length-1?d.color[e]:d.color[e%d.color.length],c.fillStyle=f,c.fillText(a,b,d.y+20*e),b+=c.measureText(a).width})}():c.fillText(this.value,this.x,this.y)}},{key:"getWidth",get:function(){return k.canvas.measureText(this.value,this.font)}},{key:"value",get:function(){return this._value},set:function(b){this._value=b}},{key:"fontName",get:function(){return this._fontName},set:function(b){this._fontName=b}},{key:"font",get:function(){return this._font},set:function(b){this.fontName=b,this._font=this.size+"px "+this.fontName}},{key:"size",get:function(){return this._size},set:function(b){this._size=b,this._font=b+"px "+this.fontName}}]),b}(f.Sprite);c.Text=l},{"../shapesregistry.js":65,"../sprite.js":75}],72:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Trapezoid=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},f=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},h=(a("../point.js"),a("../line.js")),i=a("../sprite.js"),m=function(a){function b(a,c,d,e,f,g){j(this,b);var h=k(this,Object.getPrototypeOf(b).call(this,a,c,d,e));if(h.type="Trapezoid","number"!=typeof f)throw new Error("No angle for trapezoid was supplied.");if("number"!=typeof g&&(g=f),h._leftAngle=f,h._rightAngle=g,h._setAngles(),h.topLeft.x>h.topRight.x||h.bottomLeft.x>h.bottomRight.x||h.topLeft.y>h.bottomLeft.y||h.topRight.y>h.bottomRight.y)throw new Error("Parameters do not define trapezoid.");return h}return l(b,a),d(b,[{key:"animate",value:function(){}},{key:"lines",value:function(){return[new h.Line(this.topLeft,this.topRight),new h.Line(this.topRight,this.bottomRight),new h.Line(this.bottomRight,this.bottomLeft),new h.Line(this.bottomLeft,this.topLeft)]}},{key:"getSideLength",value:function(b,c){var d=trees.degToRad(180-b);return c/Math.sin(d)}},{key:"rotate",value:function(c,d){e(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.topLeft&&(this.topLeft=trees.rotatePoint(this.topLeft,d,c),this.topRight=trees.rotatePoint(this.topRight,d,c),this.bottomLeft=trees.rotatePoint(this.bottomLeft,d,c),this.bottomRight=trees.rotatePoint(this.bottomRight,d,c))}},{key:"trimTop",value:function(c){var d=this.height,f=this.getSideLength(this.leftAngle,d),g=this.getSideLength(this.rightAngle,d),h=trees.copyPoint(this.bottomLeft),i=trees.copyPoint(this.bottomRight),j=trees.copyPoint(this.topRight),k=trees.copyPoint(this.topLeft);e(Object.getPrototypeOf(b.prototype),"trimTop",this).call(this,c);var l=this.getSideLength(this.leftAngle,this.height),m=this.getSideLength(this.rightAngle,this.height);this.topLeft=trees.getPointOnLine(k,f-l,trees.getAngle(this.topLeft,this.bottomLeft)),this.topRight=trees.getPointOnLine(j,g-m,trees.getAngle(this.topRight,this.bottomRight)),this.bottomLeft=h,this.bottomRight=i}},{key:"growTop",value:function(b){this.trimTop(-b)}},{key:"_setAngles",value:function(){this.leftAngle<90?(this._topLeft=this.a,this._bottomLeft=trees.getPointOnLine(this.a,this.getSideLength(this.leftAngle,this.height),this.leftAngle)):(this._topLeft=trees.getPointOnLine(this.d,-this.getSideLength(this.leftAngle,this.height),this.leftAngle),this._bottomLeft=this.d),this.rightAngle<90?(this._topRight=this.b,this._bottomRight=trees.getPointOnLine(this.b,this.getSideLength(this.rightAngle,this.height),180-this.rightAngle)):(this._topRight=trees.getPointOnLine(this.c,-this.getSideLength(this.rightAngle,this.height),180-this.rightAngle),this._bottomRight=this.c)}},{key:"draw",value:function(c){e(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.yMove(this.topLeft),c.yLine(this.bottomLeft),c.yLine(this.bottomRight),c.yLine(this.topRight),c.yLine(this.topLeft),this.pathOnly||c.fill(),!this.pathOnly&&this.lineColor&&c.stroke(),c.closePath()}},{key:"x",set:function(c){var d=this.x,e=c-d;f(Object.getPrototypeOf(b.prototype),"x",c,this),this.topLeft.x+=e,this.topRight.x+=e,this.bottomLeft.x+=e,this.bottomRight.x+=e},get:function(){return e(Object.getPrototypeOf(b.prototype),"x",this)}},{key:"y",set:function(c){var d=this.y,e=c-d;f(Object.getPrototypeOf(b.prototype),"y",c,this),this.topLeft.y+=e,this.topRight.y+=e,this.bottomLeft.y+=e,this.bottomRight.y+=e},get:function(){return e(Object.getPrototypeOf(b.prototype),"y",this)}},{key:"width",get:function(){return e(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){f(Object.getPrototypeOf(b.prototype),"width",c,this)}},{key:"height",get:function(){return e(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){f(Object.getPrototypeOf(b.prototype),"height",c,this)}},{key:"area",get:function(){return.5*(this.b1+this.b2)*this.height}},{key:"b1",get:function(){return this.topRight.x-this.topLeft.x}},{key:"b2",get:function(){return this.bottomRight.x-this.bottomLeft.x}},{key:"bottomLeft",get:function(){return this._bottomLeft},set:function(b){this._bottomLeft=b}},{key:"bottomRight",get:function(){return this._bottomRight},set:function(b){this._bottomRight=b}},{key:"topLeft",get:function(){return this._topLeft},set:function(b){this._topLeft=b}},{key:"topRight",get:function(){return this._topRight},set:function(b){this._topRight=b}},{key:"leftAngle",get:function(){return this._leftAngle},set:function(b){this._leftAngle=b}},{key:"rightAngle",get:function(){return this._rightAngle},set:function(b){this._rightAngle=b}}]),b}(i.Sprite);c.Trapezoid=m},{"../line.js":58,"../point.js":64,"../sprite.js":75}],73:[function(a,b,c){"use strict";function i(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function j(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function k(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}Object.defineProperty(c,"__esModule",{value:!0}),c.Triangle=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../sprite.js"),h=a("../point.js"),l=function(a){function b(a,c,d,e,f){i(this,b);var g=j(this,Object.getPrototypeOf(b).call(this,a,c,d,e,f));return g.type="Triangle",g.ta=new h.Point(g.d.x,g.d.y),g.tb=new h.Point(g.c.x,g.c.y),g.tc=trees.getPointOnLine(g.a,g.width/2,trees.getAngle(g.a,g.b)),g}return k(b,a),d(b,[{key:"rotate",value:function(c,d){f(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.ta=trees.rotatePoint(this.ta,d,c),this.tb=trees.rotatePoint(this.tb,d,c),this.tc=trees.rotatePoint(this.tc,d,c)}},{key:"_updatePoints",value:function(){var c=this.origin;f(Object.getPrototypeOf(b.prototype),"_updatePoints",this).call(this);var d=this.origin.x-c.x,e=this.origin.y-c.y;this.ta||(this.ta=new h.Point(this.d.x,this.d.y),this.tb=new h.Point(this.c.x,this.c.y),this.tc=trees.getPointOnLine(this.a,this.width/2,trees.getAngle(this.a,this.b))),this.ta=new h.Point(this.ta.x+d,this.ta.y+e),this.tb=new h.Point(this.tb.x+d,this.tb.y+e),this.tc=new h.Point(this.tc.x+d,this.tc.y+e)}},{key:"createSATObject",value:function(){return[new SAT.Polygon(new SAT.Vector(this.x,this.y),[new SAT.Vector(this.ta.x-this.x,this.ta.y-this.y),new SAT.Vector(this.tc.x-this.x,this.tc.y-this.y),new SAT.Vector(this.tb.x-this.x,this.tb.y-this.y)])]}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.moveTo(this.ta.x,this.ta.y),c.lineTo(this.tb.x,this.tb.y),c.lineTo(this.tc.x,this.tc.y),c.lineTo(this.ta.x,this.ta.y),this.pathOnly||c.fill(),!this.pathOnly&&this.lineColor&&c.stroke(),c.closePath()}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.tb=new h.Point(this.c.x,this.c.y),this.tc=trees.getPointOnLine(this.a,trees.getDistance(this.a,this.b)/2,trees.getAngle(this.a,this.b))}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"height",c,this),this.ta=new h.Point(this.d.x,this.d.y),this.tb=new h.Point(this.c.x,this.c.y)}},{key:"points",get:function(){return[this.ta,this.tb,this.tc]},set:function(b){if(!Array.isArray(b)||b.length<3)throw new Error("Triangle points property expects array with three Point objects");this.ta=b[0],this.tb=b[1],this.tc=b[2]}}]),b}(g.Sprite);c.Triangle=l},{"../point.js":64,"../sprite.js":75}],74:[function(a,b,c){"use strict";function j(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function k(a,b){if(!a)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!b||"object"!=typeof b&&"function"!=typeof b?a:b}function l(a,b){if("function"!=typeof b&&null!==b)throw new TypeError("Super expression must either be null or a function, not "+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}function m(a){return a/2*.552284749831}Object.defineProperty(c,"__esModule",{value:!0}),c.Wedge=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=function a(b,c,d,e){var f=Object.getOwnPropertyDescriptor(b,c);if(void 0===f){var g=Object.getPrototypeOf(b);null!==g&&a(g,c,d,e)}else if("value"in f&&f.writable)f.value=d;else{var h=f.set;void 0!==h&&h.call(e,d)}return d},f=function a(b,c,d){null===b&&(b=Function.prototype);var e=Object.getOwnPropertyDescriptor(b,c);if(void 0===e){var f=Object.getPrototypeOf(b);return null===f?void 0:a(f,c,d)}if("value"in e)return e.value;var g=e.get;if(void 0!==g)return g.call(d)},g=a("../point.js"),h=a("../sprite.js"),i=a("../curve.js"),n=function(a){function b(a,c,d,e){return j(this,b),k(this,Object.getPrototypeOf(b).call(this,a,c,d,e))}return l(b,a),d(b,[{key:"_updatePoints",value:function(){var c=this.origin;f(Object.getPrototypeOf(b.prototype),"_updatePoints",this).call(this);var d=this.origin.x-c.x,e=this.origin.y-c.y;this.cp1||(this._cp1=new g.Point(this.x+m(2*this.width),this.y),this._cp2=new g.Point(this.b.x,this.c.y-m(2*this.height)),this._end=new g.Point(this.c.x,this.c.y)),this.cp1=new g.Point(this.cp1.x+d,this.cp1.y+e),this.cp2=new g.Point(this.cp2.x+d,this.cp2.y+e),this.end=new g.Point(this.end.x+d,this.end.y+e),this._curve=new i.Curve(this._cp1,this._cp2,this._end)}},{key:"rotate",value:function(c,d){f(Object.getPrototypeOf(b.prototype),"rotate",this).call(this,c,d),this.cp1=trees.rotatePoint(this.cp1,d,c),this.cp2=trees.rotatePoint(this.cp2,d,c),this.end=trees.rotatePoint(this.end,d,c),this.curve=new i.Curve(this.cp1,this.cp2,this.end)}},{key:"getReverseCurve",value:function(){return new i.Curve(this.cp2,this.cp1,this.a)}},{key:"createSATObject",value:function(){return[]}},{key:"draw",value:function(c){f(Object.getPrototypeOf(b.prototype),"draw",this).call(this,c),c.beginPath(),c.yMove(this.origin),c.curve(this.curve),c.yLine(this.d),c.yLine(this.a),c.fill(),this.lineColor&&c.stroke(),c.closePath()}},{key:"width",get:function(){return f(Object.getPrototypeOf(b.prototype),"width",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"width",c,this),this.cp1=trees.getPointOnLine(this.a,m(2*this.width),trees.getAngle(this.a,this.b)),this.cp2=trees.getPointOnLine(this.c,m(2*-this.height),trees.getAngle(this.b,this.c)),this.end=new g.Point(this.c.x,this.c.y),this._curve=new i.Curve(this._cp1,this._cp2,this._end)}},{key:"height",get:function(){return f(Object.getPrototypeOf(b.prototype),"height",this)},set:function(c){e(Object.getPrototypeOf(b.prototype),"height",c,this),this.cp1=trees.getPointOnLine(this.a,m(2*this.width),trees.getAngle(this.a,this.b)),this.cp2=trees.getPointOnLine(this.c,m(2*-this.height),trees.getAngle(this.b,this.c)),this.end=new g.Point(this.c.x,this.c.y),this._curve=new i.Curve(this._cp1,this._cp2,this._end)}},{key:"cp1",get:function(){return this._cp1},set:function(b){this._cp1=b}},{key:"cp2",get:function(){return this._cp2},set:function(b){this._cp2=b}},{key:"end",get:function(){return this._end},set:function(b){this._end=b}},{key:"curve",get:function(){return this._curve},set:function(b){this._curve=b}}]),b}(h.Sprite);c.Wedge=n},{"../curve.js":55,"../point.js":64,"../sprite.js":75}],75:[function(a,b,c){"use strict";function g(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.Sprite=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./point.js"),f=a("./line.js"),h=function(){function a(b,c,d,f){g(this,a),this._width=d||0,this._height=f||0,this._x=b||0,this._y=c||0,this._origin=new e.Point(this.x,this.y),this._a=new e.Point(this.x,this.y),this._b=new e.Point(this.x+this.width,this.y),this._c=new e.Point(this.x+this.width,this.y+this.height),this._d=new e.Point(this.x,this.y+this.height),this._boundary={},this._center=new e.Point(this.x+this.width/2,this.y+this.height/2),this._updatePoints(),this._lineWidth=1,this._showBoundingBox=!1,this._color="transparent",this._lineColor=null,this._id=null,this._collidingWith=null,this._collidable=!1,this._minHeight=1,this._visible=!0,this._pathOnly=!1}return d(a,[{key:"rotate",value:function(b,c){if("number"!=typeof b||"number"!=typeof c.x||"number"!=typeof c.y)throw new Error("Attempted to rotate using non-numeric value");this._origin=trees.rotatePoint(this.origin,c,b),this._x=this.origin.x,this._y=this.origin.y,this.a=trees.rotatePoint(this.a,c,b),this.b=trees.rotatePoint(this.b,c,b),this.c=trees.rotatePoint(this.c,c,b),this.d=trees.rotatePoint(this.d,c,b),this.center=trees.rotatePoint(this.center,c,b),this._updateBoundaries()}},{key:"trimTop",value:function(b){b=this.height-b>this._minHeight?b:this.height-this._minHeight,this._height-=b;var c=trees.getAngle(this.a,this.d),d=trees.getPointOnLine(this.a,b,c);this.x=d.x,this.y=d.y,this.c=trees.getPointOnLine(this.c,-b,c),this.d=trees.getPointOnLine(this.d,-b,c),this.center=trees.getPointOnLine(this.a,trees.getDistance(this.a,this.c)/2,trees.getAngle(this.a,this.c)),this._updateBoundaries()}},{key:"growTop",value:function(b){this._height+=b;var c=trees.getAngle(this.a,this.d),d=trees.getPointOnLine(this.a,-b,c);this.x=d.x,this.y=d.y,this.c=trees.getPointOnLine(this.c,b,c),this.d=trees.getPointOnLine(this.d,b,c),this.center=trees.getPointOnLine(this.a,trees.getDistance(this.a,this.c)/2,trees.getAngle(this.a,this.c)),this._updateBoundaries()}},{key:"lines",value:function(){return[new f.Line(this.a,this.b),new f.Line(this.b,this.c),new f.Line(this.c,this.d),new f.Line(this.d,this.a)]}},{key:"wasClicked",value:function(b,c){return this.boundary.a.x<=b&&this.boundary.b.x>=b&&.9*this.boundary.a.y<=c&&1.1*this.boundary.d.y>=c?this:null}},{key:"_updatePoints",value:function(){var b=this.origin;this.origin=new e.Point(this.x,this.y);var c=this.origin.x-b.x,d=this.origin.y-b.y;this.center=new e.Point(this.center.x+c,this.center.y+d),this.a=new e.Point(this.a.x+c,this.a.y+d),this.b=new e.Point(this.b.x+c,this.b.y+d),this.c=new e.Point(this.c.x+c,this.c.y+d),this.d=new e.Point(this.d.x+c,this.d.y+d),this._updateBoundaries()}},{key:"_updateBoundaries",value:function(){var b=Math.min(this.a.x,this.b.x,this.c.x,this.d.x),c=Math.max(this.a.x,this.b.x,this.c.x,this.d.x),d=Math.min(this.a.y,this.b.y,this.c.y,this.d.y),f=Math.max(this.a.y,this.b.y,this.c.y,this.d.y),g=c-b,h=f-d;this.boundary.a=new e.Point(b,d),this.boundary.b=new e.Point(b+g,d),this.boundary.c=new e.Point(b+g,d+h),this.boundary.d=new e.Point(b,d+h)}},{key:"draw",value:function(b){if(!b||!b.beginPath||!b.closePath)throw new Error("Attempted to draw without supplying context");if(this.showBoundingBox){b.beginPath(),b.fillStyle="red",b.lineWidth=1;var c=5;b.rect(this.x-c/2,this.y-c/2,c,c),b.rect(this.a.x-c/2,this.a.y-c/2,c,c),b.rect(this.center.x-c/2,this.center.y-c/2,c,c),b.fill(),b.closePath(),b.fillStyle="transparent",b.strokeStyle="blue",b.beginPath(),b.yRect(this.boundary),b.fill(),b.stroke(),b.closePath(),b.strokeStyle="green",b.beginPath(),b.yRect({a:this.a,b:this.b,c:this.c,d:this.d}),b.fill(),b.stroke(),b.closePath()}else b.lineJoin="miter",b.fillStyle=this.color,b.strokeStyle=this.lineColor,b.lineWidth=this.lineWidth}},{key:"x",set:function(b){if("number"!=typeof b)throw new Error("x must be a number.");this._x=b,this._updatePoints()},get:function(){return this._x}},{key:"y",set:function(b){if("number"!=typeof b)throw new Error("y must be a number.");this._y=b,this._updatePoints()},get:function(){return this._y}},{key:"center",get:function(){return this._center},set:function(b){this._center=b}},{key:"origin",get:function(){return this._origin},set:function(b){this._origin=b}},{key:"id",set:function(b){this._id=b},get:function(){return this._id}},{key:"a",set:function(b){this._a=b},get:function(){return this._a}},{key:"b",set:function(b){this._b=b},get:function(){return this._b}},{key:"c",set:function(b){this._c=b},get:function(){return this._c}},{key:"d",set:function(b){this._d=b},get:function(){return this._d}},{key:"width",get:function(){return this._width},set:function(b){if("number"!=typeof b)throw new Error("width must be a number.");var c=this.width;this._width=b;var d=this.width-c,e=trees.getAngle(this.a,this.b);this.b=trees.getPointOnLine(this.b,d,e),this.c=trees.getPointOnLine(this.c,d,e),this.center=trees.getPointOnLine(this.a,trees.getDistance(this.a,this.c)/2,trees.getAngle(this.a,this.c)),this._updateBoundaries()}},{key:"height",get:function(){return this._height},set:function(b){if("number"!=typeof b)throw new Error("height must be a number.");var c=this.height;this._height=b;var d=this.height-c,e=trees.getAngle(this.a,this.d);this.c=trees.getPointOnLine(this.c,d,e),this.d=trees.getPointOnLine(this.d,d,e),this.center=trees.getPointOnLine(this.a,trees.getDistance(this.a,this.c)/2,trees.getAngle(this.a,this.c)),this._updateBoundaries()}},{key:"showBoundingBox",set:function(b){this._showBoundingBox=b},get:function(){return this._showBoundingBox}},{key:"collidable",set:function(b){this._collidable=b},get:function(){return this._collidable}},{key:"color",set:function(b){this._color=b},get:function(){return this._color}},{key:"lineColor",set:function(b){this._lineColor=b},get:function(){return this._lineColor}},{key:"lineWidth",set:function(b){this._lineWidth=b},get:function(){return this._lineWidth}},{key:"boundary",get:function(){return this._boundary},set:function(b){this._boundary=b}},{key:"collidingWith",get:function(){return this._collidingWith},set:function(b){this._collidingWith=b}},{key:"visible",get:function(){return this._visible},set:function(b){this._visible=b}},{key:"pathOnly",get:function(){return this._pathOnly},set:function(b){this._pathOnly=b}}]),a}();c.Sprite=h},{"./line.js":58,"./point.js":64}],76:[function(a,b,c){"use strict";function k(){document.onkeydown=o}function l(){h=!h,g.forEach(function(a){a.showBoundingBox=h})}function m(){j=!0,i<g.staticBackgroundCanvas.height.percent(2)?(g.allCanvases.forEach(function(a){a.scroll(-3)}),i++,setTimeout(m,5)):j=!1}function n(){j=!0,i<g.staticBackgroundCanvas.height.percent(2)?(g.allCanvases.forEach(function(a){a.scroll(3)}),i++,setTimeout(n,5)):j=!1}function o(a){switch(a=a||window.event,a.keyCode){case 32:l();break;case 38:i=0,j||m();break;case 40:i=0,j||n();break;default:return}a.preventDefault()}Object.defineProperty(c,"__esModule",{value:!0}),c.keyboardEvents=void 0;var e=(a("../canvas.js"),a("../shapesregistry.js")),f={initialize:k},g=new e.ShapesRegistry,h=!1,i=0,j=!1;c.keyboardEvents=f},{"../canvas.js":3,"../shapesregistry.js":65}],77:[function(a,b,c){"use strict";function n(){window.addEventListener("mousedown",o),window.addEventListener("mouseup",q)}function o(a){}function p(a){}function q(){window.removeEventListener("mousemove",p,!1)}Object.defineProperty(c,"__esModule",{value:!0}),c.mouseEvents=void 0;var e=(a("../canvas.js"),a("../shapesregistry.js")),f={initialize:n};new e.ShapesRegistry;c.mouseEvents=f},{"../canvas.js":3,"../shapesregistry.js":65}],78:[function(a,b,c){"use strict";function g(){var b=0,c=!1;window.addEventListener("scroll",function(a){b=window.scrollY,c||window.requestAnimationFrame(function(){f.allCanvases.forEach(function(a){a.currentY=b,a.scroll(0)}),document.getElementById("main").style.marginTop=-b+"px",c=!1}),c=!0})}Object.defineProperty(c,"__esModule",{value:!0}),c.scrollEvents=void 0;var d=a("../shapesregistry.js"),e={initialize:g},f=new d.ShapesRegistry;c.scrollEvents=e},{"../shapesregistry.js":65}],79:[function(a,b,c){"use strict";function x(){f=e.staticBackgroundCanvas.width,g=e.staticBackgroundCanvas.height,h=g.percent(40),i=g.percent(20),j=g.percent(10),k=g.percent(30),e.staticBackgroundCanvas.element.style.backgroundColor=q,A(),C(),B(),y(),D(),H(),G(),E(),F(),z()}function y(){var a=f.percent(5),b=f.percent(50),c=g.percent(8),h=new d.engine.simples.Text("Gary Kertis",b,c,a,r);h.color="black",e.addToStaticForeground(h);var i=new d.engine.simples.Text("Projects",b,g.percent(11),f.percent(3),r);i.color="black",e.addToStaticForeground(i)}function z(){var a=f.percent(30),b=h+i+j,c=new d.engine.complex.PourComposite(a,b,f.percent(10),g.percent(35));c.color=trees.setOpacity(m,.5),e.addToDynamicBackground(c),c.start(),c.activePour.oscillate=!0;for(var k=0;k<c.height;k++)c.activePour.addDrop();var l=b;c.activePour.drops.forEach(function(a){a.y=l,l+=1}),c.stop(),c.start();var n=new d.engine.complex.Box(a-f.percent(1),b+g.percent(21),f.percent(12),g.percent(2));e.addToDynamicBackground(n),d.engine.patterns.polkaDots(n,d.engine.simples.Circle,20,1,f.percent(4),s),n.shape.forEach(function(a){"Circle"===a.type&&(a.x=n.center.x,a.y=n.center.y,a.speed=trees.posNeg()*trees.random(1,n.width/f.percent(4)))}),n.callback=function(){n.shape.forEach(function(a,b){"Circle"===a.type&&(a.x+a.width<n.x||a.x>n.x+n.width?(a.x=n.center.x-a.width/2,a.y=n.center.y,a.speed=(b%2===0?1:-1)*trees.random(1,n.width/f.percent(4))):a.x+=a.speed,a.y>n.center.y-a.width/2&&(a.y-=Math.abs(a.speed)))})}}function A(){for(var a=function(b){var c=f.percent(trees.random(1,5)),h=f.percent(trees.random(0,95)),i=g.percent(trees.random(10,30)),j=new d.engine.client.StripedBalloon(h,i,c,c);j.stripeWidth=j.width.percent(trees.random(1,20)),j.stripeSpacing=j.width.percent(trees.random(1,20)),j.stripeColor=function(){for(var a=[],b=0;b<trees.random(1,25);b++)a.push(trees.randomColor());return a}(),j.stripeOrientation=["vertical","diagonal","horizontal"][trees.random(0,2)],j.color=trees.randomColor(),j.callback=function(){this.y-=c/50},e.addToDynamicBackground(j)},b=0;b<10;b++)a(b)}function B(){for(var a=0;a<50;a++){var b=f.percent(trees.random(2,15)),c=trees.random(0,f),i=trees.random(0,h-g.percent(10)),j=b/4,k=new d.engine.client.Cloud(c,i,b,j),l=1-b/300;k.color=trees.setOpacity(s,l),e.addToStaticForeground(k)}}function C(){var a=f,b=g.percent(5),c=0,i=h-b,j=new d.engine.client.Mountains(c,i,a,b);j.color=t,e.addToDynamicBackground(j),d.engine.patterns.polkaDots(j,d.engine.simples.Circle,100,1,5,v),j.callback=function(){this.shape.forEach(function(a){"Circle"===a.type&&(a.x+=trees.random(-1,1),a.y+=trees.random(-1,1))})}}function D(){var a=f.percent(32.3),b=a,c=f.percent(15),g=h-b/2,i=new d.engine.client.WaterWheel(c,g,a,b);i.callback=function(){i.rotate(.5,i.center),this.shape.forEach(function(a){"Cup"===a.type&&a.y>h&&a.fill(1)})},e.addToDynamicBackground(i)}function E(){for(var a=0;a<50;a++){var b=trees.random(0,f),c=trees.random(h+i+j,h+i+j+k),g=trees.random(f.percent(.1),f.percent(1)),l=g,m=new d.engine.client.Crystal(b,c,l,g);m.color=trees.randomColor(),m.rotate(trees.random(0,180),m.center),e.addToStaticBackground(m)}}function F(){for(var a=0;a<3;a++){var b=trees.random(0,f),c=trees.random(h+i+j,h+i+j+k.percent(60)),g=trees.random(f.percent(2),f.percent(4)),l=g/2,m=new d.engine.client.GleamingCrystal(b,c,l,g);
-m.color=trees.randomColor(),m.stripeWidth=m.width.percent(10),m.stripeSpacing=m.width.percent(90),m.stripeColor=[trees.setOpacity(s,.5)],m.stripeOrientation="vertical",m.rotate(trees.random(0,180),m.center),e.addToStaticBackground(m)}}function G(){var a=new d.engine.complex.Box(0,h,f,i),b=new d.engine.client.Lake(0,h,f,i),c=new d.engine.complex.Box(0,h+i,f,j);c.color=l,a.color=m,b.color=n,d.engine.patterns.polkaDots(c,d.engine.simples.Circle,100,1,5,q),new d.engine.complex.RockyBorder(c,f.percent(3),c.lines()[2]),new d.engine.complex.RockyBorder(b,f.percent(2),b.lines()[2]),e.addToStaticForeground(c),e.addToStaticForeground(a),e.addToStaticForeground(b)}function H(){var a=new d.engine.complex.Box(0,h+i+j,f,k),b=new d.engine.client.Cave(0,h+i+j,f,k),c=new d.engine.complex.Box(0,h+i+j+k-g.percent(8),f,g.percent(8));a.color=o,b.color=p,c.color=m,b.shape.forEach(function(a){"Box"===a.type&&d.engine.patterns.polkaTrapezoids(a,10,1,5,u)}),e.addToStaticBackground(a),e.addToStaticForeground(c),e.addToStaticForeground(b)}Object.defineProperty(c,"__esModule",{value:!0}),c.level0=void 0;var d=a("../engine/engine.js"),e=d.engine.shapesRegistry,f=void 0,g=void 0,h=void 0,i=void 0,j=void 0,k=void 0,l="#190D03",m="rgb(0,47,57)",n="rgb(0,74,37)",o="#1A001A",p="#44355B",q="pink",r="BungeeShade",s="white",t="black",u="gray",v="yellow";c.level0=x},{"../engine/engine.js":57}],80:[function(a,b,c){"use strict";function h(){f=d.engine.canvas.width,g=d.engine.canvas.height,d.engine.canvas.element.style.backgroundColor="pink",l(),setInterval(function(){k()},1e3),i()}function i(){var a=f.percent(5),b=g,c=30,h=30,i=new d.engine.complex.RockyBorder(c,h,a,b);i.color=trees.randomColor(),e.add(i)}function k(){var a=f.percent(trees.random(1,15)),b=f.percent(trees.random(0,95)),c=g+a,h=new d.engine.complex.StripedBalloon(b,c,a,a);h.stripeWidth=h.width.percent(trees.random(1,20)),h.stripeSpacing=h.width.percent(trees.random(1,20)),h.stripeColor=function(){for(var a=[],b=0;b<trees.random(1,25);b++)a.push(trees.randomColor());return a}(),h.orientation=["vertical","diagonal","horizontal"][trees.random(0,2)],h.color=trees.randomColor(),h.callback=function(){this.y-=a/50},e.add(h)}function l(){var a=f.percent(5),b=f.percent(3),c=g.percent(3),h=new d.engine.simples.Text("Gary K",b,c,a,"Lato");h.color=["rgb(0,47,57)"],e.add(h)}Object.defineProperty(c,"__esModule",{value:!0}),c.level1=void 0;var d=a("../engine/engine.js"),e=d.engine.shapesRegistry,f=void 0,g=void 0;c.level1=h},{"../engine/engine.js":57}],81:[function(a,b,c){"use strict";function f(){var a=trees.random(10,30),b=trees.random(1,6),c=trees.random(-1,1),f=new d.engine.complex.Arch(trees.random(1,d.engine.canvas.width),-a,a,a/2,0,b);f.rotate(trees.random(0,360),f.center),f.color=trees.randomColor(),f.ySpeed=a/10,f.callback=function(){this.y+=this.ySpeed,this.rotate(this.ySpeed*c,this.center)},f.collidable=!1,e.add(f)}function g(){d.engine.timer=setInterval(f,100)}Object.defineProperty(c,"__esModule",{value:!0}),c.level2=void 0;var d=a("../engine/engine.js"),e=d.engine.shapesRegistry;c.level2=g},{"../engine/engine.js":57}],82:[function(a,b,c){"use strict";function f(){var a=d.engine.canvas.width,b=d.engine.canvas.height,c=0,f=0,g=new d.engine.complex.Box(c,f,a,b,0);g.radius=a,g.color="black",d.engine.patterns.randomSpotsOnCircle(g).forEach(function(a){a.color="black",a.collidable=!1,g.addShape(a)});d.engine.patterns.polkaDots(g,d.engine.simples.Circle,100,1,5,"white"),g.callback=function(){this.width++,this.height++,this.x-=.5,this.y-=.5},e.add(g)}Object.defineProperty(c,"__esModule",{value:!0}),c.level3=void 0;var d=a("../engine/engine.js"),e=d.engine.shapesRegistry;c.level3=f},{"../engine/engine.js":57}],83:[function(a,b,c){"use strict";function e(){var a=d.engine.shapesRegistry,b=new d.engine.complex.Octopus(300,300,300,300,0);b.color="black",a.add(b)}Object.defineProperty(c,"__esModule",{value:!0}),c.level4=void 0;var d=a("../engine/engine.js");c.level4=e},{"../engine/engine.js":57}],84:[function(a,b,c){"use strict";function f(a){var b=new d.engine.simples.Circle(d.engine.canvas.width/2,d.engine.canvas.height/2,1,1,0);b.color="black",b.xSpeed=16,b.ySpeed=16,b.collidable=!1;var c=!0,f=!1;b.callback=function(){return c&&(this.width+=this.xSpeed,this.height+=this.ySpeed,this.y-=this.ySpeed/2,this.x-=this.xSpeed/2,this.radius>d.engine.canvas.width&&(c=!1)),c||(this.width-=this.xSpeed,this.height-=this.ySpeed,this.y+=this.ySpeed/2,this.x+=this.xSpeed/2,(this.width<=b.xSpeed||this.height<=b.ySpeed)&&(c=!0)),f=!0},e.add(b)}function g(){f()}Object.defineProperty(c,"__esModule",{value:!0}),c.level5=void 0;var d=a("../engine/engine.js"),e=d.engine.shapesRegistry;c.level5=g},{"../engine/engine.js":57}],85:[function(a,b,c){"use strict";function e(){function o(){var b=trees.random(0,n-1),c=a.shapes[b];c&&!c.called&&(c.callback=function(){this.y-=this.ySpeed,this.ySpeed*=1.01,this.rotate(1,this.center)},c.called=!0)}for(var a=d.engine.shapesRegistry,b=50,c=b*-.12,e=0,f=0,g=0,h=b/-c,i=d.engine.canvas.height/b+h,j=d.engine.canvas.width/b+h,k=0;k<i;k++){e=0,f+=2*c;for(var l=0;l<j;l++){e+=c,g=k%2?b/2+c/2:0;var m=new d.engine.simples.Polygon(l*b+e-g,k*b+f,b,b,0,6);m.color=trees.randomColor(),m.ySpeed=3,a.add(m)}}var n=a.length;d.engine.timer=setInterval(o,10)}Object.defineProperty(c,"__esModule",{value:!0}),c.level6=void 0;var d=a("../engine/engine.js");c.level6=e},{"../engine/engine.js":57}],86:[function(a,b,c){"use strict";function e(){var a=d.engine.shapesRegistry,b=new d.engine.complex.WaterWheel(300,300,300,300);a.add(b);var c=new d.engine.simples.Rectangle(0,600,d.engine.canvas.width,d.engine.canvas.height-600);c.color="blue",a.add(c),b.callback=function(){this.rotate(.4,this.center),this.shape.forEach(function(a){"Cup"===a.type&&a.y+a.height>620&&a.fill(1)})}}Object.defineProperty(c,"__esModule",{value:!0}),c.level7=void 0;var d=a("../engine/engine.js");c.level7=e},{"../engine/engine.js":57}],87:[function(a,b,c){"use strict";function e(){for(var a=d.engine.shapesRegistry,b=0;b<20;b++)a.add(f())}function f(){var a=trees.random(0,d.engine.canvas.width),b=trees.random(0,d.engine.canvas.height),c=trees.random(5,d.engine.canvas.width/2),f=(c/trees.random(2,100),trees.random(0,360)),g=new d.engine.complex.Hose(a,b,700,10,f);g.color="brown",g.sectionColor="tan";var h=trees.random(1,g.length),i=trees.posNeg()*trees.random(1,180),j=trees.random(5,g.length-h),k=1,l=0,m=0,n=i<0?-1:1,o=1,p=1;return g.callback=function(){l!==h&&k!==j?(l!==h&&(g.selectSection(g.shape[l]),l+=o),k!==j&&(g.sectionLength=k,k+=p)):m!==i?(g.bend(n),m+=n):(h=trees.random(1,g.length),i=trees.posNeg()*trees.random(1,180),j=trees.random(5,g.length-h),n=i<0?-1:1,o=h>l?1:-1,p=j>k?1:-1,m=0)},g}Object.defineProperty(c,"__esModule",{value:!0}),c.level8=void 0;var d=a("../engine/engine.js");c.level8=e},{"../engine/engine.js":57}],88:[function(a,b,c){"use strict";function j(){var a=d.engine.shapesRegistry;e=n(),f=k(),h=m(),g=l(),a.addToDynamicForeground(f),a.addToDynamicForeground(h),a.addToDynamicForeground(g),f.callback=function(){},a.allCanvases.forEach(function(a){a.addEventListener("upArrow",function(a){e.bend(-1),h.rotate(-1,h.center),f.rotate(-1,f.center),g.levelLine=g.y+g.height,g.fill(10),console.log(g.empty)}),a.addEventListener("downArrow",function(a){e.bend(1),h.rotate(1,h.center),f.rotate(1,f.center),g.rotate(1,f.center)})})}function k(){var a=new d.engine.complex.Cup(200,100,200,300,85);return a.color=trees.setOpacity("white",.2),a.liquidColor=trees.setOpacity("orange",.9),a.level=90,a.thickness=10,a}function l(){var a=new d.engine.complex.TestTube(600,100,200,300);return a.color=trees.setOpacity("white",.2),a.liquidColor=trees.setOpacity("orange",.9),a.level=50,a.lip.thickness=20,a}function m(){var a=new d.engine.complex.Erlenmeyer(900,300,200,300,85);return a.color=trees.setOpacity("white",.2),a.liquidColor=trees.setOpacity("orange",.9),a.level=90,a.thickness=10,a}function n(){var a=new d.engine.complex.Hose(200,344,500,10);return a.rotate(-85,a.center),a.color=trees.setOpacity("lightPink",.3),a.sectionColor=trees.setOpacity("pink",.3),a.selectSection(a.shape[35]),a.bend(110),a}Object.defineProperty(c,"__esModule",{value:!0}),c.level9=void 0;var d=a("../engine/engine.js"),e=void 0,f=void 0,g=void 0,h=void 0;c.level9=j},{"../engine/engine.js":57}],89:[function(a,b,c){"use strict";Object.defineProperty(c,"__esModule",{value:!0}),c.scenes=void 0;var d=a("./level0.js"),e=a("./level1.js"),f=a("./level2.js"),g=a("./level3.js"),h=a("./level4.js"),i=a("./level5.js"),j=a("./level6.js"),k=a("./level7.js"),l=a("./level8.js"),m=a("./level9.js"),n={level0:d.level0,level1:e.level1,level2:f.level2,level3:g.level3,level4:h.level4,level5:i.level5,level6:j.level6,level7:k.level7,level8:l.level8,level9:m.level9};c.scenes=n},{"./level0.js":79,"./level1.js":80,"./level2.js":81,"./level3.js":82,"./level4.js":83,"./level5.js":84,"./level6.js":85,"./level7.js":86,"./level8.js":87,"./level9.js":88}],90:[function(a,b,c){"use strict";function h(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(c,"__esModule",{value:!0}),c.trees=void 0;var d=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a("./engine/point.js"),f=a("./engine/line.js"),i=(a("./engine/engine.js"),void 0);Number.prototype.percent=function(a){return this.valueOf()*a/100},Array.prototype.move=function(a,b){if(b>=this.length)for(var c=b-this.length;c--+1;)this.push(void 0);this.splice(b,0,this.splice(a,1)[0])};var j=function(){function a(){h(this,a)}return d(a,null,[{key:"random",value:function(b,c){return null==c&&(c=b,b=0),b+Math.floor(Math.random()*(c-b+1))}},{key:"randomColor",value:function(){return"#"+Math.floor(16777215*Math.random()).toString(16)}},{key:"moveToEnd",value:function(b,c){for(var d=0;d<c;d++)b.push(b.shift())}},{key:"posNeg",value:function(){return 0===this.random(0,1)?-1:1}},{key:"getRGB",value:function(b){return i=document.getElementById("staticBackgroundCanvas"),i.style.color=b,document.body.appendChild(i),window.getComputedStyle(i).color}},{key:"setOpacity",value:function(b,c){var d=this.getRGB(b).replace("rgb","rgba");return[d.slice(0,d.length-1),", "+c.toString(),d.slice(d.length-1)].join("")}},{key:"getCenterX",value:function(b,c){var d=c.x+c.width/2,e=b/2,f=d-e;return f}},{key:"getBezierDistance",value:function(b){return b/2*.552284749831}},{key:"degToRad",value:function(b){return b*(Math.PI/180)}},{key:"getAngle",value:function(b,c){return 180*Math.atan2(c.y-b.y,c.x-b.x)/Math.PI}},{key:"getDistance",value:function(b,c){return Math.sqrt((b.x-c.x)*(b.x-c.x)+(b.y-c.y)*(b.y-c.y))}},{key:"rotatePoint",value:function(b,c,d){var f=d*Math.PI/180,g=Math.cos(f)*(b.x-c.x)-Math.sin(f)*(b.y-c.y)+c.x,h=Math.sin(f)*(b.x-c.x)+Math.cos(f)*(b.y-c.y)+c.y;return new e.Point(g,h)}},{key:"getPointOnLine",value:function(b,c,d){var f=b.x+c*Math.cos(this.degToRad(d)),g=b.y+c*Math.sin(this.degToRad(d));return new e.Point(f,g)}},{key:"copyPoint",value:function(b){return new e.Point(b.x,b.y)}},{key:"copyLine",value:function(b){return new f.Line(this.copyPoint(b.start),this.copyPoint(b.end))}},{key:"resizeLine",value:function(b,c){var d=this.getAngle(b.start,b.end);b.start=this.getPointOnLine(b.start,c,d),b.end=this.getPointOnLine(b.end,-c,d)}},{key:"moveLineHorizontal",value:function(b,c){b.start.x+=c,b.end.x+=c}},{key:"moveLineVertical",value:function(b,c){b.start.y+=c,b.end.y+=c}},{key:"polygonArea",value:function(b){var c=[],d=[];b.forEach(function(a){c.push(a.start.x),c.push(a.end.x),d.push(a.start.y),d.push(a.end.y)});for(var e=c.length,f=0,g=e-1,h=0;h<e;h++)f+=(c[g]+c[h])*(d[g]-d[h]),g=h;return-f/2}},{key:"orientation",value:function(b){var c=null;return b.start.x<=b.end.x&&b.start.y<=b.end.y&&(c="I"),b.start.x<=b.end.x&&b.start.y>b.end.y&&(c="II"),b.start.x>b.end.x&&b.start.y>b.end.y&&(c="III"),b.start.x>b.end.x&&b.start.y<=b.end.y&&(c="IV"),c}},{key:"intersection",value:function(b,c){var d,e,f,g,h,i={x:null,y:null,onLine1:!1,onLine2:!1};return d=(c.end.y-c.start.y)*(b.end.x-b.start.x)-(c.end.x-c.start.x)*(b.end.y-b.start.y),0==d?i:(e=b.start.y-c.start.y,f=b.start.x-c.start.x,g=(c.end.x-c.start.x)*e-(c.end.y-c.start.y)*f,h=(b.end.x-b.start.x)*e-(b.end.y-b.start.y)*f,e=g/d,f=h/d,i.x=b.start.x+e*(b.end.x-b.start.x),i.y=b.start.y+e*(b.end.y-b.start.y),e>0&&e<1&&(i.onLine1=!0),f>0&&f<1&&(i.onLine2=!0),i)}},{key:"shadeColor",value:function(b,c){var d=parseInt(b.slice(1),16),e=c<0?0:255,f=c<0?c*-1:c,g=d>>16,h=d>>8&255,i=255&d;return"#"+(16777216+65536*(Math.round((e-g)*f)+g)+256*(Math.round((e-h)*f)+h)+(Math.round((e-i)*f)+i)).toString(16).slice(1)}}]),a}();window.trees=j,c.trees=j},{"./engine/engine.js":57,"./engine/line.js":58,"./engine/point.js":64}]},{},[1]);
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+var _trees = require('./trees.js');
+
+var _engine = require('./engine/engine.js');
+
+var _scenes = require('./scenes/scenes.js');
+
+function load() {
+    _scenes.scenes.level0();
+}
+
+_engine.engine.go(load);
+
+},{"./engine/engine.js":17,"./scenes/scenes.js":40,"./trees.js":41}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.animate = undefined;
+
+var _shapesregistry = require('./shapesregistry.js');
+
+var shapesRegistry = new _shapesregistry.ShapesRegistry();
+var now = void 0;
+var then = Date.now();
+var delta = void 0;
+
+function animate() {
+    console.log('anim!');
+    if (!shapesRegistry.static) {
+        requestAnimationFrame(function () {
+            animate();
+        });
+    }
+
+    now = Date.now();
+    delta = now - then;
+
+    if (delta > shapesRegistry._interval) {
+        // update time stuffs
+
+        // Just `then = now` is not enough.
+        // Lets say we set fps at 10 which means
+        // each frame must take 100ms
+        // Now frame executes in 16ms (60fps) so
+        // the loop iterates 7 times (16*7 = 112ms) until
+        // delta > _interval === true
+        // Eventually this lowers down the FPS as
+        // 112*10 = 1120ms (NOT 1000ms).
+        // So we have to get rid of that extra 12ms
+        // by subtracting delta (112) % _interval (100).
+        // Hope that makes sense.
+
+        then = now - delta % shapesRegistry._interval;
+
+        // ... Code for Drawing the Frame ...
+        if (shapesRegistry.length) {
+            (function () {
+                if (!shapesRegistry.blur) {
+                    shapesRegistry.dynamicBackgroundCanvas.ctx.clearRect(0, 0, shapesRegistry.dynamicBackgroundCanvas.width, shapesRegistry.dynamicBackgroundCanvas.height);
+                    shapesRegistry.dynamicForegroundCanvas.ctx.clearRect(0, 0, shapesRegistry.dynamicForegroundCanvas.width, shapesRegistry.dynamicForegroundCanvas.height);
+                }
+
+                var counter = 0;
+
+                shapesRegistry.dynamicShapes.forEach(function (shape) {
+                    if (!shapesRegistry.static && (shape.boundary.a.x > shape.canvas.width.percent(110) || shape.boundary.b.x < -shape.canvas.width.percent(10))) {
+                        //shapesRegistry.remove(shape);
+                        return;
+                    }
+
+                    if (!shapesRegistry.static && (shape.boundary.a.y > shape.canvas.currentY + window.innerHeight.percent(110) || shape.boundary.d.y < shape.canvas.currentY - shape.canvas.height.percent(10))) {
+                        //shapesRegistry.remove(shape);
+                        return;
+                    }
+                    counter++;
+
+                    if (shape.animate) {
+                        shape.animate();
+                    }
+                    if (shape.callback) {
+                        shape.callback();
+                    }
+
+                    if (shape.visible) shape.draw();
+                });
+
+                //console.log("Drew " + counter + " shapesRegistry.");
+            })();
+        }
+    }
+}
+
+exports.animate = animate;
+
+},{"./shapesregistry.js":25}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Canvas = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _point = require('./point.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+CanvasRenderingContext2D.prototype.curve = function (points) {
+    if (points) {
+        this.bezierCurveTo(points.cp1.x, points.cp1.y, points.cp2.x, points.cp2.y, points.end.x, points.end.y);
+    }
+};
+
+CanvasRenderingContext2D.prototype.yLine = function (a) {
+    this.lineTo(a.x, a.y);
+};
+
+CanvasRenderingContext2D.prototype.yRect = function (rect) {
+    this.yMove(rect.a);
+    this.yLine(rect.b);
+    this.yLine(rect.c);
+    this.yLine(rect.d);
+    this.yLine(rect.a);
+};
+CanvasRenderingContext2D.prototype.yMove = function (point) {
+    this.moveTo(point.x, point.y);
+};
+CanvasRenderingContext2D.prototype.yArc = function (arc) {
+    this.arc(arc.x, arc.y, arc.r, arc.sAngle, arc.eAngle);
+};
+
+var Canvas = function () {
+    function Canvas(parentNodeName) {
+        _classCallCheck(this, Canvas);
+
+        this.element = document.createElement('canvas');
+        this.ctx = this.element.getContext("2d");
+        this._center = new _point.Point(this.element.width / 2, this.element.height / 2);
+        this._width = this.element.width;
+        this._height = this.element.height;
+
+        this._currentY = 0;
+
+        this.parentNode = document.getElementById(parentNodeName) || document.body;
+
+        var dpr = window.devicePixelRatio || 1;
+        var bsr = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
+
+        this.pixelRatio = dpr / bsr;
+
+        //Create canvas with the device resolution.
+        this.createCanvas(500, 250);
+
+        //Create canvas with a custom resolution.
+        //var myCustomCanvas = createHiDPICanvas(500, 200, 4);
+    }
+
+    _createClass(Canvas, [{
+        key: 'measureText',
+        value: function measureText(text, font) {
+            this.ctx.font = font;
+            return this.ctx.measureText(text).width;
+        }
+    }, {
+        key: 'createCanvas',
+        value: function createCanvas(w, h, ratio) {
+            try {
+                this.parentNode.removeChild(this.element);
+            } catch (e) {}
+
+            if (!ratio) {
+                ratio = this.pixelRatio;
+            }
+            var can = document.createElement('canvas');
+            can.width = w * ratio;
+            can.height = h * ratio;
+            can.style.width = w + "px";
+            can.style.height = h + "px";
+
+            this.ctx = can.getContext("2d");
+            this.element = can;
+            this.ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            this.parentNode.appendChild(this.element);
+        }
+    }, {
+        key: 'addEventListener',
+        value: function addEventListener(event, func) {
+            this.element.addEventListener(event, func, false);
+        }
+    }, {
+        key: 'dispatchEvent',
+        value: function dispatchEvent(event) {
+            this.element.dispatchEvent(event);
+        }
+    }, {
+        key: 'getBoundingClientRect',
+        value: function getBoundingClientRect() {
+            return this.element.getBoundingClientRect();
+        }
+    }, {
+        key: 'scroll',
+        value: function scroll(amount) {
+            if (this.currentY + amount > 0 && this.currentY + amount < this.height) {
+                this.currentY += amount;
+                this.element.style.marginTop = -this.currentY + "px";
+            }
+        }
+    }, {
+        key: 'width',
+        set: function set(width) {
+            this._width = width;
+            this._center = new _point.Point(width / 2, this._center.y);
+            this.createCanvas(width, this.height);
+        },
+        get: function get() {
+            return this._width;
+        }
+    }, {
+        key: 'height',
+        set: function set(height) {
+            this._height = height;
+            this._center = new _point.Point(this._center.x, height / 2);
+            this.createCanvas(this.width, height);
+        },
+        get: function get() {
+            return this._height;
+        }
+    }, {
+        key: 'center',
+        get: function get() {
+            return this._center;
+        }
+    }, {
+        key: 'currentY',
+        get: function get() {
+            return this._currentY;
+        },
+        set: function set(currentY) {
+            this._currentY = currentY;
+        }
+    }]);
+
+    return Canvas;
+}();
+
+;
+
+exports.Canvas = Canvas;
+
+},{"./point.js":24}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.client = undefined;
+
+var _cloud = require('./cloud.js');
+
+var _hotAirBalloon = require('./hotAirBalloon.js');
+
+var _stripedBalloon = require('./stripedBalloon.js');
+
+var client = {
+    Cloud: _cloud.Cloud,
+    HotAirBalloon: _hotAirBalloon.HotAirBalloon,
+    StripedBalloon: _stripedBalloon.StripedBalloon
+};
+
+exports.client = client;
+
+},{"./cloud.js":5,"./hotAirBalloon.js":6,"./stripedBalloon.js":7}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Cloud = undefined;
+
+var _simples = require('../simples/simples.js');
+
+var _complex = require('../complex/complex.js');
+
+var _complexShape = require('../complex/complexShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Cloud = function (_ComplexShape) {
+    _inherits(Cloud, _ComplexShape);
+
+    function Cloud(x, y, width, height, angle) {
+        _classCallCheck(this, Cloud);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Cloud).call(this, x, y, width, height, angle));
+
+        _this.type = "Cloud";
+
+        var maxSize = _this.width / 2;
+        var previousCircle = void 0;
+        var circleX = void 0;
+        var moreCircles = true;
+
+        while (moreCircles) {
+
+            //the x of the circle should overlap the right edge of the previous circle by 25%
+            circleX = previousCircle ? previousCircle.b.x - previousCircle.width / 4 : _this.x;
+
+            //the max size of any circle should be 50% of the width. Min size is 25%
+            var size = trees.random(maxSize / 4, maxSize);
+
+            //create the circle.
+            var circle = new _complex.complex.SemiCircle(circleX, _this.d.y - size / 2, size, size / 2);
+            _this.addShape(circle);
+            previousCircle = circle;
+
+            //if the circle's right edge exceeds the width of the cloud, move it over.
+            //otherwise add another circle.
+            if (circle.b.x > _this.b.x) {
+                circle.x = _this.b.x - circle.width;
+                moreCircles = false;
+            }
+        }
+        return _this;
+    }
+
+    return Cloud;
+}(_complexShape.ComplexShape);
+
+exports.Cloud = Cloud;
+
+},{"../complex/complex.js":12,"../complex/complexShape.js":13,"../simples/simples.js":30}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.HotAirBalloon = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _simples = require('../simples/simples.js');
+
+var _complex = require('../complex/complex.js');
+
+var _complexShape = require('../complex/complexShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HotAirBalloon = function (_ComplexShape) {
+    _inherits(HotAirBalloon, _ComplexShape);
+
+    function HotAirBalloon(x, y, width, height) {
+        _classCallCheck(this, HotAirBalloon);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HotAirBalloon).call(this, x, y, width, height));
+
+        _this.type = "HotAirBalloon";
+
+        _this.balloon = new _complex.complex.Balloon(x, y, width, height);
+        _this.basket = new _simples.simples.Rectangle(trees.getCenterX(width.percent(15), _this.balloon), y + height.percent(140), width.percent(15), height.percent(15));
+        _this.leftString = new _simples.simples.Rectangle(trees.getCenterX(width.percent(15), _this.balloon) + width.percent(1), y + height.percent(125), width.percent(1), height.percent(15));
+        _this.rightString = new _simples.simples.Rectangle(trees.getCenterX(width.percent(15), _this.balloon) + width.percent(13), y + height.percent(125), width.percent(1), height.percent(15));
+
+        _this.addShape(_this.balloon);
+        _this.addShape(_this.leftString);
+        _this.addShape(_this.basket);
+        _this.addShape(_this.rightString);
+
+        return _this;
+    }
+
+    _createClass(HotAirBalloon, [{
+        key: 'color',
+        get: function get() {
+            return _get(Object.getPrototypeOf(HotAirBalloon.prototype), 'color', this);
+        },
+        set: function set(color) {
+            _set(Object.getPrototypeOf(HotAirBalloon.prototype), 'color', color, this);
+            this.leftString.color = "black";
+            this.rightString.color = "black";
+            this.basket.color = "white";
+        }
+    }]);
+
+    return HotAirBalloon;
+}(_complexShape.ComplexShape);
+
+exports.HotAirBalloon = HotAirBalloon;
+
+},{"../complex/complex.js":12,"../complex/complexShape.js":13,"../simples/simples.js":30}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.StripedBalloon = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _simples = require('../simples/simples.js');
+
+var _patterns = require('../patterns/patterns.js');
+
+var _hotAirBalloon = require('./hotAirBalloon.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StripedBalloon = function (_HotAirBalloon) {
+    _inherits(StripedBalloon, _HotAirBalloon);
+
+    function StripedBalloon(x, y, width, height) {
+        _classCallCheck(this, StripedBalloon);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StripedBalloon).call(this, x, y, width, height));
+
+        _this.type = "Balloon";
+        return _this;
+    }
+
+    _createClass(StripedBalloon, [{
+        key: 'addStripes',
+        value: function addStripes() {
+            var _this2 = this;
+
+            if (this.stripeWidth && this.stripeSpacing && this.stripeColor && this.stripeOrientation) {
+                this.stripes = _patterns.patterns.stripes(this.balloon, this.stripeWidth, this.stripeSpacing, this.stripeColor, this.stripeOrientation);
+
+                this.stripes.forEach(function (stripe) {
+                    _this2.addShape(stripe);
+                });
+            }
+        }
+    }, {
+        key: 'stripeColor',
+        get: function get() {
+            return this._stripeColor;
+        },
+        set: function set(stripeColor) {
+            this._stripeColor = stripeColor;
+            this.addStripes();
+        }
+    }, {
+        key: 'stripeWidth',
+        get: function get() {
+            return this._stripeWidth;
+        },
+        set: function set(stripeWidth) {
+            this._stripeWidth = stripeWidth;
+            this.addStripes();
+        }
+    }, {
+        key: 'stripeSpacing',
+        get: function get() {
+            return this._stripeSpacing;
+        },
+        set: function set(stripeSpacing) {
+            this._stripeSpacing = stripeSpacing;
+            this.addStripes();
+        }
+    }, {
+        key: 'stripeOrientation',
+        get: function get() {
+            return this._stripeOrientation;
+        },
+        set: function set(stripeOrientation) {
+            this._stripeOrientation = stripeOrientation;
+            this.addStripes();
+        }
+    }]);
+
+    return StripedBalloon;
+}(_hotAirBalloon.HotAirBalloon);
+
+exports.StripedBalloon = StripedBalloon;
+
+},{"../patterns/patterns.js":19,"../simples/simples.js":30,"./hotAirBalloon.js":6}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Balloon = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _simples = require('../simples/simples.js');
+
+var _complexShape = require('./complexShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Balloon = function (_ComplexShape) {
+    _inherits(Balloon, _ComplexShape);
+
+    function Balloon(x, y, width, height) {
+        _classCallCheck(this, Balloon);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Balloon).call(this, x, y, width, height));
+
+        _this.type = "Balloon";
+
+        _this.circle = new _simples.simples.Circle(x, y, width, height);
+        _this.circle.startAngle = 0.835;
+        _this.circle.endAngle = 0.165;
+        _this.trapezoid = new _simples.simples.Trapezoid(trees.getCenterX(width.percent(86), _this.circle), y + height.percent(75), width.percent(86), height.percent(50), 55);
+        _this.height = _this.circle.height + _this.trapezoid.height;
+        _this.circle.pathOnly = true;
+        _this.trapezoid.pathOnly = true;
+
+        _this.addShape(_this.circle);
+        _this.addShape(_this.trapezoid);
+        return _this;
+    }
+
+    _createClass(Balloon, [{
+        key: 'draw',
+        value: function draw(ctx) {
+            ctx.beginPath();
+            ctx.arc(this.circle.center.x, this.circle.center.y, this.circle.radius, this.circle.startAngle, this.circle.endAngle);
+            ctx.yLine(this.trapezoid.bottomRight);
+            ctx.yLine(this.trapezoid.bottomLeft);
+            ctx.yLine(this.trapezoid.topLeft);
+            ctx.fillStyle = this.color;
+            ctx.strokeStyle = this.lineColor;
+            if (!this.pathOnly) ctx.fill();
+            if (!this.pathOnly && this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }]);
+
+    return Balloon;
+}(_complexShape.ComplexShape);
+
+exports.Balloon = Balloon;
+
+},{"../simples/simples.js":30,"./complexShape.js":13}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Circle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _simples = require('../../simples/simples.js');
+
+var _circularShape = require('./circularShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Circle = function (_CircularShape) {
+    _inherits(Circle, _CircularShape);
+
+    function Circle(x, y, width, height) {
+        _classCallCheck(this, Circle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Circle).call(this, x, y, width, height));
+
+        _this.type = "Circle";
+
+        _this.topRight = new _simples.simples.Wedge(x + width / 2, y, width / 2, height / 2);
+        _this.topLeft = new _simples.simples.Wedge(x, y, width / 2, height / 2, 270);
+        _this.topLeft.rotate(270, _this.topLeft.center);
+        _this.bottomRight = new _simples.simples.Wedge(x + width / 2, y + height / 2, width / 2, height / 2, 90);
+        _this.bottomRight.rotate(90, _this.bottomRight.center);
+        _this.bottomLeft = new _simples.simples.Wedge(x, y + height / 2, width / 2, height / 2, 180);
+        _this.bottomLeft.rotate(180, _this.bottomLeft.center);
+
+        _this.addShape(_this.topRight);
+        _this.addShape(_this.topLeft);
+        _this.addShape(_this.bottomRight);
+        _this.addShape(_this.bottomLeft);
+
+        return _this;
+    }
+
+    _createClass(Circle, [{
+        key: 'rotate',
+        value: function rotate() {}
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Circle.prototype), 'draw', this).call(this, ctx);
+
+            ctx.beginPath();
+
+            this.shape.forEach(function (shape) {
+                shape.draw(ctx);
+            });
+
+            ctx.closePath();
+        }
+    }]);
+
+    return Circle;
+}(_circularShape.CircularShape);
+
+exports.Circle = Circle;
+
+},{"../../simples/simples.js":30,"./circularShape.js":10}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.CircularShape = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _simples = require('../../simples/simples.js');
+
+var _complexShape = require('../complexShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CircularShape = function (_ComplexShape) {
+    _inherits(CircularShape, _ComplexShape);
+
+    function CircularShape(x, y, width, height, thickness) {
+        _classCallCheck(this, CircularShape);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CircularShape).call(this, x, y, width, height));
+
+        _this.type = "CircularShape";
+        _this._radius = _this.width / 2;
+        return _this;
+    }
+
+    _createClass(CircularShape, [{
+        key: 'createSATObject',
+        value: function createSATObject() {
+            return [new SAT.Circle(new SAT.Vector(this.center.x, this.center.y), this.radius)];
+        }
+    }, {
+        key: 'radius',
+        get: function get() {
+            return this._radius;
+        },
+        set: function set(radius) {
+            this._radius = radius;
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return _get(Object.getPrototypeOf(CircularShape.prototype), 'width', this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(CircularShape.prototype), 'width', width, this);
+            this.radius = width / 2;
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return _get(Object.getPrototypeOf(CircularShape.prototype), 'height', this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(CircularShape.prototype), 'height', height, this);
+            //this.radius = height/2;
+        }
+    }]);
+
+    return CircularShape;
+}(_complexShape.ComplexShape);
+
+exports.CircularShape = CircularShape;
+
+},{"../../simples/simples.js":30,"../complexShape.js":13}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SemiCircle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _simples = require('../../simples/simples.js');
+
+var _circularShape = require('./circularShape.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SemiCircle = function (_CircularShape) {
+    _inherits(SemiCircle, _CircularShape);
+
+    function SemiCircle(x, y, width, height, angle) {
+        _classCallCheck(this, SemiCircle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SemiCircle).call(this, x, y, width, height, angle));
+
+        _this.type = "SemiCircle";
+
+        _this.right = new _simples.simples.Wedge(x + width / 2, y, width / 2, height);
+        _this.left = new _simples.simples.Wedge(x, y, width / 2, height, 270);
+        _this.left.rotate(270, _this.left.center);
+        _this.addShape(_this.left);
+        _this.addShape(_this.right);
+        return _this;
+    }
+
+    _createClass(SemiCircle, [{
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(SemiCircle.prototype), 'draw', this).call(this, ctx);
+
+            ctx.beginPath();
+            ctx.yMove(this.d);
+            ctx.curve(this.left.curve);
+            ctx.curve(this.right.curve);
+            ctx.yLine(this.d);
+            ctx.fill();
+            if (this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }]);
+
+    return SemiCircle;
+}(_circularShape.CircularShape);
+
+exports.SemiCircle = SemiCircle;
+
+},{"../../simples/simples.js":30,"./circularShape.js":10}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.complex = undefined;
+
+var _semiCircle = require('./circularShapes/semiCircle.js');
+
+var _circle = require('./circularShapes/circle.js');
+
+var _balloon = require('./balloon.js');
+
+var complex = {
+    SemiCircle: _semiCircle.SemiCircle,
+    Circle: _circle.Circle,
+    Balloon: _balloon.Balloon
+};
+
+exports.complex = complex;
+
+},{"./balloon.js":8,"./circularShapes/circle.js":9,"./circularShapes/semiCircle.js":11}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.ComplexShape = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require("../sprite.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ComplexShape = function (_Sprite) {
+    _inherits(ComplexShape, _Sprite);
+
+    function ComplexShape(x, y, width, height) {
+        _classCallCheck(this, ComplexShape);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ComplexShape).call(this, x, y, width, height));
+
+        _this.type = "ComplexShape";
+        _this._shape = [];
+        return _this;
+    }
+
+    _createClass(ComplexShape, [{
+        key: "addShape",
+        value: function addShape(shape) {
+            if (this.shape.indexOf(shape) >= 0) {
+                throw new Error("Attempted to add same shape twice.");
+            }
+            shape.relativeX = (shape.x - this.x) / this.width;
+            shape.relativeY = (shape.y - this.y) / this.height;
+            shape.relativeWidth = shape.width / this.width;
+            shape.relativeHeight = shape.height / this.height;
+            this.shape.push(shape);
+        }
+    }, {
+        key: "moveDrawOrderBack",
+        value: function moveDrawOrderBack(shape) {
+            var shapeToMove = this.removeShape(shape);
+            this.shape.unshift(shape);
+        }
+    }, {
+        key: "removeShape",
+        value: function removeShape(shape) {
+            var index = this.shape.indexOf(shape);
+            if (index >= 0) {
+                this.shape.splice(index, 1);
+            }
+        }
+    }, {
+        key: "animate",
+        value: function animate() {
+            this.shape && this.shape.forEach(function (shape) {
+                if (shape.animate) shape.animate();
+            });
+        }
+    }, {
+        key: "rotate",
+        value: function rotate(deg, transformOrigin) {
+            _get(Object.getPrototypeOf(ComplexShape.prototype), "rotate", this).call(this, deg, transformOrigin);
+            this.shape && this.shape.forEach(function (shape) {
+                shape.rotate(deg, transformOrigin);
+            });
+        }
+    }, {
+        key: "createSATObject",
+
+
+        //merge all SAT objects into a single array.
+        value: function createSATObject() {
+            var response = [];
+            this.shape.forEach(function (shape) {
+                response = response.concat(shape.createSATObject());
+            });
+            return response;
+        }
+    }, {
+        key: "wasClicked",
+        value: function wasClicked(mouseX, mouseY) {
+            var clicked = null;
+            this.shape.forEach(function (shape) {
+                clicked = clicked || shape.wasClicked(mouseX, mouseY);
+            });
+            return clicked;
+        }
+    }, {
+        key: "draw",
+        value: function draw(ctx) {
+            ctx = ctx || this.canvas && this.canvas.ctx;
+
+            _get(Object.getPrototypeOf(ComplexShape.prototype), "draw", this).call(this, ctx);
+
+            ctx.beginPath();
+
+            this.shape.forEach(function (shape) {
+                if (shape.visible) shape.draw(ctx);
+            });
+
+            ctx.closePath();
+        }
+    }, {
+        key: "shape",
+        get: function get() {
+            return this._shape;
+        },
+        set: function set(shape) {
+            this._shape = shape;
+        }
+    }, {
+        key: "lastShape",
+        get: function get() {
+            return this._shape[this._shape.length - 1];
+        }
+    }, {
+        key: "firstShape",
+        get: function get() {
+            return this._shape[0];
+        }
+    }, {
+        key: "pathOnly",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "pathOnly", this);
+        },
+        set: function set(pathOnly) {
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "pathOnly", pathOnly, this);
+            this.shape.forEach(function (shape) {
+                shape.pathOnly = pathOnly;
+            });
+        }
+    }, {
+        key: "color",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "color", this);
+        },
+        set: function set(color) {
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "color", color, this);
+            this.shape.forEach(function (shape) {
+                shape.color = color;
+            });
+        }
+    }, {
+        key: "lineColor",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "lineColor", this);
+        },
+        set: function set(lineColor) {
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "lineColor", lineColor, this);
+            this.shape.forEach(function (shape) {
+                shape.lineColor = lineColor;
+            });
+        }
+    }, {
+        key: "collidable",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "collidable", this);
+        },
+        set: function set(collidable) {
+            if (typeof collidable !== "boolean") {
+                throw new Error("Property collidable expects boolean value");
+            }
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "collidable", collidable, this);
+            this.shape.forEach(function (shape) {
+                shape.collidable = collidable;
+            });
+        }
+    }, {
+        key: "x",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "x", this);
+        },
+        set: function set(x) {
+            var oldX = this.x;
+            var diffX = x - oldX;
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "x", x, this);
+            this.shape.forEach(function (shape) {
+                shape.x += diffX;
+            });
+        }
+    }, {
+        key: "y",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "y", this);
+        },
+        set: function set(y) {
+            var oldY = this.y;
+            var diffY = y - oldY;
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "y", y, this);
+            this.shape.forEach(function (shape) {
+                shape.y += diffY;
+            });
+        }
+    }, {
+        key: "width",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "width", this);
+        },
+        set: function set(width) {
+            var oldwidth = this.width;
+            var diffwidth = width - oldwidth;
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "width", width, this);
+            this.shape.forEach(function (shape) {
+                shape.width = width * shape.relativeWidth;
+                shape.x = shape.x + diffwidth * shape.relativeX;
+            });
+        }
+    }, {
+        key: "height",
+        get: function get() {
+            return _get(Object.getPrototypeOf(ComplexShape.prototype), "height", this);
+        },
+        set: function set(height) {
+            var oldheight = this.height;
+            var diffheight = height - oldheight;
+            _set(Object.getPrototypeOf(ComplexShape.prototype), "height", height, this);
+            this.shape.forEach(function (shape) {
+                shape.height = height * shape.relativeHeight;
+                shape.y = shape.y + diffheight * shape.relativeY;
+            });
+        }
+    }]);
+
+    return ComplexShape;
+}(_sprite.Sprite);
+
+exports.ComplexShape = ComplexShape;
+
+},{"../sprite.js":35}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Curve = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _point = require('./point.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Curve = function () {
+    function Curve(cp1, cp2, end) {
+        _classCallCheck(this, Curve);
+
+        this._cp1 = cp1;
+        this._cp2 = cp2;
+        this._end = end;
+        this._points = [this._cp1, this._cp2, this._end];
+    }
+
+    _createClass(Curve, [{
+        key: 'points',
+        get: function get() {
+            return this._points;
+        },
+        set: function set(points) {
+            this._points = points;
+        }
+    }, {
+        key: 'cp1',
+        get: function get() {
+            return this._cp1;
+        },
+        set: function set(cp1) {
+            this._cp1 = cp1;
+        }
+    }, {
+        key: 'cp2',
+        get: function get() {
+            return this._cp2;
+        },
+        set: function set(cp2) {
+            this._cp2 = cp2;
+        }
+    }, {
+        key: 'end',
+        get: function get() {
+            return this._end;
+        },
+        set: function set(end) {
+            this._end = end;
+        }
+    }]);
+
+    return Curve;
+}();
+
+exports.Curve = Curve;
+
+},{"./point.js":24}],15:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DrawInstruction = function () {
+    function DrawInstruction(line, rule) {
+        _classCallCheck(this, DrawInstruction);
+
+        this._line = line;
+        this._rule = rule;
+    }
+
+    _createClass(DrawInstruction, [{
+        key: "line",
+        get: function get() {
+            return this._line;
+        },
+        set: function set(line) {
+            this._line = line;
+        }
+    }, {
+        key: "rule",
+        get: function get() {
+            return this._rule;
+        },
+        set: function set(rule) {
+            this._rule = rule;
+        }
+    }]);
+
+    return DrawInstruction;
+}();
+
+exports.DrawInstruction = DrawInstruction;
+
+},{}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.drawStaticShapes = undefined;
+
+var _shapesregistry = require('./shapesregistry.js');
+
+var shapesRegistry = new _shapesregistry.ShapesRegistry();
+
+function drawStaticShapes() {
+
+    requestAnimationFrame(function () {
+        if (shapesRegistry.length) {
+            if (!shapesRegistry.blur) {
+                shapesRegistry.staticBackgroundCanvas.ctx.clearRect(0, 0, shapesRegistry.staticBackgroundCanvas.width, shapesRegistry.staticBackgroundCanvas.height);
+                shapesRegistry.staticForegroundCanvas.ctx.clearRect(0, 0, shapesRegistry.staticForegroundCanvas.width, shapesRegistry.staticForegroundCanvas.height);
+            }
+
+            shapesRegistry.staticShapes.forEach(function (shape) {
+                if (shape.visible) shape.draw();
+            });
+        }
+    });
+}
+
+exports.drawStaticShapes = drawStaticShapes;
+
+},{"./shapesregistry.js":25}],17:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.engine = undefined;
+
+var _shapesregistry = require('./shapesregistry.js');
+
+var _animate = require('./animate.js');
+
+var _drawStaticShapes = require('./drawStaticShapes.js');
+
+var _simples = require('./simples/simples.js');
+
+var _complex = require('./complex/complex.js');
+
+var _client = require('./client/client.js');
+
+var _patterns = require('./patterns/patterns.js');
+
+var _mouseEvents = require('./userInput/mouseEvents.js');
+
+var _keyboardEvents = require('./userInput/keyboardEvents.js');
+
+var _scrollEvents = require('./userInput/scrollEvents.js');
+
+var shapesRegistry = new _shapesregistry.ShapesRegistry();
+var level = 0;
+
+var engine = {
+    patterns: _patterns.patterns,
+    shapesRegistry: shapesRegistry,
+    drawStaticShapes: _drawStaticShapes.drawStaticShapes,
+    simples: _simples.simples,
+    complex: _complex.complex,
+    client: _client.client,
+    go: go,
+    levels: []
+};
+
+exports.engine = engine;
+
+//set canvas height, maps keys, calls game setup function, and begins animation.
+
+function go(callback) {
+    shapesRegistry.maxShapes = 10000;
+
+    shapesRegistry.allCanvases.forEach(function (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener('load', function () {
+        // keyboardEvents.initialize();
+        _scrollEvents.scrollEvents.initialize();
+        callback();
+        (0, _drawStaticShapes.drawStaticShapes)();
+        (0, _animate.animate)();
+    }, false);
+}
+
+},{"./animate.js":2,"./client/client.js":4,"./complex/complex.js":12,"./drawStaticShapes.js":16,"./patterns/patterns.js":19,"./shapesregistry.js":25,"./simples/simples.js":30,"./userInput/keyboardEvents.js":36,"./userInput/mouseEvents.js":37,"./userInput/scrollEvents.js":38}],18:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Line = function () {
+    function Line(start, end) {
+        _classCallCheck(this, Line);
+
+        this._start = start;
+        this._end = end;
+    }
+
+    _createClass(Line, [{
+        key: "createSATObject",
+        value: function createSATObject() {
+            return [new SAT.Polygon(new SAT.Vector(0, 0), [new SAT.Vector(this.end.x, this.end.y), new SAT.Vector(this.start.x, this.start.y)])];
+        }
+    }, {
+        key: "start",
+        get: function get() {
+            return this._start;
+        },
+        set: function set(start) {
+            this._start = start;
+        }
+    }, {
+        key: "end",
+        get: function get() {
+            return this._end;
+        },
+        set: function set(end) {
+            this._end = end;
+        }
+    }]);
+
+    return Line;
+}();
+
+exports.Line = Line;
+
+},{}],19:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.patterns = undefined;
+
+var _randomSpotsOnCircle = require('./randomSpotsOnCircle.js');
+
+var _polkaDots = require('./polkaDots.js');
+
+var _polkaTrapezoids = require('./polkaTrapezoids.js');
+
+var _stripes = require('./stripes.js');
+
+var patterns = {
+    randomSpotsOnCircle: _randomSpotsOnCircle.randomSpotsOnCircle,
+    polkaDots: _polkaDots.polkaDots,
+    polkaTrapezoids: _polkaTrapezoids.polkaTrapezoids,
+    stripes: _stripes.stripes
+};
+
+exports.patterns = patterns;
+
+},{"./polkaDots.js":20,"./polkaTrapezoids.js":21,"./randomSpotsOnCircle.js":22,"./stripes.js":23}],20:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * A function to add random spots to an object
+ * @param  {Sprite} container
+ * @param  {Sprite} shape  
+ * @param  {Number} density
+ * @param  {Number} minSize
+ * @param  {Number} maxSize
+ * @param  {String} color  
+ */
+function polkaDots(container, shape, density, minSize, maxSize, color) {
+
+    for (var i = 0; i < density; i++) {
+        var randomPoint1 = trees.getPointOnLine(container.a, trees.random(0, container.width), trees.getAngle(container.a, container.b));
+        var randomPoint2 = trees.getPointOnLine(randomPoint1, trees.random(0, container.height), trees.getAngle(container.a, container.d));
+        var x = randomPoint2.x;
+        var y = randomPoint2.y;
+        var size = trees.random(minSize, maxSize);
+        var dot = new shape(x, y, size, size);
+        dot.color = color;
+        container.addShape(dot);
+    }
+}
+
+exports.polkaDots = polkaDots;
+
+},{}],21:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.polkaTrapezoids = undefined;
+
+var _trapezoid = require('../simples/trapezoid.js');
+
+/**
+ * A function to add random spots to an object
+ * @param  {Sprite} container
+ * @param  {Sprite} shape  
+ * @param  {Number} density
+ * @param  {Number} minSize
+ * @param  {Number} maxSize
+ * @param  {String} color  
+ */
+function polkaTrapezoids(container, density, minSize, maxSize, color) {
+
+    for (var i = 0; i < density; i++) {
+        var randomPoint1 = trees.getPointOnLine(container.a, trees.random(0, container.width), trees.getAngle(container.a, container.b));
+        var randomPoint2 = trees.getPointOnLine(randomPoint1, trees.random(0, container.height), trees.getAngle(container.a, container.d));
+        var x = randomPoint2.x;
+        var y = randomPoint2.y;
+        var size = trees.random(minSize, maxSize);
+        var dot = new _trapezoid.Trapezoid(x, y, size, size, trees.random(85, 105), trees.random(85, 105));
+        dot.color = color;
+        container.addShape(dot);
+    }
+}
+
+exports.polkaTrapezoids = polkaTrapezoids;
+
+},{"../simples/trapezoid.js":32}],22:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.randomSpotsOnCircle = undefined;
+
+var _simples = require('../simples/simples.js');
+
+function randomSpotsOnCircle(container) {
+
+    var spots = [];
+
+    var _loop = function _loop(i) {
+        var location = randomCirclePoint(container.center, container.radius);
+        var radius = randomRadius(location, container);
+        var spot = new _simples.simples.Circle(location.x, location.y, radius, radius);
+
+        var safe = true;
+        spots.forEach(function (s) {
+
+            var spotLeft = spot.center.x - spot.radius;
+            var spotRight = spot.center.x + spot.radius;
+            var spotTop = spot.center.y - spot.radius;
+            var spotBottom = spot.center.y + spot.radius;
+
+            var sLeft = s.center.x - s.radius;
+            var sRight = s.center.x + s.radius;
+            var sTop = s.center.y - s.radius;
+            var sBottom = s.center.y + s.radius;
+
+            if (spotLeft < sRight && spotRight > sLeft && spotTop < sBottom && spotBottom > sTop) {
+                safe = false;
+            }
+        });
+
+        if (safe) {
+            spots.push(spot);
+        }
+    };
+
+    for (var i = 0; i < 20; i++) {
+        _loop(i);
+    }
+
+    return spots;
+}
+
+function randomRadius(location, container) {
+    var angle = trees.getAngle(container.center, location);
+    var edge = trees.getPointOnLine(container.center, container.radius, angle);
+    var max = trees.getDistance(location, edge) / 2;
+    var min = container.radius / 6 > max ? max : container.radius / 6;
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function randomCirclePoint(center, radius) {
+    var a = 2 * Math.PI * Math.random();
+    var r = Math.sqrt(Math.random());
+    var x = radius * r * Math.cos(a) + center.x;
+    var y = radius * r * Math.sin(a) + center.y;
+    return { x: x, y: y };
+}
+
+exports.randomSpotsOnCircle = randomSpotsOnCircle;
+
+},{"../simples/simples.js":30}],23:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.stripes = undefined;
+
+var _simples = require('../simples/simples.js');
+
+var _complex = require('../complex/complex.js');
+
+function stripes(container, stripeSize, stripeSpacing, color, orientation) {
+    var stripes = [];
+    if (!orientation || orientation === "vertical") {
+
+        var numStripes = container.width / (stripeSize + stripeSpacing);
+        var currentStripe = container.x;
+
+        var _loop = function _loop(i) {
+            var stripe = new _simples.simples.Rectangle(currentStripe, container.y, stripeSize, container.height);
+            stripe.color = color[i % color.length];
+            stripe.draw = function (ctx) {
+                ctx = ctx || this.canvas && this.canvas.ctx;
+
+                ctx.save();
+                ctx.beginPath();
+                container.pathOnly = true;
+                container.draw(ctx);
+                container.pathOnly = false;
+                ctx.clip();
+                ctx.closePath();
+                ctx.beginPath();
+                var rect = {
+                    a: this.a,
+                    b: this.b,
+                    c: this.c,
+                    d: this.d
+                };
+                ctx.yMove(this.a);
+                ctx.yRect(rect);
+                ctx.fillStyle = color[i % color.length];
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            };
+
+            stripes.push(stripe);
+            currentStripe += stripeSize + stripeSpacing;
+        };
+
+        for (var i = 0; i < numStripes; i++) {
+            _loop(i);
+        }
+    } else if (orientation === "horizontal") {
+
+        var _numStripes = container.height / (stripeSize + stripeSpacing);
+        var _currentStripe = container.y;
+
+        var _loop2 = function _loop2(_i) {
+            var stripe = new _simples.simples.Rectangle(container.x, _currentStripe, container.width, stripeSize);
+            stripe.color = color[_i % color.length];
+            stripe.draw = function (ctx) {
+                ctx = ctx || this.canvas && this.canvas.ctx;
+
+                ctx.save();
+                ctx.beginPath();
+                container.pathOnly = true;
+                container.draw(ctx);
+                container.pathOnly = false;
+                ctx.clip();
+                ctx.closePath();
+                ctx.beginPath();
+                var rect = {
+                    a: this.a,
+                    b: this.b,
+                    c: this.c,
+                    d: this.d
+                };
+                ctx.yMove(this.a);
+                ctx.yRect(rect);
+                ctx.fillStyle = color[_i % color.length];
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            };
+
+            stripes.push(stripe);
+            _currentStripe += stripeSize + stripeSpacing;
+        };
+
+        for (var _i = 0; _i < _numStripes; _i++) {
+            _loop2(_i);
+        }
+    } else if (orientation === "diagonal") {
+        var _numStripes2 = container.height / (stripeSize + stripeSpacing) * 2;
+        var _currentStripe2 = container.y;
+
+        var _loop3 = function _loop3(_i2) {
+            var stripe = new _simples.simples.Rectangle(container.x - container.width / 2, _currentStripe2 - container.width / 2, container.width * 2, stripeSize);
+            stripe.rotate(-45, stripe.center);
+            stripe.color = color[_i2 % color.length];
+            stripe.draw = function (ctx) {
+                ctx = ctx || this.canvas && this.canvas.ctx;
+
+                ctx.save();
+                ctx.beginPath();
+                container.pathOnly = true;
+                container.draw(ctx);
+                container.pathOnly = false;
+                ctx.clip();
+                ctx.closePath();
+                ctx.beginPath();
+                var rect = {
+                    a: this.a,
+                    b: this.b,
+                    c: this.c,
+                    d: this.d
+                };
+                ctx.yMove(this.a);
+                ctx.yRect(rect);
+                ctx.fillStyle = color[_i2 % color.length];
+                ctx.fill();
+                ctx.closePath();
+                ctx.restore();
+            };
+
+            stripes.push(stripe);
+            _currentStripe2 += stripeSize + stripeSpacing;
+        };
+
+        for (var _i2 = 0; _i2 < _numStripes2; _i2++) {
+            _loop3(_i2);
+        }
+    }
+
+    return stripes;
+}
+
+exports.stripes = stripes;
+
+},{"../complex/complex.js":12,"../simples/simples.js":30}],24:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Point = function () {
+    function Point(x, y) {
+        _classCallCheck(this, Point);
+
+        this._x = x;
+        this._y = y;
+    }
+
+    _createClass(Point, [{
+        key: "x",
+        get: function get() {
+            return this._x;
+        },
+        set: function set(x) {
+            this._x = x;
+        }
+    }, {
+        key: "y",
+        get: function get() {
+            return this._y;
+        },
+        set: function set(y) {
+            this._y = y;
+        }
+    }]);
+
+    return Point;
+}();
+
+exports.Point = Point;
+
+},{}],25:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.ShapesRegistry = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _canvas = require("./canvas.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var instance = null;
+
+var ShapesRegistry = function () {
+    function ShapesRegistry() {
+        _classCallCheck(this, ShapesRegistry);
+
+        if (!instance) {
+            instance = this;
+            this._shapes = {};
+            this._dynamicShapes = [];
+            this._staticShapes = [];
+            this._shapeId = 0;
+            this._maxShapes = 1000000;
+            this._fps = 60;
+            this._interval = 1000 / this._fps;
+            this.blur = false;
+            this._staticBackgroundCanvas = new _canvas.Canvas("staticBackgroundCanvas");
+            this._staticForegroundCanvas = new _canvas.Canvas("staticForegroundCanvas");
+            this._dynamicBackgroundCanvas = new _canvas.Canvas("dynamicBackgroundCanvas");
+            this._dynamicForegroundCanvas = new _canvas.Canvas("dynamicForegroundCanvas");
+            this.static = true;
+        }
+        return instance;
+    }
+
+    _createClass(ShapesRegistry, [{
+        key: "addToStaticBackground",
+        value: function addToStaticBackground(shape) {
+            var _this = this;
+
+            this.add(shape);
+            if (!Array.isArray(shape)) {
+                this.staticShapes.push(shape);
+            } else {
+                shape.forEach(function (s) {
+                    return _this.staticShapes.push(s);
+                });
+            }
+            shape.canvas = this.staticBackgroundCanvas;
+        }
+    }, {
+        key: "addToStaticForeground",
+        value: function addToStaticForeground(shape) {
+            var _this2 = this;
+
+            this.add(shape);
+            if (!Array.isArray(shape)) {
+                this.staticShapes.push(shape);
+            } else {
+                shape.forEach(function (s) {
+                    return _this2.staticShapes.push(s);
+                });
+            }
+            shape.canvas = this.staticForegroundCanvas;
+        }
+    }, {
+        key: "addToDynamicBackground",
+        value: function addToDynamicBackground(shape) {
+            var _this3 = this;
+
+            this.add(shape);
+            if (!Array.isArray(shape)) {
+                this.dynamicShapes.push(shape);
+            } else {
+                shape.forEach(function (s) {
+                    return _this3.dynamicShapes.push(s);
+                });
+            }
+            shape.canvas = this.dynamicBackgroundCanvas;
+        }
+    }, {
+        key: "addToDynamicForeground",
+        value: function addToDynamicForeground(shape) {
+            var _this4 = this;
+
+            this.add(shape);
+            if (!Array.isArray(shape)) {
+                this.dynamicShapes.push(shape);
+            } else {
+                shape.forEach(function (s) {
+                    return _this4.dynamicShapes.push(s);
+                });
+            }
+            shape.canvas = this.dynamicForegroundCanvas;
+        }
+    }, {
+        key: "forEach",
+        value: function forEach(callback) {
+            var _this5 = this;
+
+            Object.keys(this.shapes).forEach(function (key) {
+                var obj = _this5.shapes[key];
+                if (obj) {
+                    callback(obj);
+                }
+            });
+        }
+    }, {
+        key: "add",
+        value: function add(shape) {
+            var _this6 = this;
+
+            if (Array.isArray(shape)) {
+                shape.forEach(function (obj) {
+                    addShape.call(_this6, obj);
+                });
+            } else {
+                addShape.call(this, shape);
+            }
+
+            function addShape(s) {
+                s.id = this.shapeId;
+                this.shapeId++;
+                if (this.length < this.maxShapes) {
+                    this._shapes[s.id] = s;
+                }
+                if (!s.canvas) s.canvas = this.staticBackgroundCanvas;
+            }
+        }
+    }, {
+        key: "remove",
+        value: function remove(shape) {
+            var shapesRegistry = this;
+            setTimeout(function () {
+                delete shapesRegistry._shapes[shape.id];
+            }, 0);
+        }
+    }, {
+        key: "reset",
+        value: function reset() {
+            this.shapeId = 0;
+            this.shapes = {};
+        }
+    }, {
+        key: "staticBackgroundCanvas",
+        get: function get() {
+            return this._staticBackgroundCanvas;
+        },
+        set: function set(staticBackgroundCanvas) {
+            this._staticBackgroundCanvas = staticBackgroundCanvas;
+        }
+    }, {
+        key: "dynamicBackgroundCanvas",
+        get: function get() {
+            return this._dynamicBackgroundCanvas;
+        },
+        set: function set(dynamicBackgroundCanvas) {
+            this._dynamicBackgroundCanvas = dynamicBackgroundCanvas;
+        }
+    }, {
+        key: "staticForegroundCanvas",
+        get: function get() {
+            return this._staticForegroundCanvas;
+        },
+        set: function set(staticForegroundCanvas) {
+            this._staticForegroundCanvas = staticForegroundCanvas;
+        }
+    }, {
+        key: "dynamicForegroundCanvas",
+        get: function get() {
+            return this._dynamicForegroundCanvas;
+        },
+        set: function set(dynamicForegroundCanvas) {
+            this._dynamicBackgroundCanvas = dynamicBackgroundCanvas;
+        }
+    }, {
+        key: "allCanvases",
+        get: function get() {
+            return [this.staticBackgroundCanvas, this.dynamicBackgroundCanvas, this.staticForegroundCanvas, this.dynamicForegroundCanvas];
+        }
+    }, {
+        key: "shapes",
+        get: function get() {
+            return this._shapes;
+        },
+        set: function set(shapes) {
+            this._shapes = shapes;
+        }
+    }, {
+        key: "dynamicShapes",
+        get: function get() {
+            return this._dynamicShapes;
+        },
+        set: function set(dynamicShapes) {
+            this._dynamicShapes = dynamicShapes;
+        }
+    }, {
+        key: "staticShapes",
+        get: function get() {
+            return this._staticShapes;
+        },
+        set: function set(staticShapes) {
+            this._staticShapes = staticShapes;
+        }
+    }, {
+        key: "shapeId",
+        get: function get() {
+            return this._shapeId;
+        },
+        set: function set(id) {
+            this._shapeId = id;
+        }
+    }, {
+        key: "maxShapes",
+        get: function get() {
+            return this._maxShapes;
+        },
+        set: function set(n) {
+            this._maxShapes = n;
+        }
+    }, {
+        key: "length",
+        get: function get() {
+            return Object.keys(this.shapes).length;
+        }
+    }]);
+
+    return ShapesRegistry;
+}();
+
+exports.ShapesRegistry = ShapesRegistry;
+
+},{"./canvas.js":3}],26:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Circle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require("../sprite.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Circle = function (_Sprite) {
+    _inherits(Circle, _Sprite);
+
+    function Circle(x, y, width, height) {
+        _classCallCheck(this, Circle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Circle).call(this, x, y, width, height));
+
+        _this.type = "Circle";
+        _this._radius = width / 2;
+        _this.startAngle = 0;
+        _this.endAngle = 2;
+        return _this;
+    }
+
+    _createClass(Circle, [{
+        key: "createSATObject",
+        value: function createSATObject() {
+            return [new SAT.Circle(new SAT.Vector(this.center.x, this.center.y), this.width / 2)];
+        }
+    }, {
+        key: "draw",
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Circle.prototype), "draw", this).call(this, ctx);
+
+            ctx.beginPath();
+
+            ctx.arc(this.center.x, this.center.y, this.radius, this.startAngle, this.endAngle);
+
+            if (!this.pathOnly) ctx.fill();
+            if (!this.pathOnly && this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }, {
+        key: "radius",
+        get: function get() {
+            return this._radius;
+        },
+        set: function set(radius) {
+            this._radius = radius;
+        }
+    }, {
+        key: "width",
+        get: function get() {
+            return _get(Object.getPrototypeOf(Circle.prototype), "width", this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(Circle.prototype), "width", width, this);
+            this.radius = width / 2;
+        }
+    }, {
+        key: "height",
+        get: function get() {
+            return _get(Object.getPrototypeOf(Circle.prototype), "height", this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(Circle.prototype), "height", height, this);
+            //this.radius = height/2;
+        }
+    }, {
+        key: "startAngle",
+        get: function get() {
+            return this._startAngle;
+        },
+        set: function set(startAngle) {
+            this._startAngle = startAngle * Math.PI;
+            //this.radius = height/2;
+        }
+    }, {
+        key: "endAngle",
+        get: function get() {
+            return this._endAngle;
+        },
+        set: function set(endAngle) {
+            this._endAngle = endAngle * Math.PI;
+            //this.radius = height/2;
+        }
+    }]);
+
+    return Circle;
+}(_sprite.Sprite);
+
+exports.Circle = Circle;
+
+},{"../sprite.js":35}],27:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Polygon = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require('../sprite.js');
+
+var _point = require('../point.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Polygon = function (_Sprite) {
+    _inherits(Polygon, _Sprite);
+
+    function Polygon(x, y, width, height, sides) {
+        _classCallCheck(this, Polygon);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Polygon).call(this, x, y, width, height));
+
+        _this.type = "Polygon";
+        _this._sides = sides;
+        _this._points = [];
+        _this._radius = _this.width / 2;
+        _this.updatePolygon();
+        return _this;
+    }
+
+    _createClass(Polygon, [{
+        key: 'rotate',
+        value: function rotate(deg, transformOrigin) {
+            _get(Object.getPrototypeOf(Polygon.prototype), 'rotate', this).call(this, deg, transformOrigin);
+            this.points = this.points.map(function (point) {
+                return trees.rotatePoint(point, transformOrigin, deg);
+            });
+        }
+    }, {
+        key: '_updatePoints',
+        value: function _updatePoints() {
+            var oldOrigin = this.origin;
+            _get(Object.getPrototypeOf(Polygon.prototype), '_updatePoints', this).call(this);
+            if (!this.points) this.updatePolygon();
+
+            var xDiff = this.origin.x - oldOrigin.x;
+            var yDiff = this.origin.y - oldOrigin.y;
+
+            this.points = this.points.map(function (point) {
+                return new _point.Point(point.x + xDiff, point.y + yDiff);
+            });
+        }
+    }, {
+        key: 'updatePolygon',
+        value: function updatePolygon() {
+            this._points = [];
+
+            var startingPoint = trees.getPointOnLine(this.a, this.width / 2, trees.getAngle(this.a, this.b));
+            var a = Math.acos((startingPoint.x - this.center.x) / this.radius);
+
+            for (var i = 0; i < this.sides; i++) {
+                var x = this.center.x + this.radius * Math.cos(a + 2 * Math.PI * i / this.sides);
+                var y = this.center.y + this.radius * Math.sin(a + 2 * Math.PI * i / this.sides);
+                this._points[i] = new _point.Point(x, y);
+            }
+        }
+    }, {
+        key: 'createSATObject',
+        value: function createSATObject() {
+            var _this2 = this;
+
+            var result = [];
+            this.points.forEach(function (point) {
+                result.push(new SAT.Vector(point.x - _this2.x, point.y - _this2.y));
+            });
+            return [new SAT.Polygon(new SAT.Vector(this.x, this.y), result)];
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Polygon.prototype), 'draw', this).call(this, ctx);
+            var rect = {
+                a: this.a,
+                b: this.b,
+                c: this.c,
+                d: this.d
+            };
+
+            if (this.points.length) {
+                ctx.beginPath();
+                ctx.yMove(this.points[0]);
+
+                this.points.forEach(function (point, index) {
+                    ctx.yLine(point);
+                });
+                ctx.yLine(this.points[0]);
+
+                if (this.lineColor) ctx.stroke();
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+    }, {
+        key: 'sides',
+        get: function get() {
+            return this._sides;
+        },
+        set: function set(sides) {
+            this._sides = sides;
+            this.updatePolygon();
+        }
+    }, {
+        key: 'points',
+        get: function get() {
+            return this._points;
+        },
+        set: function set(points) {
+            this._points = points;
+        }
+    }, {
+        key: 'radius',
+        get: function get() {
+            return this._radius;
+        },
+        set: function set(radius) {
+            this._radius = radius;
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Polygon.prototype), 'width', this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(Polygon.prototype), 'width', width, this);
+            this._radius = width / 2;
+            this.updatePolygon();
+        }
+    }]);
+
+    return Polygon;
+}(_sprite.Sprite);
+
+exports.Polygon = Polygon;
+
+},{"../point.js":24,"../sprite.js":35}],28:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Rectangle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require('../sprite.js');
+
+var _drawInstruction = require('../drawInstruction.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Rectangle = function (_Sprite) {
+    _inherits(Rectangle, _Sprite);
+
+    function Rectangle(x, y, width, height, angle) {
+        _classCallCheck(this, Rectangle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Rectangle).call(this, x, y, width, height, angle));
+
+        _this.type = "Rectangle";
+
+        var lines = _this.lines();
+        lines.forEach(function (line) {
+            _this.drawingInstructions.push(new _drawInstruction.DrawInstruction(line));
+        });
+        return _this;
+    }
+
+    _createClass(Rectangle, [{
+        key: 'createSATObject',
+        value: function createSATObject() {
+            return [new SAT.Polygon(new SAT.Vector(this.x, this.y), [new SAT.Vector(this.a.x - this.x, this.a.y - this.y), new SAT.Vector(this.b.x - this.x, this.b.y - this.y), new SAT.Vector(this.c.x - this.x, this.c.y - this.y), new SAT.Vector(this.d.x - this.x, this.d.y - this.y)])];
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            ctx = ctx || this.canvas && this.canvas.ctx;
+            _get(Object.getPrototypeOf(Rectangle.prototype), 'draw', this).call(this, ctx);
+            var rect = {
+                a: this.a,
+                b: this.b,
+                c: this.c,
+                d: this.d
+            };
+
+            ctx.beginPath();
+            ctx.yMove(this.a);
+            ctx.yRect(rect);
+            if (!this.pathOnly) ctx.fill();
+            if (!this.pathOnly && this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }]);
+
+    return Rectangle;
+}(_sprite.Sprite);
+
+exports.Rectangle = Rectangle;
+
+},{"../drawInstruction.js":15,"../sprite.js":35}],29:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SemiCircle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require("../sprite.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SemiCircle = function (_Sprite) {
+    _inherits(SemiCircle, _Sprite);
+
+    function SemiCircle(x, y, width, height, angle) {
+        _classCallCheck(this, SemiCircle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SemiCircle).call(this, x, y, width, height, angle));
+
+        _this.type = "SemiCircle";
+        _this._radius = width / 2;
+
+        return _this;
+    }
+
+    _createClass(SemiCircle, [{
+        key: "createSATObject",
+        value: function createSATObject() {
+            return [new SAT.Circle(new SAT.Vector(this.center.x, this.center.y), this.radius)];
+        }
+    }, {
+        key: "draw",
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(SemiCircle.prototype), "draw", this).call(this, ctx);
+
+            ctx.beginPath();
+
+            ctx.arc(this.center.x, this.center.y, this.radius, 1 * Math.PI, 0);
+
+            ctx.fill();
+            if (this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }, {
+        key: "radius",
+        get: function get() {
+            return this._radius;
+        },
+        set: function set(radius) {
+            this._radius = radius;
+        }
+    }, {
+        key: "width",
+        get: function get() {
+            return _get(Object.getPrototypeOf(SemiCircle.prototype), "width", this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(SemiCircle.prototype), "width", width, this);
+            this.radius = width / 2;
+        }
+    }, {
+        key: "height",
+        get: function get() {
+            return _get(Object.getPrototypeOf(SemiCircle.prototype), "height", this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(SemiCircle.prototype), "height", height, this);
+            //this.radius = height/2;
+        }
+    }]);
+
+    return SemiCircle;
+}(_sprite.Sprite);
+
+exports.SemiCircle = SemiCircle;
+
+},{"../sprite.js":35}],30:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.simples = undefined;
+
+var _rectangle = require('./rectangle.js');
+
+var _triangle = require('./triangle.js');
+
+var _circle = require('./circle.js');
+
+var _polygon = require('./polygon.js');
+
+var _semiCircle = require('./semiCircle.js');
+
+var _wedge = require('./wedge.js');
+
+var _trapezoid = require('./trapezoid.js');
+
+var _text = require('./text.js');
+
+var simples = {
+    Rectangle: _rectangle.Rectangle,
+    Circle: _circle.Circle,
+    Wedge: _wedge.Wedge,
+    Trapezoid: _trapezoid.Trapezoid,
+    Text: _text.Text
+};
+
+exports.simples = simples;
+
+},{"./circle.js":26,"./polygon.js":27,"./rectangle.js":28,"./semiCircle.js":29,"./text.js":31,"./trapezoid.js":32,"./triangle.js":33,"./wedge.js":34}],31:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Text = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require('../sprite.js');
+
+var _shapesregistry = require('../shapesregistry.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var shapesRegistry = new _shapesregistry.ShapesRegistry();
+
+var Text = function (_Sprite) {
+    _inherits(Text, _Sprite);
+
+    function Text(text, x, y, size, font) {
+        _classCallCheck(this, Text);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Text).call(this, x, y, size, size));
+
+        _this.type = "Text";
+        _this._value = text;
+        _this._size = size;
+        _this._fontName = font;
+        _this._font = size + "px " + font;
+        return _this;
+    }
+
+    _createClass(Text, [{
+        key: 'draw',
+        value: function draw(ctx) {
+            var _this2 = this;
+
+            ctx = ctx || this.canvas && this.canvas.ctx;
+            _get(Object.getPrototypeOf(Text.prototype), 'draw', this).call(this, ctx);
+            ctx.font = this.font;
+            ctx.textBaseline = "hanging";
+            ctx.textAlign = "center";
+            if (Array.isArray(this.color)) {
+                (function () {
+                    var letters = _this2.value.split("");
+                    var x = _this2.x;
+                    letters.forEach(function (letter, index) {
+                        var color = void 0;
+                        if (index <= _this2.color.length - 1) {
+                            color = _this2.color[index];
+                        } else {
+                            color = _this2.color[index % _this2.color.length];
+                        }
+                        ctx.fillStyle = color;
+                        ctx.fillText(letter, x, _this2.y + index * 20);
+                        x += ctx.measureText(letter).width;
+                    });
+                })();
+            } else {
+                ctx.fillText(this.value, this.x, this.y);
+            }
+        }
+    }, {
+        key: 'getWidth',
+        get: function get() {
+            return shapesRegistry.canvas.measureText(this.value, this.font);
+        }
+    }, {
+        key: 'value',
+        get: function get() {
+            return this._value;
+        },
+        set: function set(value) {
+            this._value = value;
+        }
+    }, {
+        key: 'fontName',
+        get: function get() {
+            return this._fontName;
+        },
+        set: function set(fontName) {
+            this._fontName = fontName;
+        }
+    }, {
+        key: 'font',
+        get: function get() {
+            return this._font;
+        },
+        set: function set(font) {
+            this.fontName = font;
+            this._font = this.size + "px " + this.fontName;
+        }
+    }, {
+        key: 'size',
+        get: function get() {
+            return this._size;
+        },
+        set: function set(size) {
+            this._size = size;
+            this._font = size + "px " + this.fontName;
+        }
+    }]);
+
+    return Text;
+}(_sprite.Sprite);
+
+exports.Text = Text;
+
+},{"../shapesregistry.js":25,"../sprite.js":35}],32:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Trapezoid = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _point = require('../point.js');
+
+var _line = require('../line.js');
+
+var _sprite = require('../sprite.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Trapezoid = function (_Sprite) {
+    _inherits(Trapezoid, _Sprite);
+
+    function Trapezoid(x, y, width, height, leftAngle, rightAngle) {
+        _classCallCheck(this, Trapezoid);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Trapezoid).call(this, x, y, width, height));
+
+        _this.type = "Trapezoid";
+
+        if (typeof leftAngle !== "number") {
+            throw new Error("No angle for trapezoid was supplied.");
+        }
+
+        if (typeof rightAngle !== "number") {
+            rightAngle = leftAngle;
+        }
+
+        //left angle is the degree of the top left corner.
+        //right angle is the degree of the top right corner.
+
+        _this._leftAngle = leftAngle;
+        _this._rightAngle = rightAngle;
+        _this._setAngles();
+
+        if (_this.topLeft.x > _this.topRight.x || _this.bottomLeft.x > _this.bottomRight.x || _this.topLeft.y > _this.bottomLeft.y || _this.topRight.y > _this.bottomRight.y) {
+            throw new Error("Parameters do not define trapezoid.");
+        }
+        //this.showBoundingBox = true;
+
+        return _this;
+    }
+
+    _createClass(Trapezoid, [{
+        key: 'animate',
+        value: function animate() {
+            // if (!this.collidingWithPlatform) this.fall();
+        }
+    }, {
+        key: 'lines',
+        value: function lines() {
+            return [new _line.Line(this.topLeft, this.topRight), new _line.Line(this.topRight, this.bottomRight), new _line.Line(this.bottomRight, this.bottomLeft), new _line.Line(this.bottomLeft, this.topLeft)];
+        }
+    }, {
+        key: 'getSideLength',
+        value: function getSideLength(angle, height) {
+            var radians = trees.degToRad(180 - angle);
+            return height / Math.sin(radians);
+        }
+    }, {
+        key: 'rotate',
+        value: function rotate(deg, transformOrigin) {
+            _get(Object.getPrototypeOf(Trapezoid.prototype), 'rotate', this).call(this, deg, transformOrigin);
+            if (this.topLeft) {
+                this.topLeft = trees.rotatePoint(this.topLeft, transformOrigin, deg);
+                this.topRight = trees.rotatePoint(this.topRight, transformOrigin, deg);
+                this.bottomLeft = trees.rotatePoint(this.bottomLeft, transformOrigin, deg);
+                this.bottomRight = trees.rotatePoint(this.bottomRight, transformOrigin, deg);
+            }
+        }
+    }, {
+        key: 'trimTop',
+        value: function trimTop(amount) {
+            //main concern with this function is it does not adjust the width as trapezoid scales
+            //therefore, we should be careful when collision testing, if that becomes necessary.
+            var oldHeight = this.height;
+            var oldLeftHypotenuse = this.getSideLength(this.leftAngle, oldHeight);
+            var oldRightHypotenuse = this.getSideLength(this.rightAngle, oldHeight);
+
+            var bottomLeft = trees.copyPoint(this.bottomLeft);
+            var bottomRight = trees.copyPoint(this.bottomRight);
+            var topRight = trees.copyPoint(this.topRight);
+            var topLeft = trees.copyPoint(this.topLeft);
+
+            _get(Object.getPrototypeOf(Trapezoid.prototype), 'trimTop', this).call(this, amount);
+
+            var newLeftHypotenuse = this.getSideLength(this.leftAngle, this.height);
+            var newRightHypotenuse = this.getSideLength(this.rightAngle, this.height);
+
+            this.topLeft = trees.getPointOnLine(topLeft, oldLeftHypotenuse - newLeftHypotenuse, trees.getAngle(this.topLeft, this.bottomLeft));
+            this.topRight = trees.getPointOnLine(topRight, oldRightHypotenuse - newRightHypotenuse, trees.getAngle(this.topRight, this.bottomRight));
+
+            this.bottomLeft = bottomLeft;
+            this.bottomRight = bottomRight;
+        }
+    }, {
+        key: 'growTop',
+        value: function growTop(amount) {
+            this.trimTop(-amount);
+        }
+    }, {
+        key: '_setAngles',
+        value: function _setAngles() {
+            if (this.leftAngle < 90) {
+
+                this._topLeft = this.a;
+                this._bottomLeft = trees.getPointOnLine(this.a, this.getSideLength(this.leftAngle, this.height), this.leftAngle);
+            } else {
+
+                this._topLeft = trees.getPointOnLine(this.d, -this.getSideLength(this.leftAngle, this.height), this.leftAngle);
+                this._bottomLeft = this.d;
+            }
+
+            if (this.rightAngle < 90) {
+
+                this._topRight = this.b;
+                this._bottomRight = trees.getPointOnLine(this.b, this.getSideLength(this.rightAngle, this.height), 180 - this.rightAngle);
+            } else {
+
+                this._topRight = trees.getPointOnLine(this.c, -this.getSideLength(this.rightAngle, this.height), 180 - this.rightAngle);
+                this._bottomRight = this.c;
+            }
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Trapezoid.prototype), 'draw', this).call(this, ctx);
+
+            ctx.beginPath();
+            ctx.yMove(this.topLeft);
+            ctx.yLine(this.bottomLeft);
+            ctx.yLine(this.bottomRight);
+            ctx.yLine(this.topRight);
+            ctx.yLine(this.topLeft);
+
+            if (!this.pathOnly) ctx.fill();
+            if (!this.pathOnly && this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }, {
+        key: 'x',
+        set: function set(x) {
+            var oldX = this.x;
+            var diffX = x - oldX;
+            _set(Object.getPrototypeOf(Trapezoid.prototype), 'x', x, this);
+            this.topLeft.x += diffX;
+            this.topRight.x += diffX;
+            this.bottomLeft.x += diffX;
+            this.bottomRight.x += diffX;
+        },
+        get: function get() {
+            return _get(Object.getPrototypeOf(Trapezoid.prototype), 'x', this);
+        }
+    }, {
+        key: 'y',
+        set: function set(y) {
+            var oldY = this.y;
+            var diffY = y - oldY;
+            _set(Object.getPrototypeOf(Trapezoid.prototype), 'y', y, this);
+            this.topLeft.y += diffY;
+            this.topRight.y += diffY;
+            this.bottomLeft.y += diffY;
+            this.bottomRight.y += diffY;
+        },
+        get: function get() {
+            return _get(Object.getPrototypeOf(Trapezoid.prototype), 'y', this);
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Trapezoid.prototype), 'width', this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(Trapezoid.prototype), 'width', width, this);
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Trapezoid.prototype), 'height', this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(Trapezoid.prototype), 'height', height, this);
+        }
+    }, {
+        key: 'area',
+        get: function get() {
+            return 0.5 * (this.b1 + this.b2) * this.height;
+        }
+    }, {
+        key: 'b1',
+        get: function get() {
+            return this.topRight.x - this.topLeft.x;
+        }
+    }, {
+        key: 'b2',
+        get: function get() {
+            return this.bottomRight.x - this.bottomLeft.x;
+        }
+    }, {
+        key: 'bottomLeft',
+        get: function get() {
+            return this._bottomLeft;
+        },
+        set: function set(bottomLeft) {
+            this._bottomLeft = bottomLeft;
+        }
+    }, {
+        key: 'bottomRight',
+        get: function get() {
+            return this._bottomRight;
+        },
+        set: function set(bottomRight) {
+            this._bottomRight = bottomRight;
+        }
+    }, {
+        key: 'topLeft',
+        get: function get() {
+            return this._topLeft;
+        },
+        set: function set(topLeft) {
+            this._topLeft = topLeft;
+        }
+    }, {
+        key: 'topRight',
+        get: function get() {
+            return this._topRight;
+        },
+        set: function set(topRight) {
+            this._topRight = topRight;
+        }
+    }, {
+        key: 'leftAngle',
+        get: function get() {
+            return this._leftAngle;
+        },
+        set: function set(leftAngle) {
+            this._leftAngle = leftAngle;
+        }
+    }, {
+        key: 'rightAngle',
+        get: function get() {
+            return this._rightAngle;
+        },
+        set: function set(rightAngle) {
+            this._rightAngle = rightAngle;
+        }
+    }]);
+
+    return Trapezoid;
+}(_sprite.Sprite);
+
+exports.Trapezoid = Trapezoid;
+
+},{"../line.js":18,"../point.js":24,"../sprite.js":35}],33:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Triangle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _sprite = require('../sprite.js');
+
+var _point = require('../point.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Triangle = function (_Sprite) {
+    _inherits(Triangle, _Sprite);
+
+    function Triangle(x, y, width, height, angle) {
+        _classCallCheck(this, Triangle);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Triangle).call(this, x, y, width, height, angle));
+
+        _this.type = "Triangle";
+        _this.ta = new _point.Point(_this.d.x, _this.d.y);
+        _this.tb = new _point.Point(_this.c.x, _this.c.y);
+        _this.tc = trees.getPointOnLine(_this.a, _this.width / 2, trees.getAngle(_this.a, _this.b));
+        return _this;
+    }
+
+    _createClass(Triangle, [{
+        key: 'rotate',
+        value: function rotate(deg, transformOrigin) {
+            _get(Object.getPrototypeOf(Triangle.prototype), 'rotate', this).call(this, deg, transformOrigin);
+            this.ta = trees.rotatePoint(this.ta, transformOrigin, deg);
+            this.tb = trees.rotatePoint(this.tb, transformOrigin, deg);
+            this.tc = trees.rotatePoint(this.tc, transformOrigin, deg);
+        }
+    }, {
+        key: '_updatePoints',
+        value: function _updatePoints() {
+            var oldOrigin = this.origin;
+            _get(Object.getPrototypeOf(Triangle.prototype), '_updatePoints', this).call(this);
+
+            var xDiff = this.origin.x - oldOrigin.x;
+            var yDiff = this.origin.y - oldOrigin.y;
+            if (!this.ta) {
+                this.ta = new _point.Point(this.d.x, this.d.y);
+                this.tb = new _point.Point(this.c.x, this.c.y);
+                this.tc = trees.getPointOnLine(this.a, this.width / 2, trees.getAngle(this.a, this.b));
+            }
+            this.ta = new _point.Point(this.ta.x + xDiff, this.ta.y + yDiff);
+            this.tb = new _point.Point(this.tb.x + xDiff, this.tb.y + yDiff);
+            this.tc = new _point.Point(this.tc.x + xDiff, this.tc.y + yDiff);
+        }
+    }, {
+        key: 'createSATObject',
+        value: function createSATObject() {
+            return [new SAT.Polygon(new SAT.Vector(this.x, this.y), [new SAT.Vector(this.ta.x - this.x, this.ta.y - this.y), new SAT.Vector(this.tc.x - this.x, this.tc.y - this.y), new SAT.Vector(this.tb.x - this.x, this.tb.y - this.y)])];
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Triangle.prototype), 'draw', this).call(this, ctx);
+            ctx.beginPath();
+            ctx.moveTo(this.ta.x, this.ta.y);
+            ctx.lineTo(this.tb.x, this.tb.y);
+            ctx.lineTo(this.tc.x, this.tc.y);
+            ctx.lineTo(this.ta.x, this.ta.y);
+            if (!this.pathOnly) ctx.fill();
+            if (!this.pathOnly && this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Triangle.prototype), 'width', this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(Triangle.prototype), 'width', width, this);
+            this.tb = new _point.Point(this.c.x, this.c.y);
+            this.tc = trees.getPointOnLine(this.a, trees.getDistance(this.a, this.b) / 2, trees.getAngle(this.a, this.b));
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Triangle.prototype), 'height', this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(Triangle.prototype), 'height', height, this);
+            this.ta = new _point.Point(this.d.x, this.d.y);
+            this.tb = new _point.Point(this.c.x, this.c.y);
+        }
+    }, {
+        key: 'points',
+        get: function get() {
+            return [this.ta, this.tb, this.tc];
+        },
+        set: function set(arr) {
+            if (!Array.isArray(arr) || arr.length < 3) {
+                throw new Error("Triangle points property expects array with three Point objects");
+            }
+            this.ta = arr[0];
+            this.tb = arr[1];
+            this.tc = arr[2];
+        }
+    }]);
+
+    return Triangle;
+}(_sprite.Sprite);
+
+exports.Triangle = Triangle;
+
+},{"../point.js":24,"../sprite.js":35}],34:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Wedge = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _point = require('../point.js');
+
+var _sprite = require('../sprite.js');
+
+var _curve = require('../curve.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function getBezierDistance(n) {
+    return n / 2 * 0.552284749831;
+}
+
+var Wedge = function (_Sprite) {
+    _inherits(Wedge, _Sprite);
+
+    function Wedge(x, y, width, height) {
+        _classCallCheck(this, Wedge);
+
+        // Here, it calls the parent class' constructor with lengths
+        // provided for the Polygon's width and height
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Wedge).call(this, x, y, width, height));
+    }
+
+    _createClass(Wedge, [{
+        key: '_updatePoints',
+        value: function _updatePoints() {
+            var oldOrigin = this.origin;
+            _get(Object.getPrototypeOf(Wedge.prototype), '_updatePoints', this).call(this);
+
+            var xDiff = this.origin.x - oldOrigin.x;
+            var yDiff = this.origin.y - oldOrigin.y;
+            if (!this.cp1) {
+                this._cp1 = new _point.Point(this.x + getBezierDistance(this.width * 2), this.y);
+                this._cp2 = new _point.Point(this.b.x, this.c.y - getBezierDistance(this.height * 2));
+                this._end = new _point.Point(this.c.x, this.c.y);
+            }
+            this.cp1 = new _point.Point(this.cp1.x + xDiff, this.cp1.y + yDiff);
+            this.cp2 = new _point.Point(this.cp2.x + xDiff, this.cp2.y + yDiff);
+            this.end = new _point.Point(this.end.x + xDiff, this.end.y + yDiff);
+
+            this._curve = new _curve.Curve(this._cp1, this._cp2, this._end);
+        }
+    }, {
+        key: 'rotate',
+        value: function rotate(deg, transformOrigin) {
+            _get(Object.getPrototypeOf(Wedge.prototype), 'rotate', this).call(this, deg, transformOrigin);
+            this.cp1 = trees.rotatePoint(this.cp1, transformOrigin, deg);
+            this.cp2 = trees.rotatePoint(this.cp2, transformOrigin, deg);
+            this.end = trees.rotatePoint(this.end, transformOrigin, deg);
+            this.curve = new _curve.Curve(this.cp1, this.cp2, this.end);
+        }
+    }, {
+        key: 'getReverseCurve',
+        value: function getReverseCurve() {
+            return new _curve.Curve(this.cp2, this.cp1, this.a);
+        }
+    }, {
+        key: 'createSATObject',
+        value: function createSATObject() {
+            return [];
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            _get(Object.getPrototypeOf(Wedge.prototype), 'draw', this).call(this, ctx);
+            ctx.beginPath();
+            ctx.yMove(this.origin);
+            ctx.curve(this.curve);
+            ctx.yLine(this.d);
+            ctx.yLine(this.a);
+            ctx.fill();
+            if (this.lineColor) ctx.stroke();
+            ctx.closePath();
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Wedge.prototype), 'width', this);
+        },
+        set: function set(width) {
+            _set(Object.getPrototypeOf(Wedge.prototype), 'width', width, this);
+            this.cp1 = trees.getPointOnLine(this.a, getBezierDistance(this.width * 2), trees.getAngle(this.a, this.b));
+            this.cp2 = trees.getPointOnLine(this.c, getBezierDistance(-this.height * 2), trees.getAngle(this.b, this.c));
+            this.end = new _point.Point(this.c.x, this.c.y);
+            this._curve = new _curve.Curve(this._cp1, this._cp2, this._end);
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return _get(Object.getPrototypeOf(Wedge.prototype), 'height', this);
+        },
+        set: function set(height) {
+            _set(Object.getPrototypeOf(Wedge.prototype), 'height', height, this);
+            this.cp1 = trees.getPointOnLine(this.a, getBezierDistance(this.width * 2), trees.getAngle(this.a, this.b));
+            this.cp2 = trees.getPointOnLine(this.c, getBezierDistance(-this.height * 2), trees.getAngle(this.b, this.c));
+            this.end = new _point.Point(this.c.x, this.c.y);
+            this._curve = new _curve.Curve(this._cp1, this._cp2, this._end);
+        }
+    }, {
+        key: 'cp1',
+        get: function get() {
+            return this._cp1;
+        },
+        set: function set(cp1) {
+            this._cp1 = cp1;
+        }
+    }, {
+        key: 'cp2',
+        get: function get() {
+            return this._cp2;
+        },
+        set: function set(cp2) {
+            this._cp2 = cp2;
+        }
+    }, {
+        key: 'end',
+        get: function get() {
+            return this._end;
+        },
+        set: function set(end) {
+            this._end = end;
+        }
+    }, {
+        key: 'curve',
+        get: function get() {
+            return this._curve;
+        },
+        set: function set(curve) {
+            this._curve = curve;
+        }
+    }]);
+
+    return Wedge;
+}(_sprite.Sprite);
+
+exports.Wedge = Wedge;
+
+},{"../curve.js":14,"../point.js":24,"../sprite.js":35}],35:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Sprite = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _point = require('./point.js');
+
+var _line = require('./line.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Sprite = function () {
+    function Sprite(x, y, width, height) {
+        _classCallCheck(this, Sprite);
+
+        this._width = width || 0;
+        this._height = height || 0;
+        this._x = x || 0;
+        this._y = y || 0;
+        this._origin = new _point.Point(this.x, this.y);
+        this._a = new _point.Point(this.x, this.y);
+        this._b = new _point.Point(this.x + this.width, this.y);
+        this._c = new _point.Point(this.x + this.width, this.y + this.height);
+        this._d = new _point.Point(this.x, this.y + this.height);
+        this._boundary = {};
+        this._center = new _point.Point(this.x + this.width / 2, this.y + this.height / 2);
+        this._updatePoints();
+        this._lineWidth = 1;
+        this._showBoundingBox = false;
+        this._color = "transparent";
+        this._lineColor = null;
+        this._id = null;
+        this._collidingWith = null;
+        this._collidable = false;
+        this._minHeight = 1;
+        this._visible = true;
+        this._pathOnly = false;
+        this._drawingInstructions = [];
+    }
+
+    _createClass(Sprite, [{
+        key: 'rotate',
+        value: function rotate(deg, transformOrigin) {
+            if (typeof deg !== "number" || typeof transformOrigin.x !== "number" || typeof transformOrigin.y !== "number") {
+                throw new Error('Attempted to rotate using non-numeric value');
+            }
+            this._origin = trees.rotatePoint(this.origin, transformOrigin, deg);
+            this._x = this.origin.x;
+            this._y = this.origin.y;
+            this.a = trees.rotatePoint(this.a, transformOrigin, deg);
+            this.b = trees.rotatePoint(this.b, transformOrigin, deg);
+            this.c = trees.rotatePoint(this.c, transformOrigin, deg);
+            this.d = trees.rotatePoint(this.d, transformOrigin, deg);
+            this.center = trees.rotatePoint(this.center, transformOrigin, deg);
+
+            this._updateBoundaries();
+        }
+    }, {
+        key: 'trimTop',
+        value: function trimTop(amount) {
+            amount = this.height - amount > this._minHeight ? amount : this.height - this._minHeight;
+            this._height -= amount;
+            var angle = trees.getAngle(this.a, this.d);
+            var newOrigin = trees.getPointOnLine(this.a, amount, angle);
+
+            this.x = newOrigin.x;
+            this.y = newOrigin.y;
+            this.c = trees.getPointOnLine(this.c, -amount, angle);
+            this.d = trees.getPointOnLine(this.d, -amount, angle);
+
+            this.center = trees.getPointOnLine(this.a, trees.getDistance(this.a, this.c) / 2, trees.getAngle(this.a, this.c));
+            this._updateBoundaries();
+        }
+    }, {
+        key: 'growTop',
+        value: function growTop(amount) {
+            this._height += amount;
+            var angle = trees.getAngle(this.a, this.d);
+            var newOrigin = trees.getPointOnLine(this.a, -amount, angle);
+            this.x = newOrigin.x;
+            this.y = newOrigin.y;
+            this.c = trees.getPointOnLine(this.c, amount, angle);
+            this.d = trees.getPointOnLine(this.d, amount, angle);
+            this.center = trees.getPointOnLine(this.a, trees.getDistance(this.a, this.c) / 2, trees.getAngle(this.a, this.c));
+            this._updateBoundaries();
+        }
+    }, {
+        key: 'lines',
+        value: function lines() {
+            return [new _line.Line(this.a, this.b), new _line.Line(this.b, this.c), new _line.Line(this.c, this.d), new _line.Line(this.d, this.a)];
+        }
+    }, {
+        key: 'wasClicked',
+        value: function wasClicked(mouseX, mouseY) {
+            if (this.boundary.a.x <= mouseX && this.boundary.b.x >= mouseX && this.boundary.a.y * 0.9 <= mouseY && this.boundary.d.y * 1.1 >= mouseY) {
+                return this;
+            }
+            return null;
+        }
+    }, {
+        key: '_updatePoints',
+        value: function _updatePoints() {
+
+            var oldOrigin = this.origin;
+            this.origin = new _point.Point(this.x, this.y);
+            var xDiff = this.origin.x - oldOrigin.x;
+            var yDiff = this.origin.y - oldOrigin.y;
+            this.center = new _point.Point(this.center.x + xDiff, this.center.y + yDiff);
+
+            this.a = new _point.Point(this.a.x + xDiff, this.a.y + yDiff);
+            this.b = new _point.Point(this.b.x + xDiff, this.b.y + yDiff);
+            this.c = new _point.Point(this.c.x + xDiff, this.c.y + yDiff);
+            this.d = new _point.Point(this.d.x + xDiff, this.d.y + yDiff);
+
+            this._updateBoundaries();
+        }
+    }, {
+        key: '_updateBoundaries',
+        value: function _updateBoundaries() {
+            var lowestX = Math.min(this.a.x, this.b.x, this.c.x, this.d.x);
+            var highestX = Math.max(this.a.x, this.b.x, this.c.x, this.d.x);
+            var lowestY = Math.min(this.a.y, this.b.y, this.c.y, this.d.y);
+            var highestY = Math.max(this.a.y, this.b.y, this.c.y, this.d.y);
+            var boundaryW = highestX - lowestX;
+            var boundaryH = highestY - lowestY;
+
+            this.boundary.a = new _point.Point(lowestX, lowestY);
+            this.boundary.b = new _point.Point(lowestX + boundaryW, lowestY);
+            this.boundary.c = new _point.Point(lowestX + boundaryW, lowestY + boundaryH);
+            this.boundary.d = new _point.Point(lowestX, lowestY + boundaryH);
+        }
+    }, {
+        key: 'draw',
+        value: function draw(ctx) {
+            ctx = ctx || this.canvas && this.canvas.ctx;
+
+            if (!ctx || !ctx.beginPath || !ctx.closePath) {
+                throw new Error("Attempted to draw without supplying context");
+            }
+            if (this.showBoundingBox) {
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.lineWidth = 1;
+                var size = 5;
+                ctx.rect(this.x - size / 2, this.y - size / 2, size, size);
+                ctx.rect(this.a.x - size / 2, this.a.y - size / 2, size, size);
+                ctx.rect(this.center.x - size / 2, this.center.y - size / 2, size, size);
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.fillStyle = "transparent";
+
+                ctx.strokeStyle = "blue";
+                ctx.beginPath();
+                ctx.yRect(this.boundary);
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.strokeStyle = "green";
+                ctx.beginPath();
+                ctx.yRect({
+                    a: this.a,
+                    b: this.b,
+                    c: this.c,
+                    d: this.d
+                });
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+            } else {
+
+                ctx.lineJoin = 'miter';
+                ctx.fillStyle = this.color;
+                ctx.strokeStyle = this.lineColor;
+                ctx.lineWidth = this.lineWidth;
+            }
+        }
+    }, {
+        key: 'x',
+        set: function set(x) {
+            if (typeof x !== "number") {
+                throw new Error("x must be a number.");
+            };
+            this._x = x;
+            this._updatePoints();
+        },
+        get: function get() {
+            return this._x;
+        }
+    }, {
+        key: 'y',
+        set: function set(y) {
+            if (typeof y !== "number") {
+                throw new Error("y must be a number.");
+            };
+            this._y = y;
+            this._updatePoints();
+        },
+        get: function get() {
+            return this._y;
+        }
+    }, {
+        key: 'center',
+        get: function get() {
+            return this._center;
+        },
+        set: function set(center) {
+            this._center = center;
+        }
+    }, {
+        key: 'origin',
+        get: function get() {
+            return this._origin;
+        },
+        set: function set(origin) {
+            this._origin = origin;
+        }
+    }, {
+        key: 'id',
+        set: function set(id) {
+            this._id = id;
+        },
+        get: function get() {
+            return this._id;
+        }
+    }, {
+        key: 'a',
+        set: function set(obj) {
+            this._a = obj;
+        },
+        get: function get() {
+            return this._a;
+        }
+    }, {
+        key: 'b',
+        set: function set(obj) {
+            this._b = obj;
+        },
+        get: function get() {
+            return this._b;
+        }
+    }, {
+        key: 'c',
+        set: function set(obj) {
+            this._c = obj;
+        },
+        get: function get() {
+            return this._c;
+        }
+    }, {
+        key: 'd',
+        set: function set(obj) {
+            this._d = obj;
+        },
+        get: function get() {
+            return this._d;
+        }
+    }, {
+        key: 'width',
+        get: function get() {
+            return this._width;
+        },
+        set: function set(width) {
+            if (typeof width !== "number") {
+                throw new Error("width must be a number.");
+            };
+            var oldWidth = this.width;
+            this._width = width;
+            var widthDiff = this.width - oldWidth;
+
+            var angle = trees.getAngle(this.a, this.b);
+            this.b = trees.getPointOnLine(this.b, widthDiff, angle);
+            this.c = trees.getPointOnLine(this.c, widthDiff, angle);
+
+            this.center = trees.getPointOnLine(this.a, trees.getDistance(this.a, this.c) / 2, trees.getAngle(this.a, this.c));
+            this._updateBoundaries();
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return this._height;
+        },
+        set: function set(height) {
+            if (typeof height !== "number") {
+                throw new Error("height must be a number.");
+            };
+            var oldHeight = this.height;
+            this._height = height;
+            var heightDiff = this.height - oldHeight;
+            var angle = trees.getAngle(this.a, this.d);
+
+            this.c = trees.getPointOnLine(this.c, heightDiff, angle);
+            this.d = trees.getPointOnLine(this.d, heightDiff, angle);
+
+            this.center = trees.getPointOnLine(this.a, trees.getDistance(this.a, this.c) / 2, trees.getAngle(this.a, this.c));
+            this._updateBoundaries();
+        }
+    }, {
+        key: 'showBoundingBox',
+        set: function set(bool) {
+            this._showBoundingBox = bool;
+        },
+        get: function get() {
+            return this._showBoundingBox;
+        }
+    }, {
+        key: 'collidable',
+        set: function set(collidable) {
+            this._collidable = collidable;
+        },
+        get: function get() {
+            return this._collidable;
+        }
+    }, {
+        key: 'color',
+        set: function set(color) {
+            this._color = color;
+        },
+        get: function get() {
+            return this._color;
+        }
+    }, {
+        key: 'lineColor',
+        set: function set(color) {
+            this._lineColor = color;
+        },
+        get: function get() {
+            return this._lineColor;
+        }
+    }, {
+        key: 'lineWidth',
+        set: function set(width) {
+            this._lineWidth = width;
+        },
+        get: function get() {
+            return this._lineWidth;
+        }
+    }, {
+        key: 'boundary',
+        get: function get() {
+            return this._boundary;
+        },
+        set: function set(boundary) {
+            this._boundary = boundary;
+        }
+    }, {
+        key: 'collidingWith',
+        get: function get() {
+            return this._collidingWith;
+        },
+        set: function set(collidingWith) {
+            this._collidingWith = collidingWith;
+        }
+    }, {
+        key: 'visible',
+        get: function get() {
+            return this._visible;
+        },
+        set: function set(visible) {
+            this._visible = visible;
+        }
+    }, {
+        key: 'pathOnly',
+        get: function get() {
+            return this._pathOnly;
+        },
+        set: function set(pathOnly) {
+            this._pathOnly = pathOnly;
+        }
+    }, {
+        key: 'drawingInstructions',
+        get: function get() {
+            return this._drawingInstructions;
+        },
+        set: function set(drawingInstructions) {
+            this._drawingInstructions = drawingInstructions;
+        }
+    }]);
+
+    return Sprite;
+}();
+
+exports.Sprite = Sprite;
+
+},{"./line.js":18,"./point.js":24}],36:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.keyboardEvents = undefined;
+
+var _canvas = require('../canvas.js');
+
+var _shapesregistry = require('../shapesregistry.js');
+
+var keyboardEvents = {
+    initialize: initialize
+};
+
+var shapes = new _shapesregistry.ShapesRegistry();
+var boundingBoxes = false;
+var i = 0;
+
+var nowScrolling = false;
+
+function initialize() {
+    document.onkeydown = mapKeys;
+}
+
+function toggleBoundingBoxes() {
+    boundingBoxes = !boundingBoxes;
+    shapes.forEach(function (shape) {
+        shape.showBoundingBox = boundingBoxes;
+    });
+}
+
+function scrollUp() {
+
+    nowScrolling = true;
+
+    if (i < shapes.staticBackgroundCanvas.height.percent(2)) {
+        shapes.allCanvases.forEach(function (canvas) {
+            canvas.scroll(-3);
+        });
+        i++;
+        setTimeout(scrollUp, 5);
+    } else {
+        nowScrolling = false;
+    }
+}
+
+function scrollDown() {
+    nowScrolling = true;
+    if (i < shapes.staticBackgroundCanvas.height.percent(2)) {
+        shapes.allCanvases.forEach(function (canvas) {
+            canvas.scroll(3);
+        });
+        i++;
+        setTimeout(scrollDown, 5);
+    } else {
+        nowScrolling = false;
+    }
+}
+
+function mapKeys(e) {
+    e = e || window.event;
+
+    switch (e.keyCode) {
+        case 32:
+            // space
+            toggleBoundingBoxes();
+            break;
+        case 38:
+            i = 0;
+            if (!nowScrolling) scrollUp();
+            break;
+        case 40:
+            // down
+            i = 0;
+            if (!nowScrolling) scrollDown();
+            break;
+        default:
+            return;
+    }
+    e.preventDefault();
+};
+
+exports.keyboardEvents = keyboardEvents;
+
+},{"../canvas.js":3,"../shapesregistry.js":25}],37:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.mouseEvents = undefined;
+
+var _canvas = require('../canvas.js');
+
+var _shapesregistry = require('../shapesregistry.js');
+
+var mouseEvents = {
+    initialize: initialize
+};
+
+var shapesRegistry = new _shapesregistry.ShapesRegistry();
+var clickedShape = null;
+var mouse = { x: null, y: null };
+var prevMouse = { x: null, y: null };
+var direction = { left: false, right: false, up: false, down: false };
+var mouseClick = null;
+var mouseMove = null;
+
+function initialize() {
+    window.addEventListener("mousedown", clickObject);
+    window.addEventListener("mouseup", releaseObject);
+}
+
+function clickObject(e) {
+    // let bRect = shapesRegistry.canvas.getBoundingClientRect();
+    // mouse.x = (e.clientX - bRect.left) * (shapesRegistry.canvas.width / bRect.width);
+    // mouse.y = (e.clientY - bRect.top) * (shapesRegistry.canvas.height / bRect.height);
+
+    // shapesRegistry.forEach(shape => {
+    //     let clicked = shape.wasClicked(mouse.x, mouse.y);
+
+    //     if (clicked) {
+
+    //         mouseClick = new CustomEvent('mouseClick', {
+    //             detail: { shape: clicked }
+    //         });
+
+    //         shapesRegistry.canvas.dispatchEvent(mouseClick);
+    //         window.addEventListener("mousemove", dragObject, false)
+    //     }
+    // });
+}
+
+function dragObject(e) {
+    // let bRect = shapesRegistry.canvas.getBoundingClientRect();
+    // mouse.x = (e.clientX - bRect.left) * (shapesRegistry.canvas.width / bRect.width);
+    // mouse.y = (e.clientY - bRect.top) * (shapesRegistry.canvas.height / bRect.height);
+
+    // clickedShape = null;
+
+    // shapesRegistry.forEach(shape => {
+    //     clickedShape = clickedShape || shape.wasClicked(mouse.x, mouse.y);
+    // });
+
+    // if (prevMouse.x) {
+
+    //     mouseMove = new CustomEvent('mouseMove', {
+    //         detail: { direction: direction, mouse: mouse, shape: clickedShape }
+    //     });
+
+    //     direction.left = prevMouse.x > mouse.x;
+    //     direction.right = prevMouse.x < mouse.x;
+    //     direction.up = prevMouse.y > mouse.y;
+    //     direction.down = prevMouse.y < mouse.y;
+    //     shapesRegistry.canvas.dispatchEvent(mouseMove);
+
+    // }
+
+    // prevMouse.x = mouse.x;
+    // prevMouse.y = mouse.y;
+
+
+}
+
+function releaseObject() {
+    window.removeEventListener("mousemove", dragObject, false);
+}
+
+exports.mouseEvents = mouseEvents;
+
+},{"../canvas.js":3,"../shapesregistry.js":25}],38:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.scrollEvents = undefined;
+
+var _shapesregistry = require('../shapesregistry.js');
+
+var scrollEvents = {
+    initialize: initialize
+};
+var shapes = new _shapesregistry.ShapesRegistry();
+
+function initialize() {
+
+    var nowScrolling = false;
+    var last_known_scroll_position = 0;
+    var ticking = false;
+
+    window.addEventListener('scroll', function (e) {
+        last_known_scroll_position = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                shapes.allCanvases.forEach(function (canvas) {
+                    canvas.currentY = last_known_scroll_position;
+                    canvas.scroll(0);
+                });
+                //document.getElementById("main").style.marginTop = -last_known_scroll_position + "px"
+                ticking = false;
+            });
+        }
+        ticking = true;
+    });
+}
+
+exports.scrollEvents = scrollEvents;
+
+},{"../shapesregistry.js":25}],39:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.level0 = undefined;
+
+var _engine = require("../engine/engine.js");
+
+var shapes = _engine.engine.shapesRegistry;
+var Width = void 0;
+var Height = void 0;
+
+var skyHeight = void 0;
+var lakeHeight = void 0;
+var earthHeight = void 0;
+var caveHeight = void 0;
+
+var BROWN = "#190D03";
+var BLUE = "rgb(0,47,57)";
+var GREEN = "rgb(0,74,37)";
+var DARKPURPLE = "#1A001A";
+var LIGHTPURPLE = "#44355B";
+var PINK = "pink";
+var FONTPRIMARY = "BungeeShade";
+var WHITE = "white";
+var BLACK = "black";
+var GRAY = "gray";
+var YELLOW = "yellow";
+var OLIVE = "#666633";
+
+function level0() {
+
+    Width = shapes.staticBackgroundCanvas.width;
+    Height = shapes.staticBackgroundCanvas.height;
+    shapes.staticBackgroundCanvas.element.style.backgroundColor = DARKPURPLE;
+
+    Clouds();
+    StripedBalloons();
+}
+
+function StripedBalloons() {
+    for (var i = 0; i < 5; i++) {
+
+        var size = Width.percent(trees.random(2, 5));
+        var x = Width.percent(trees.random(0, 95));
+        var y = Height.percent(trees.random(0, 95));
+
+        var balloon = new _engine.engine.client.StripedBalloon(x, y, size, size);
+        balloon.stripeWidth = balloon.width.percent(trees.random(1, 20));
+        balloon.stripeSpacing = balloon.width.percent(trees.random(1, 20));
+
+        balloon.stripeColor = function () {
+            var arr = [];
+            for (var _i = 0; _i < trees.random(1, 25); _i++) {
+                arr.push(trees.randomColor());
+            }
+            return arr;
+        }();
+
+        balloon.stripeOrientation = ["vertical", "diagonal", "horizontal"][trees.random(0, 2)];
+        balloon.color = trees.randomColor();
+        shapes.addToDynamicBackground(balloon);
+    }
+}
+
+function Clouds() {
+    for (var i = 0; i < 10; i++) {
+        var width = Width.percent(trees.random(2, 15));
+        var x = trees.random(0, Width);
+        var y = trees.random(0, Height);
+        var height = width / 4;
+        var cloud = new _engine.engine.client.Cloud(x, y, width, height);
+        var opacity = 1 - width / 300;
+        cloud.color = trees.setOpacity(WHITE, opacity);
+        shapes.addToStaticForeground(cloud);
+    }
+}
+
+exports.level0 = level0;
+
+},{"../engine/engine.js":17}],40:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.scenes = undefined;
+
+var _level = require('./level0.js');
+
+var scenes = {
+	level0: _level.level0
+};
+
+exports.scenes = scenes;
+
+},{"./level0.js":39}],41:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.trees = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _point = require('./engine/point.js');
+
+var _line = require('./engine/line.js');
+
+var _engine = require('./engine/engine.js');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * A SMALL utilities library using Underscore-like statics.
+ * @return {Object}
+ */
+
+var d = void 0;
+
+Number.prototype.percent = function (percentage) {
+    return this.valueOf() * percentage / 100;
+};
+
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while (k-- + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+};
+
+var trees = function () {
+    function trees() {
+        _classCallCheck(this, trees);
+    }
+
+    _createClass(trees, null, [{
+        key: 'random',
+
+
+        /**
+         * Returns a random number between min and max, inclusive
+         * @param  {Number} min
+         * @param  {Number} max
+         */
+        value: function random(min, max) {
+            if (max == null) {
+                max = min;
+                min = 0;
+            }
+            return min + Math.floor(Math.random() * (max - min + 1));
+        }
+    }, {
+        key: 'randomColor',
+
+
+        /**
+         * Returns a random hex color
+         * @return {String} 
+         */
+        value: function randomColor() {
+            return '#' + Math.floor(Math.random() * 16777215).toString(16);
+        }
+    }, {
+        key: 'moveToEnd',
+        value: function moveToEnd(arr, numElements) {
+            for (var i = 0; i < numElements; i++) {
+                arr.push(arr.shift());
+            }
+        }
+    }, {
+        key: 'posNeg',
+        value: function posNeg() {
+            if (this.random(0, 1) === 0) return -1;else return 1;
+        }
+    }, {
+        key: 'getRGB',
+        value: function getRGB(color) {
+            d = document.getElementById("staticBackgroundCanvas");
+            d.style.color = color;
+            document.body.appendChild(d);
+            return window.getComputedStyle(d).color;
+        }
+    }, {
+        key: 'setOpacity',
+        value: function setOpacity(color, opacity) {
+            var rgb = this.getRGB(color).replace("rgb", "rgba");
+            return [rgb.slice(0, rgb.length - 1), ", " + opacity.toString(), rgb.slice(rgb.length - 1)].join("");
+        }
+    }, {
+        key: 'getCenterX',
+        value: function getCenterX(innerWidth, outer) {
+            var outerCenter = outer.x + outer.width / 2;
+            var innerOffset = innerWidth / 2;
+            var innerX = outerCenter - innerOffset;
+            return innerX;
+        }
+    }, {
+        key: 'getBezierDistance',
+        value: function getBezierDistance(n) {
+            return n / 2 * 0.552284749831;
+        }
+    }, {
+        key: 'degToRad',
+        value: function degToRad(deg) {
+            return deg * (Math.PI / 180);
+        }
+    }, {
+        key: 'getAngle',
+        value: function getAngle(p1, p2) {
+            return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        }
+    }, {
+        key: 'getDistance',
+        value: function getDistance(p1, p2) {
+            return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+        }
+    }, {
+        key: 'rotatePoint',
+        value: function rotatePoint(point, origin, deg) {
+            var angle = deg * Math.PI / 180.0;
+            var x = Math.cos(angle) * (point.x - origin.x) - Math.sin(angle) * (point.y - origin.y) + origin.x;
+            var y = Math.sin(angle) * (point.x - origin.x) + Math.cos(angle) * (point.y - origin.y) + origin.y;
+            return new _point.Point(x, y);
+        }
+    }, {
+        key: 'getPointOnLine',
+        value: function getPointOnLine(firstPoint, width, angle) {
+            var secondPointX = firstPoint.x + width * Math.cos(this.degToRad(angle));
+            var secondPointY = firstPoint.y + width * Math.sin(this.degToRad(angle));
+            return new _point.Point(secondPointX, secondPointY);
+        }
+    }, {
+        key: 'copyPoint',
+        value: function copyPoint(point) {
+            return new _point.Point(point.x, point.y);
+        }
+    }, {
+        key: 'copyLine',
+        value: function copyLine(line) {
+            return new _line.Line(this.copyPoint(line.start), this.copyPoint(line.end));
+        }
+    }, {
+        key: 'resizeLine',
+        value: function resizeLine(line, amount) {
+            var angle = this.getAngle(line.start, line.end);
+            line.start = this.getPointOnLine(line.start, amount, angle);
+            line.end = this.getPointOnLine(line.end, -amount, angle);
+        }
+    }, {
+        key: 'moveLineHorizontal',
+        value: function moveLineHorizontal(line, amount) {
+            line.start.x += amount;
+            line.end.x += amount;
+        }
+    }, {
+        key: 'moveLineVertical',
+        value: function moveLineVertical(line, amount) {
+            line.start.y += amount;
+            line.end.y += amount;
+        }
+    }, {
+        key: 'polygonArea',
+        value: function polygonArea(lines) {
+
+            var X = [];
+            var Y = [];
+
+            lines.forEach(function (line) {
+                X.push(line.start.x);
+                X.push(line.end.x);
+                Y.push(line.start.y);
+                Y.push(line.end.y);
+            });
+
+            var numPoints = X.length;
+
+            var area = 0; // Accumulates area in the loop
+            var j = numPoints - 1; // The last vertex is the 'previous' one to the first
+
+            for (var i = 0; i < numPoints; i++) {
+                area = area + (X[j] + X[i]) * (Y[j] - Y[i]);
+                j = i; //j is previous vertex to i
+            }
+            return -area / 2;
+        }
+    }, {
+        key: 'orientation',
+        value: function orientation(line) {
+            var result = null;
+            if (line.start.x <= line.end.x && line.start.y <= line.end.y) {
+                result = "I";
+            }
+            if (line.start.x <= line.end.x && line.start.y > line.end.y) {
+                result = "II";
+            }
+            if (line.start.x > line.end.x && line.start.y > line.end.y) {
+                result = "III";
+            }
+            if (line.start.x > line.end.x && line.start.y <= line.end.y) {
+                result = "IV";
+            }
+            return result;
+        }
+    }, {
+        key: 'intersection',
+        value: function intersection(line1, line2) {
+            // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+            var denominator,
+                a,
+                b,
+                numerator1,
+                numerator2,
+                result = {
+                x: null,
+                y: null,
+                onLine1: false,
+                onLine2: false
+            };
+            denominator = (line2.end.y - line2.start.y) * (line1.end.x - line1.start.x) - (line2.end.x - line2.start.x) * (line1.end.y - line1.start.y);
+            if (denominator == 0) {
+                return result;
+            }
+            a = line1.start.y - line2.start.y;
+            b = line1.start.x - line2.start.x;
+            numerator1 = (line2.end.x - line2.start.x) * a - (line2.end.y - line2.start.y) * b;
+            numerator2 = (line1.end.x - line1.start.x) * a - (line1.end.y - line1.start.y) * b;
+            a = numerator1 / denominator;
+            b = numerator2 / denominator;
+
+            // if we cast these lines infinitely in both directions, they intersect here:
+            result.x = line1.start.x + a * (line1.end.x - line1.start.x);
+            result.y = line1.start.y + a * (line1.end.y - line1.start.y);
+            /*
+                    // it is worth noting that this should be the same as:
+                    x = line2.start.x + (b * (line2.end.x - line2.start.x));
+                    y = line2.start.x + (b * (line2.end.y - line2.start.y));
+                    */
+            // if line1 is a segment and line2 is infinite, they intersect if:
+            if (a > 0 && a < 1) {
+                result.onLine1 = true;
+            }
+            // if line2 is a segment and line1 is infinite, they intersect if:
+            if (b > 0 && b < 1) {
+                result.onLine2 = true;
+            }
+            // if line1 and line2 are segments, they intersect if both of the above are true
+            return result;
+        }
+    }, {
+        key: 'shadeColor',
+        value: function shadeColor(color, percent) {
+            var f = parseInt(color.slice(1), 16),
+                t = percent < 0 ? 0 : 255,
+                p = percent < 0 ? percent * -1 : percent,
+                R = f >> 16,
+                G = f >> 8 & 0x00FF,
+                B = f & 0x0000FF;
+            return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+        }
+    }]);
+
+    return trees;
+}();
+
+window.trees = trees;
+exports.trees = trees;
+
+},{"./engine/engine.js":17,"./engine/line.js":18,"./engine/point.js":24}]},{},[1]);
+
+//# sourceMappingURL=build.js.map

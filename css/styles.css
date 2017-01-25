@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'BungeeShade';
-    src: url('./fonts/BungeeShade-Regular.ttf') format('truetype')
+    src: url('./fonts/Bungee-Regular.ttf') format('truetype')
 }
 
 @font-face {
@@ -9,28 +9,61 @@
 }
 
 body {
-    background-color: rgb(68, 53, 91);
+    background-color: #1A001A;
     color: rgb(68, 53, 91);
     font-family: 'Chicle', Arial, serif;
-    font-size: 2.5vw;
     height: 0px;
+}
+
+ul {
+    margin: 2%;
 }
 
 li {
     list-style: none;
 }
 
-h2 {
-    color: pink;
+@media screen and (orientation:portrait) {
+    body {
+        font-size: 4vh;
+    }
+    .title {
+        font-size: 6vh;
+    }
+    .subtitle {
+        padding: 2vh;
+        font-size: 5vh;
+    }
+    #footer {
+        font-size: 2vh;
+        padding-left: 2vh;
+    }
+}
+@media screen and (orientation:landscape) {
+    body {
+        font-size: 3vw;        
+    }
+    .title {
+        font-size: 5vw;
+    }
+    .subtitle {
+        padding: 2vw;
+        font-size: 4vw;
+    }
+    #footer {
+        font-size: 2vw;
+        padding-left: 2vw;
+    }
 }
 
 .title {
     font-family: 'BungeeShade', Arial, serif;
-    color: rgb(68, 53, 91);
-    position: absolute;
-    top: 100px;
-    left: 100px;
-    z-index: -1;
+    color: orange;
+}
+
+.subtitle {
+    font-family: 'BungeeShade', Arial, serif;
+    color: white;
 }
 
 .canvases {
@@ -60,32 +93,24 @@ h2 {
 }
 
 #main {
-    height: 200%;
-    z-index: 150;
+    height: 100%;
+    width: 100%;
+    z-index: 550;
     pointer-events: all;
 }
 
 #about {
-    position: relative;
-    top: 76%;
-    left: 60%;
-    height: 5%;
-    width: 50%;
+    width: 100%;
+    position: absolute;
+    text-align: center;
 }
 
 #footer {
-    position: fixed;
-    font-size: 1vw;
-    bottom: 3%;
-    width: 50%;
-    padding: 1%;
-    height: 1%;
-    z-index: 500;
+    z-index: 600;
+    width: 100%;
     color: pink;
-}
-
-#footer a {
-    color: white;
+    position: fixed;
+    bottom: 0%;
 }
 
 a:hover {
@@ -103,7 +128,8 @@ a {
     list-style: none;
     margin-bottom: 2em;
     padding: 0 0 0.5em;
-    color: pink;
+    color: orange;
+    margin: 0;
 }
 
 .menu:before {
